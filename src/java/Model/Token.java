@@ -1,11 +1,12 @@
 package Model;
 import lombok.Data;
+import org.joda.time.DateTime;
 
 public @Data class Token {
     private int IdToken;
     private int IdUsuario; 
     private String token;
-   //private Datetime dataValidade; 
+    private DateTime dataValidade; 
 
     public Token() {
     }
