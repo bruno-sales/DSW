@@ -10,7 +10,7 @@ public @Data class Usuario
     private String Email;
     private String Senha;
     private boolean Logado;
-    private String Foto; //mudar depois
+    private String Foto;
 
     
     public Usuario() 
@@ -29,8 +29,5 @@ public @Data class Usuario
         this.Foto = Foto;
     }
     
-    /*private void CadastraUsuario() ///
-    {
-    }*/
     
 }
