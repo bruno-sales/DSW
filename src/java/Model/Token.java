@@ -9,12 +9,14 @@ public @Data class Token {
     private DateTime dataValidade; 
 
     public Token() {
+        
     }
 
-    public Token(int IdToken, int IdUsuario, String token) {
+    public Token(int IdToken, int IdUsuario, String token, DateTime dataValidade) {
         this.IdToken = IdToken;
         this.IdUsuario = IdUsuario;
         this.token = token;
+        this.dataValidade = dataValidade;
     }
     
     
