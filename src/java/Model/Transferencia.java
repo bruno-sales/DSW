@@ -1,5 +1,7 @@
 package Model;
 import lombok.Data;
+import org.joda.time.DateTime;
+
 /* TODO
 Criar historico de transação de dinheiro e de personagem:
 Transferencia 
@@ -37,6 +39,28 @@ Ao invés de referenciar objetos nas classes [Usuario user, por exemplo], refere
 
 */
 
+public @Data class Transferencia {
+
+    private int id;
+    private double valor;
+    private DateTime data;
+    private int idUsuario;
+    private String bancoOrigem;
+    private String agenciaOrigem;
+    private String contaOrigem;
+
+  /*  public Trasferencia(int id, double valor, DateTime data, int idUsuario, String bancoOrigem, String agenciaOrigem, String contaOrigem) {
+        this.id = id;
+        this.valor = valor;
+        this.data = data;
+        this.idUsuario = idUsuario;
+        this.bancoOrigem = bancoOrigem;
+        this.agenciaOrigem = agenciaOrigem;
+        this.contaOrigem = contaOrigem;
+    }*/
+}
+
+/*
 public @Data class Conta {
 
     private double saldo;
@@ -50,3 +74,4 @@ public @Data class Conta {
         this.numeroDaConta = numeroDaConta;
     }
 }
+*/

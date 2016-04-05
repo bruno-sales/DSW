@@ -1,5 +1,7 @@
 package Model;
 import lombok.Data;
+//import java.util.ArrayList;
+import java.util.List;
 
 public @Data class Usuario 
 {
@@ -10,10 +12,11 @@ public @Data class Usuario
     private String email;
     private String senha;
     private String foto;
-
+    
+    List<Gogo> gogos;
     
     public Usuario() 
-    {
+    {        
     }
     
     public Usuario(int id, String nome, String telefone, String cpf, String email, String senha, String foto) 
