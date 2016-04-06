@@ -3,21 +3,10 @@ import lombok.Data;
 import org.joda.time.DateTime;
 
 public @Data class Token {
-    private int IdToken;
-    private int IdUsuario; 
+    private int id;
+    private int idUsuario; 
     private String token;
     private DateTime dataValidade; 
-
-    public Token() {
-        
-    }
-
-    public Token(int IdToken, int IdUsuario, String token, DateTime dataValidade) {
-        this.IdToken = IdToken;
-        this.IdUsuario = IdUsuario;
-        this.token = token;
-        this.dataValidade = dataValidade;
-    }
     
     
 }

@@ -14,21 +14,6 @@ public @Data class Usuario
     private String foto;
     
     List<Gogo> gogos;
-    
-    public Usuario() 
-    {        
-    }
-    
-    public Usuario(int id, String nome, String telefone, String cpf, String email, String senha, String foto) 
-    {
-        this.id = id;
-        this.nome = nome;
-        this.telefone = telefone;
-        this.cpf = cpf;
-        this.email = email;
-        this.senha = senha;
-        this.foto = foto;
-    }
-    
+        
     
 }
