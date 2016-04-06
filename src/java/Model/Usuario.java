@@ -13,7 +13,7 @@ public @Data class Usuario
     private String senha;
     private String foto;
     
-    List<Gogo> gogos;
+    List<Gogo> gogos; //Isso não será mapeado no banco
         
     
 }
