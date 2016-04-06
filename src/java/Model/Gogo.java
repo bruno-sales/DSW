@@ -5,7 +5,7 @@ public @Data class Gogo {
     
     private int id;
     private String nome;
-    private String caminhoFoto;
+    private String foto;
 
     
 }
