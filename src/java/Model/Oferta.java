@@ -8,7 +8,7 @@ public @Data class Oferta {
     private double valor;
     private int idUsuario;
     private StatusOferta status;
-    private int qtdGogos;
+    private int quantidadeGogos;
     private int idOfertaPar;
     private int quantidadeOriginal;
     private int idOfertaOriginal;

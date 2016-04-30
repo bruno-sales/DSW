@@ -11,7 +11,7 @@ class Lancamento {
     private String operacao; //(Debito/Credito/Bloqueio/Liberacao);
     private String historico;
     private int quantidade;
-    private double preçoUnitario;
+    private double precoUnitario;
     private int idAtivo;
     private int idUsuario;
 }
