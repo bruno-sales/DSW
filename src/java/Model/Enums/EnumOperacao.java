@@ -1,7 +1,7 @@
 package Model.Enums;
 
 public enum EnumOperacao {
-    CREDITO(1), DEBITO(1), BLOQUEIO(2), DESBLOQUEIO(3);
+    CREDITO(0), DEBITO(1), BLOQUEIO(2), DESBLOQUEIO(3);
   
     private final int valor; 
     EnumOperacao(int valorOpcao)

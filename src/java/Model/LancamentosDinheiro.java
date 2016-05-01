@@ -5,7 +5,7 @@ import org.joda.time.DateTime;
 
 public @Data
 class LancamentosDinheiro {
-    private int idLancamento;
+    private int id;
     private int idUsuario;
     private DateTime data;
     private String historico;

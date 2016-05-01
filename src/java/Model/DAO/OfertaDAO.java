@@ -1,4 +1,6 @@
 package Model.DAO;
+import Model.Enums.EnumStatusOferta;
+import Model.Enums.EnumTipoOferta;
 import Model.Oferta;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -20,21 +22,39 @@ public class OfertaDAO {
 	{
 		Oferta oft = new Oferta();
 		oft.setId(rs.getInt("id"));
-                oft.setTipo(rs.getInt("tipo"));
 		oft.setIdUsuario(rs.getInt("idUsuario"));
-                oft.setStatus(rs.getInt("status"));
-                oft.setQuantidade(rs.getDouble("quantidade"));
-                oft.setQuantidadeOriginal(rs.getDouble("quantidadeOriginal"));
+                oft.setQuantidade(rs.getInt("quantidade"));
+                oft.setQuantidadeOriginal(rs.getInt("quantidadeOriginal"));
                 oft.setIdPersonagem(rs.getInt("idPersonagem"));
-                oft.setPrecoUnitario(rs.getDouble("precoUnitario"));
-                oft.setIdOrdemOriginal(rs.getInt("idOrdemOriginal"));
+                
+                switch(rs.getInt("tipo"))
+                {
+                    case 0:
+                    oft.setTipoOferta(EnumTipoOferta.COMPRA);
+                        break;
+                    case 1:
+                    oft.setTipoOferta(EnumTipoOferta.VENDA);
+                        break;
+                }
+                switch(rs.getInt("status"))
+                {
+                    case 0:
+                    oft.setStatus(EnumStatusOferta.ABERTA);
+                        break;
+                    case 1:
+                    oft.setStatus(EnumStatusOferta.LIQUIDADA);
+                        break;
+                    case 2:
+                    oft.setStatus(EnumStatusOferta.CANCELADA);
+                        break;
+                }
                 //tk.setData(rs.getDateTime("data"));
                                  
 		return oft;
 	}
 
 	//@Override
-	public Oferta getTokensDAO(int id)
+	public Oferta getOfertaPorId(int id)
 	{
 		Connection c = config.getConnection();
 		
@@ -57,7 +77,7 @@ public class OfertaDAO {
 
 		} catch (SQLException e)
 		{
-			config.log(e.getMessage());
+			Configurador.log(e.getMessage());
 		}
 		    
 		return oft;
@@ -71,11 +91,11 @@ public class OfertaDAO {
 		if (c == null)
 			return null;
 		
-		List<Oferta> lista = new ArrayList<Oferta>();
+		List<Oferta> lista = new ArrayList<>();
 		
 		try
 		{
-			PreparedStatement ps = c.prepareStatement("SELECT * FROM Tokens");
+			PreparedStatement ps = c.prepareStatement("SELECT * FROM Ofertas");
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next())
@@ -85,13 +105,13 @@ public class OfertaDAO {
 
 		} catch (SQLException e)
 		{
-			config.log(e.getMessage());
+			Configurador.log(e.getMessage());
 		}
 		    
 		return lista;
 	}
 
-	//@Override
+        
 	public boolean insere(Oferta oft)
 	{
 		Connection c = config.getConnection();
@@ -101,6 +121,7 @@ public class OfertaDAO {
 		
 		try
 		{
+                    /*
 			CallableStatement cs = c.prepareCall("{call InsereToken(?, ?, ?, ?)}");
 			
                         cs.setInt(1, oft.getId());
@@ -115,52 +136,20 @@ public class OfertaDAO {
 //                        cs.setDateTime(10, tk.getData());
                         
                         cs.execute();
-			
 			int id = cs.getInt(1);
 			oft.setId(id);
 			
+			*/
 			c.close();
 			return true;
 
 		} catch (SQLException e)
 		{
-			config.log(e.getMessage());
+			Configurador.log(e.getMessage());
 			return false;
 		}
 	}
-
-	
-
-        //@Override
-	public boolean atualiza(Oferta oft)
-	{
-		Connection c = config.getConnection();
 		
-		if (c == null)
-			return false;
-		
-		try
-		{
-			CallableStatement cs = c.prepareCall("{call AtualizaOferta(?, ?, ?, ?)}");
-			cs.setInt(4, oft.getStatus());
-                        cs.setDouble(5, oft.getQuantidade());
-                        cs.setInt(7, oft.getIdPersonagem());
-                        cs.setDouble(8, oft.getPrecoUnitario());
-                        
-                        
-			cs.execute();
-			c.close();
-			return true;
-
-		} catch (SQLException e)
-		{
-			config.log(e.getMessage());
-			return false;
-		}
-	}
-
-	
-	//@Override
 	public boolean remove(int id)
 	{
 		Connection c = config.getConnection();
@@ -178,7 +167,7 @@ public class OfertaDAO {
 
 		} catch (SQLException e)
 		{
-			config.log(e.getMessage());
+			Configurador.log(e.getMessage());
 			return false;
 		}
 	}

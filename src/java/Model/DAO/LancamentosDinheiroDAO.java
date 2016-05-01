@@ -1,5 +1,6 @@
 package Model.DAO;
 
+import Model.Enums.EnumOperacao;
 import Model.LancamentosDinheiro;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -23,14 +24,27 @@ public class LancamentosDinheiroDAO {
 		ld.setId(rs.getInt("id"));
 		ld.setIdUsuario(rs.getInt("idUsuario"));
                 ld.setHistorico(rs.getString("historico"));
-                ld.setValor(rs.getDouble("valor"));
-                ld.setOperacao(rs.getInt("operacao"));
-                //ld.setData(rs.getDateTime("data"));
-                                 
+                ld.setValor(rs.getFloat("valor"));
+                
+                switch(rs.getInt("operacao"))
+                {
+                    case 0:
+                    ld.setOperacao(EnumOperacao.CREDITO);
+                        break;
+                    case 1:
+                    ld.setOperacao(EnumOperacao.DEBITO);
+                        break;
+                    case 2:
+                    ld.setOperacao(EnumOperacao.BLOQUEIO);
+                        break;
+                    case 3:
+                    ld.setOperacao(EnumOperacao.DESBLOQUEIO);
+                        break;
+                }
+                
 		return ld;
 	}
 
-	//@Override
 	public LancamentosDinheiro getlancamentoDinheiroDAO(int id)
 	{
 		Connection c = config.getConnection();
@@ -54,7 +68,7 @@ public class LancamentosDinheiroDAO {
 
 		} catch (SQLException e)
 		{
-			config.log(e.getMessage());
+			Configurador.log(e.getMessage());
 		}
 		    
 		return ld;
@@ -68,7 +82,7 @@ public class LancamentosDinheiroDAO {
 		if (c == null)
 			return null;
 		
-		List<LancamentosDinheiro> lista = new ArrayList<LancamentosDinheiro>();
+		List<LancamentosDinheiro> lista = new ArrayList<>();
 		
 		try
 		{
@@ -82,7 +96,7 @@ public class LancamentosDinheiroDAO {
 
 		} catch (SQLException e)
 		{
-			config.log(e.getMessage());
+			Configurador.log(e.getMessage());
 		}
 		    
 		return lista;
@@ -103,7 +117,7 @@ public class LancamentosDinheiroDAO {
 			cs.setInt(2, ld.getIdUsuario());
 			cs.setString(3, ld.getHistorico());
                         cs.setDouble(4, ld.getValor());
-                        cs.setInt(5, ld.getOperacao());
+                        cs.setInt(5, ld.getOperacao().getValor());
 //                        cs.setDateTime(4, ld.getData());
                         
                         cs.execute();
@@ -116,7 +130,7 @@ public class LancamentosDinheiroDAO {
 
 		} catch (SQLException e)
 		{
-			config.log(e.getMessage());
+			Configurador.log(e.getMessage());
 			return false;
 		}
 	}
@@ -138,7 +152,8 @@ public class LancamentosDinheiroDAO {
 			cs.setInt(2, ld.getIdUsuario());
 			cs.setString(3, ld.getHistorico());
                         cs.setDouble(4, ld.getValor());
-                        cs.setInt(5, ld.getOperacao());
+                        cs.setInt(5, ld.getOperacao().getValor());
+                        
 //                        cs.setDateTime(4, ld.getData());
 			
 			cs.execute();
@@ -147,7 +162,7 @@ public class LancamentosDinheiroDAO {
 
 		} catch (SQLException e)
 		{
-			config.log(e.getMessage());
+			Configurador.log(e.getMessage());
 			return false;
 		}
 	}
@@ -171,7 +186,7 @@ public class LancamentosDinheiroDAO {
 
 		} catch (SQLException e)
 		{
-			config.log(e.getMessage());
+			Configurador.log(e.getMessage());
 			return false;
 		}
 	}

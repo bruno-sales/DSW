@@ -33,7 +33,7 @@ public class UsuarioDAO {
 		return user;
 	}
 
-	public Usuario getUsuarioDAO(int id)
+	public Usuario getUsuarioPorId(int id)
 	{
 		Connection c = config.getConnection();
 		

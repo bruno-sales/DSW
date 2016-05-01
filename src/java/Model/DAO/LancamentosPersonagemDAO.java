@@ -1,5 +1,6 @@
 package Model.DAO;
 
+import Model.Enums.EnumOperacao;
 import Model.LancamentosPersonagem;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -19,14 +20,28 @@ public class LancamentosPersonagemDAO {
     private LancamentosPersonagem carrega(ResultSet rs) throws SQLException
 	{
 		LancamentosPersonagem lp = new LancamentosPersonagem();
-		lp.setOperacao(rs.getInt("operacao"));
                 //lp.setData(rs.getDateTime("data"));
                 lp.setHistorico(rs.getString("historico"));
                 lp.setQuantidade(rs.getInt("quantidade"));
-		lp.setPrecoUnitario(rs.getDouble("precoUnitario"));
+		lp.setPrecoUnitario(rs.getFloat("precoUnitario"));
                 lp.setIdPersonagem(rs.getInt("idPersonagem"));
                 lp.setIdUsuario(rs.getInt("idUsuario"));
                 
+                switch(rs.getInt("operacao"))
+                {
+                    case 0:
+                    lp.setOperacao(EnumOperacao.CREDITO);
+                        break;
+                    case 1:
+                    lp.setOperacao(EnumOperacao.DEBITO);
+                        break;
+                    case 2:
+                    lp.setOperacao(EnumOperacao.BLOQUEIO);
+                        break;
+                    case 3:
+                    lp.setOperacao(EnumOperacao.DESBLOQUEIO);
+                        break;
+                }
                 return lp;
 	}
 
@@ -54,7 +69,7 @@ public class LancamentosPersonagemDAO {
 
 		} catch (SQLException e)
 		{
-			config.log(e.getMessage());
+			Configurador.log(e.getMessage());
 		}
 		    
 		return lp;
@@ -68,7 +83,7 @@ public class LancamentosPersonagemDAO {
 		if (c == null)
 			return null;
 		
-		List<LancamentosPersonagem> lista = new ArrayList<LancamentosPersonagem>();
+		List<LancamentosPersonagem> lista = new ArrayList<>();
 		
 		try
 		{
@@ -82,13 +97,13 @@ public class LancamentosPersonagemDAO {
 
 		} catch (SQLException e)
 		{
-			config.log(e.getMessage());
+			Configurador.log(e.getMessage());
 		}
 		    
 		return lista;
 	}
 
-	//@Override
+        
 	public boolean insere(LancamentosPersonagem lp)
 	{
 		Connection c = config.getConnection();
@@ -99,7 +114,7 @@ public class LancamentosPersonagemDAO {
 		try
 		{
 			CallableStatement cs = c.prepareCall("{call InsereToken(?, ?, ?, ?)}");
-			cs.setInt(1, lp.getOperacao());
+			cs.setInt(1, lp.getOperacao().getValor());
                         //cs.setInt(2, lp.getData());
                         cs.setString(3, lp.getHistorico());
 			cs.setInt(4, lp.getQuantidade());
@@ -117,14 +132,12 @@ public class LancamentosPersonagemDAO {
 
 		} catch (SQLException e)
 		{
-			config.log(e.getMessage());
+			Configurador.log(e.getMessage());
 			return false;
 		}
 	}
-
 	
 
-        //@Override
 	public boolean atualiza(LancamentosPersonagem lp)
 	{
 		Connection c = config.getConnection();
@@ -134,9 +147,9 @@ public class LancamentosPersonagemDAO {
 		
 		try
 		{
-//			CallableStatement cs = c.prepareCall("{call AtualizaLancamentosPersonagem(?,?,?,?,?,?,)}");
+			CallableStatement cs = c.prepareCall("{call AtualizaLancamentosPersonagem(?,?,?,?,?,?,)}");
                         
-                        cs.setInt(1, lp.getOperacao());
+                        cs.setInt(1, lp.getOperacao().getValor());
                         //cs.setInt(2, lp.getData());
                         cs.setString(3, lp.getHistorico());
 			cs.setInt(4, lp.getQuantidade());
@@ -151,13 +164,11 @@ public class LancamentosPersonagemDAO {
 
 		} catch (SQLException e)
 		{
-			config.log(e.getMessage());
+			Configurador.log(e.getMessage());
 			return false;
 		}
 	}
 
-	
-	//@Override
 	public boolean remove(int id)
 	{
 		Connection c = config.getConnection();
@@ -175,7 +186,7 @@ public class LancamentosPersonagemDAO {
 
 		} catch (SQLException e)
 		{
-			config.log(e.getMessage());
+			Configurador.log(e.getMessage());
 			return false;
 		}
 	}
