@@ -92,7 +92,7 @@ public class UsuarioDAO {
 		return lista;
 	}
 
-	public boolean insere(Usuario usuario)
+	public boolean inserir(Usuario usuario)
 	{
 		Connection c = config.getConnection();
 		
@@ -119,7 +119,7 @@ public class UsuarioDAO {
 		}
 	}
 	
-	public boolean atualiza(Usuario usuario)
+	public boolean atualizar(Usuario usuario)
 	{
 		Connection c = config.getConnection();
 		
@@ -153,7 +153,7 @@ public class UsuarioDAO {
 			return false;
 		
                 try{
-                        CallableStatement cs = c.prepareCall("{call indicarLoginFalha(?)}");
+                        CallableStatement cs = c.prepareCall("{call IndicarLoginFalha(?)}");
 			cs.setInt(1, idUsuario);
                         
                         return true;
