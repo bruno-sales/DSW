@@ -1,5 +1,6 @@
 package Model;
 import lombok.Data;
+import org.joda.time.DateTime;
 
 public @Data class Usuario 
 {
@@ -10,4 +11,12 @@ public @Data class Usuario
     private String email;
     private String senha;
     private String foto;
+    private boolean administrador;
+    private int numeroLogins;
+    private DateTime ultimoLogin;
+    
+    public boolean isAdministrator()
+    {
+        return this.administrador;
+    }
 }

@@ -1,10 +1,10 @@
-package Model;
+package Model.Enums;
 
-public enum TipoOferta {
-    COMPRA(1), VENDA(2);
+public enum EnumStatusOferta {
+    ABERTA(0), LIQUIDADA(1), CANCELADA(2);
     
     private final int valor; 
-    TipoOferta(int valorOpcao)
+    EnumStatusOferta(int valorOpcao)
     { 
         valor = valorOpcao; 
     } 
@@ -13,5 +13,4 @@ public enum TipoOferta {
     { 
         return valor; 
     }
-
 }

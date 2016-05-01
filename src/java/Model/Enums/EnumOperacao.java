@@ -1,10 +1,10 @@
-package Model;
+package Model.Enums;
 
-public enum StatusOferta {
-    ABERTA(1), CANCELADA(2), EXECUTADA(3);
-    
+public enum EnumOperacao {
+    CREDITO(1), DEBITO(1), BLOQUEIO(2), DESBLOQUEIO(3);
+  
     private final int valor; 
-    StatusOferta(int valorOpcao)
+    EnumOperacao(int valorOpcao)
     { 
         valor = valorOpcao; 
     } 

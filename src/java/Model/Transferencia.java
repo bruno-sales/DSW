@@ -8,9 +8,9 @@ public @Data class Transferencia {
     private double valor;
     private DateTime data;
     private int idUsuario;
-    private String bancoOrigem;
-    private String agenciaOrigem;
-    private String contaOrigem;
+    private String numeroBanco;
+    private String numeroAgencia;
+    private String numeroConta;
 
 }
 
