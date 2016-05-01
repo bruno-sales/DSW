@@ -1,8 +1,11 @@
 package Model.DAO;
 
+import Model.Personagem;
 import Model.Token;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.joda.time.DateTime;
 
@@ -27,13 +30,11 @@ public class TokenDAO {
             return false;
         }
 
-        try {            
-            DateTime validade = DateTime.now().plusDays(1);
-            
+        try {                        
             CallableStatement cs = c.prepareCall("{call InserirToken(?, ?, ?)}");
             cs.setInt(1, tk.getIdUsuario());
             cs.setString(2, tk.getToken());
-            cs.setString(3, validade.toString()); //Isso vai dar merda. data na procedure é Date, não String. VERIFICAR
+            cs.setString(3, tk.getDataValidade().toString()); //Isso vai dar merda. data na procedure é Date, não String. VERIFICAR
             cs.execute();
 
             c.close();
@@ -43,5 +44,40 @@ public class TokenDAO {
             Configurador.log(e.getMessage());
             return false;
         }
+    }
+    
+    /**
+     * Metodo que verifica se token é valido
+     * @param idUsuario idUsuario
+     * @param token string do token
+     * @return Valido: true Invalido: false
+     */
+    public boolean verficaValidadeToken(int idUsuario, String token)
+    {
+        boolean tokenValido = false;
+        
+        Connection c = config.getConnection();
+
+        if (c == null) {
+            return false;
+        }
+        try {
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM Token WHERE idUsuario = ? and Token = ");
+            ps.setInt(1, idUsuario);
+            ps.setString(1, token);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                tokenValido = true;
+            }            
+
+            c.close();
+
+        } catch (SQLException e) {
+            Configurador.log(e.getMessage());
+        }
+
+        return tokenValido;
     }
 }

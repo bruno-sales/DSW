@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.joda.time.DateTime;
 
 public class UsuarioDAO {
     
@@ -27,8 +28,9 @@ public class UsuarioDAO {
                 user.setEmail(rs.getString("email"));
                 user.setSenha(rs.getString("senha"));
                 user.setFoto(rs.getString("foto"));
-            //private boolean administrator;
-            //private DateTime ultimoLogin;
+                user.setAdministrador(rs.getBoolean("administrador"));
+                user.setNumeroLogins(rs.getInt("numeroLogins"));
+                user.setUltimoLogin(DateTime.parse(rs.getString("ultimoLogin")));
                 
 		return user;
 	}
@@ -56,7 +58,7 @@ public class UsuarioDAO {
 
 		} catch (SQLException e)
 		{
-			config.log(e.getMessage());
+			Configurador.log(e.getMessage());
 		}
 		    
 		return usuario;
@@ -70,11 +72,11 @@ public class UsuarioDAO {
 		if (c == null)
 			return null;
 		
-		List<Usuario> lista = new ArrayList<Usuario>();
+		List<Usuario> lista = new ArrayList<>();
 		
 		try
 		{
-			PreparedStatement ps = c.prepareStatement("SELECT * FROM CompactDisc");
+			PreparedStatement ps = c.prepareStatement("SELECT * FROM Usuarios");
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next())
@@ -84,13 +86,12 @@ public class UsuarioDAO {
 
 		} catch (SQLException e)
 		{
-			config.log(e.getMessage());
+			Configurador.log(e.getMessage());
 		}
 		    
 		return lista;
 	}
 
-	//@Override
 	public boolean insere(Usuario usuario)
 	{
 		Connection c = config.getConnection();
@@ -100,34 +101,24 @@ public class UsuarioDAO {
 		
 		try
 		{
-			CallableStatement cs = c.prepareCall("{call InsereU(?, ?, ?, ?)}");
-			cs.setInt(1, usuario.getId());
-			cs.setString(2, usuario.getNome());
-			cs.setString(3, usuario.getTelefone());
-                        cs.setString(4, usuario.getCpf());
-                        cs.setString(5, usuario.getEmail());
-                        cs.setString(6, usuario.getSenha());
-                        cs.setString(7, usuario.getFoto());
-                       // cs.setDouble(8, usuario.getTelefone());
-                      //  cs.setDouble(9, usuario.getTelefone());
+			CallableStatement cs = c.prepareCall("{call InserirUsuario(?, ?, ?, ?, ?)}");
+			cs.setString(1, usuario.getNome());
+			cs.setString(2, usuario.getTelefone());
+                        cs.setString(3, usuario.getCpf());
+                        cs.setString(4, usuario.getEmail());
+                        cs.setString(5, usuario.getSenha());
 			cs.execute();
-			
-			int id = cs.getInt(1);
-			usuario.setId(id);
 			
 			c.close();
 			return true;
 
 		} catch (SQLException e)
 		{
-			config.log(e.getMessage());
+			Configurador.log(e.getMessage());
 			return false;
 		}
 	}
-
 	
-
-        //@Override
 	public boolean atualiza(Usuario usuario)
 	{
 		Connection c = config.getConnection();
@@ -137,47 +128,81 @@ public class UsuarioDAO {
 		
 		try
 		{
-			CallableStatement cs = c.prepareCall("{call AtualizaCompactDisc(?, ?, ?, ?)}");
-			cs.setString(2, usuario.getNome());
+			CallableStatement cs = c.prepareCall("{call EditarUsuario(?, ?, ?, ?, ?)}");
+			cs.setInt(1, usuario.getId());
+                        cs.setString(2, usuario.getNome());
 			cs.setString(3, usuario.getTelefone());
                         cs.setString(4, usuario.getCpf());
-                        cs.setString(5, usuario.getEmail());
-                        cs.setString(6, usuario.getSenha());
-                        cs.setString(7, usuario.getFoto());
-                       // cs.setDouble(8, usuario.getTelefone());
-                       // cs.setDouble(9, usuario.getTelefone());
+                        cs.setString(5, usuario.getFoto());
 			cs.execute();
 			c.close();
 			return true;
 
 		} catch (SQLException e)
 		{
-			config.log(e.getMessage());
+			Configurador.log(e.getMessage());
 			return false;
 		}
 	}
-
-	
-	//@Override
-	public boolean remove(int id)
-	{
-		Connection c = config.getConnection();
+        
+        public boolean indicarLoginFalha(int idUsuario)
+        {
+            Connection c = config.getConnection();
 		
 		if (c == null)
 			return false;
 		
-		try
-		{
-			CallableStatement cs = c.prepareCall("{call RemoveUsuario(?)}");
-			cs.setInt(1, id);
-			cs.execute();	
-			c.close();
-			return true;
-
-		} catch (SQLException e)
-		{
-			config.log(e.getMessage());
+                try{
+                        CallableStatement cs = c.prepareCall("{call indicarLoginFalha(?)}");
+			cs.setInt(1, idUsuario);
+                        
+                        return true;
+                        
+                } catch (SQLException e)
+                {
+                        Configurador.log(e.getMessage());
 			return false;
-		}
-	}
+                }
+        }
+        
+        public boolean indicarLoginSucesso(int idUsuario)
+        {
+                Connection c = config.getConnection();
+		
+		if (c == null)
+			return false;
+		
+                try{
+                        CallableStatement cs = c.prepareCall("{call IndicarLoginSucesso(?)}");
+			cs.setInt(1, idUsuario);
+                        
+                        return true;
+                        
+                } catch (SQLException e)
+                {
+                        Configurador.log(e.getMessage());
+			return false;
+                }
+        }
+        
+        public boolean TrocarSenha(int idUsuario, String senha)
+        {
+                Connection c = config.getConnection();
+		
+		if (c == null)
+			return false;
+		
+                try{
+                        CallableStatement cs = c.prepareCall("{call TrocarSenha(?,?)}");
+			cs.setInt(1, idUsuario);
+                        cs.setString(2, senha);
+                        
+                        return true;
+                        
+                } catch (SQLException e)
+                {
+                        Configurador.log(e.getMessage());
+			return false;
+                }
+        }
 }

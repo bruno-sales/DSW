@@ -75,7 +75,6 @@ public class LancamentosPersonagemDAO {
 		return lp;
 	}
 
-	//@Override
 	public List<LancamentosPersonagem> lista()
 	{
 		Connection c = config.getConnection();
@@ -104,7 +103,7 @@ public class LancamentosPersonagemDAO {
 	}
 
         
-	public boolean insere(LancamentosPersonagem lp)
+	public boolean adicionarPersonagens(int idUsuario, int idPersonagem, int quantidade)
 	{
 		Connection c = config.getConnection();
 		
@@ -113,19 +112,12 @@ public class LancamentosPersonagemDAO {
 		
 		try
 		{
-			CallableStatement cs = c.prepareCall("{call InsereToken(?, ?, ?, ?)}");
-			cs.setInt(1, lp.getOperacao().getValor());
-                        //cs.setInt(2, lp.getData());
-                        cs.setString(3, lp.getHistorico());
-			cs.setInt(4, lp.getQuantidade());
-                        cs.setDouble(5, lp.getPrecoUnitario());
-                        cs.setInt(6, lp.getIdUsuario());
-			cs.setInt(7, lp.getIdPersonagem());
+			CallableStatement cs = c.prepareCall("{call AdicionarPersonagem(?, ?, ?)}");
+			cs.setInt(1, idUsuario);
+                        cs.setInt(2, idPersonagem);
+			cs.setInt(3, quantidade);
                         
-                        cs.execute();
-			
-			int id = cs.getInt(7);
-			lp.setIdUsuario(id);
+                        cs.execute();			
 			
 			c.close();
 			return true;
@@ -190,4 +182,6 @@ public class LancamentosPersonagemDAO {
 			return false;
 		}
 	}
+        
+        
 }
