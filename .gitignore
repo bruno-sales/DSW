@@ -45,3 +45,7 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Para não conflitar nossos arquivos de configurações do NetBeans
+.properties
+.xml
