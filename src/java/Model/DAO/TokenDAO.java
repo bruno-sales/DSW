@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.joda.time.DateTime;
 
-public class TokenDAO {
+public class TokenDAO implements ITokenDAO{
 
     private final Configurador config;
 

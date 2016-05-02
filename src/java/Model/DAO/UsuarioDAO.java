@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.joda.time.DateTime;
 
-public class UsuarioDAO {
+public class UsuarioDAO implements IUsuarioDAO{
     
     private final Configurador config;
  

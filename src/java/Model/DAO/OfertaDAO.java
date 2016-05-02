@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OfertaDAO {
+public class OfertaDAO implements IOfertaDAO{
     
     private final Configurador config;
  

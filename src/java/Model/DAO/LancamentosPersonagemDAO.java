@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LancamentosPersonagemDAO {
+public class LancamentosPersonagemDAO implements ILancamentosPersonagemDAO{
     private final Configurador config;
     private LancamentosPersonagem lp;
     private LancamentosDinheiro ld;

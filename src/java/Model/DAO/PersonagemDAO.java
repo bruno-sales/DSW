@@ -9,7 +9,7 @@ import java.util.List;
 import Model.Personagem;
 import java.sql.CallableStatement;
 
-public class PersonagemDAO {
+public class PersonagemDAO implements IPersonagemDAO{
 
     private final Configurador config;
 

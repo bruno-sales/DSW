@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class LancamentosDinheiroDAO {
+public class LancamentosDinheiroDAO implements ILancamentosDinheiroDAO{
     private final Configurador config;
  
     public LancamentosDinheiroDAO() {

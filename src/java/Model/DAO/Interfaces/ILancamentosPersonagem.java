@@ -9,6 +9,6 @@ package Model.DAO.Interfaces;
  *
  * @author Hazël § Rebecca
  */
-public class ILancamentosPersonagem {
+public interfaces ILancamentosPersonagem {
     
 }

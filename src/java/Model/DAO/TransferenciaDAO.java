@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.joda.time.DateTime;
 
-public class TransferenciaDAO {
+public class TransferenciaDAO implements ITransferenciaDAO{
 
     private final Configurador config;
 
