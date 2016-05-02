@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import Model.Personagem;
-import java.sql.CallableStatement;
 
 public class PersonagemDAO implements IPersonagemDAO{
 
@@ -34,6 +33,8 @@ public class PersonagemDAO implements IPersonagemDAO{
      * @param id Idpersonagem
      * @return Objeto Personagem
      */
+    
+    @Override
     public Personagem getPersonagemPorId(int id) {
         Connection c = config.getConnection();
 
@@ -65,6 +66,7 @@ public class PersonagemDAO implements IPersonagemDAO{
      * Retorna a lista de Personagens armazenados no sistema
      * @return Lista de personagens
      */
+    @Override
     public List<Personagem> lista() {
         Connection c = config.getConnection();
 

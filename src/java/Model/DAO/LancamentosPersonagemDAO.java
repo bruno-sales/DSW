@@ -14,17 +14,14 @@ import java.util.List;
 
 public class LancamentosPersonagemDAO implements ILancamentosPersonagemDAO{
     private final Configurador config;
-    private LancamentosPersonagem lp;
-    private LancamentosDinheiro ld;
     
     public LancamentosPersonagemDAO() {
         config = new Configurador();
-        lp = new LancamentosPersonagem();
-        ld = new LancamentosDinheiro();
-     }
+    }
     
     private LancamentosPersonagem carrega(ResultSet rs) throws SQLException
 	{
+                LancamentosPersonagem lp = new LancamentosPersonagem();
                 //lp.setData(rs.getDateTime("data"));
                 lp.setHistorico(rs.getString("historico"));
                 lp.setQuantidade(rs.getInt("quantidade"));
@@ -50,7 +47,7 @@ public class LancamentosPersonagemDAO implements ILancamentosPersonagemDAO{
                 return lp;
 	}
 
-	//@Override
+	@Override
 	public LancamentosPersonagem getlancamentosPersonagemPorId(int id)
 	{
 		Connection c = config.getConnection();
@@ -79,7 +76,8 @@ public class LancamentosPersonagemDAO implements ILancamentosPersonagemDAO{
 		    
 		return lp;
 	}
-
+        
+        @Override
 	public List<LancamentosPersonagem> lista()
 	{
 		Connection c = config.getConnection();
@@ -107,7 +105,7 @@ public class LancamentosPersonagemDAO implements ILancamentosPersonagemDAO{
 		return lista;
 	}
 
-        
+        @Override
 	public boolean adicionarPersonagens(int idUsuario, int idPersonagem, int quantidade)
 	{
 		Connection c = config.getConnection();
@@ -134,6 +132,7 @@ public class LancamentosPersonagemDAO implements ILancamentosPersonagemDAO{
 		}
 	}
         
+        @Override
         public boolean removerPersonagem(int idUsuario, int idPersonagem, int quantidade, String historico, double precoUnitario, EnumOperacao operacao)
         {
                 //private LancamentosPersonagem LP = new LancamentosPersonagem;
@@ -143,11 +142,7 @@ public class LancamentosPersonagemDAO implements ILancamentosPersonagemDAO{
 			return false;
          
                 try
-		{
-                                        //INTO erro??
-                        PreparedStatement ps = c.prepareStatement("SELECT historico FROM lancamentosPersonagem WHERE idUsuario=? AND idPersonagem =?");
-     //num to usando                   ResultSet rs = ps.executeQuery();
-			
+		{			
                         CallableStatement cs = c.prepareCall("{call RemoverPersonagem(?, ?, ?, ?, ?, ?)}");
 			cs.setInt(1, idUsuario);
                         cs.setInt(2, idPersonagem);
@@ -169,6 +164,7 @@ public class LancamentosPersonagemDAO implements ILancamentosPersonagemDAO{
 
         }
         
+        @Override
         public boolean calculaSaldoDisponivelPersonagem(int IdUsuario, int idPersonagem, /*OUT*/ int saldo)
         {
 //            Connection c = config.getConnection();

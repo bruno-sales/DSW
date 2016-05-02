@@ -2,7 +2,6 @@ package Model.DAO;
 
 import Model.CasamentoOfertas;
 import Model.DAO.Interfaces.ICasamentoOfertasDAO;
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,6 +28,7 @@ public class CasamentoOfertasDAO implements ICasamentoOfertasDAO{
         return cof;
     }
 
+    @Override
     public CasamentoOfertas getCasamentosOfertaPorId(int id) {
         Connection c = config.getConnection();
 
@@ -51,13 +51,13 @@ public class CasamentoOfertasDAO implements ICasamentoOfertasDAO{
             c.close();
 
         } catch (SQLException e) {
-            config.log(e.getMessage());
+            Configurador.log(e.getMessage());
         }
 
         return cof;
     }
 
-    //@Override
+    @Override
     public List<CasamentoOfertas> lista() {
         Connection c = config.getConnection();
 
@@ -84,7 +84,7 @@ public class CasamentoOfertasDAO implements ICasamentoOfertasDAO{
         return lista;
     }
     
-    
+    @Override
     public boolean ExecutaOrdens(DateTime vAgora, int vIdPersonagem, /*INOUT*/ int vIdCompra, int vIdUsuarioComprador, /*INOUT*/ int vQuantidadeCompra, int vIdVenda, int vIdUsuarioVendedor, /*INOUT*/ int vQuantidadeVenda, float vPrecoVenda, float vPrecoCompra, /*OUT*/int vIdRestante)
     {
 //        Connection c = config.getConnection();

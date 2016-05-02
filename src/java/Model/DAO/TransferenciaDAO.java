@@ -33,6 +33,7 @@ public class TransferenciaDAO implements ITransferenciaDAO{
         return trsf;
     }
 
+    @Override
     public Transferencia getTransferenciaPorId(int id) {
         Connection c = config.getConnection();
 
@@ -61,6 +62,7 @@ public class TransferenciaDAO implements ITransferenciaDAO{
         return trsf;
     }
 
+    @Override
     public List<Transferencia> lista() {
         Connection c = config.getConnection();
 

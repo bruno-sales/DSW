@@ -4,7 +4,6 @@ import Model.DAO.Interfaces.IOfertaDAO;
 import Model.Enums.EnumStatusOferta;
 import Model.Enums.EnumTipoOferta;
 import Model.Oferta;
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -55,7 +54,7 @@ public class OfertaDAO implements IOfertaDAO{
 		return oft;
 	}
 
-	//@Override
+	@Override
 	public Oferta getOfertaPorId(int id)
 	{
 		Connection c = config.getConnection();
@@ -85,7 +84,7 @@ public class OfertaDAO implements IOfertaDAO{
 		return oft;
 	}
 
-	//@Override
+	@Override
 	public List<Oferta> lista()
 	{
 		Connection c = config.getConnection();

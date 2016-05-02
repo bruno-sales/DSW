@@ -1,14 +1,12 @@
 package Model.DAO;
 
 import Model.DAO.Interfaces.ITokenDAO;
-import Model.Personagem;
 import Model.Token;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import org.joda.time.DateTime;
 
 public class TokenDAO implements ITokenDAO{
 
@@ -24,6 +22,7 @@ public class TokenDAO implements ITokenDAO{
      * @param tk Objeto Token
      * @return Booleano informando se inseriu ou não 
      */
+    @Override
     public boolean insere(Token tk) {
         Connection c = config.getConnection();
 
@@ -35,7 +34,7 @@ public class TokenDAO implements ITokenDAO{
             CallableStatement cs = c.prepareCall("{call InserirToken(?, ?, ?)}");
             cs.setInt(1, tk.getIdUsuario());
             cs.setString(2, tk.getToken());
-            cs.setString(3, tk.getDataValidade().toString()); //Isso vai dar merda. data na procedure é Date, não String. VERIFICAR
+            cs.setString(3, tk.getDataValidade().toString());
             cs.execute();
 
             c.close();
@@ -53,6 +52,7 @@ public class TokenDAO implements ITokenDAO{
      * @param token string do token
      * @return Valido: true Invalido: false
      */
+    @Override
     public boolean verficaValidadeToken(int idUsuario, String token)
     {
         boolean tokenValido = false;

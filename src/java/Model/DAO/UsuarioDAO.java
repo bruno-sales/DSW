@@ -36,6 +36,7 @@ public class UsuarioDAO implements IUsuarioDAO{
 		return user;
 	}
 
+        @Override
 	public Usuario getUsuarioPorId(int id)
 	{
 		Connection c = config.getConnection();
@@ -65,7 +66,7 @@ public class UsuarioDAO implements IUsuarioDAO{
 		return usuario;
 	}
 
-	
+	@Override
 	public List<Usuario> lista()
 	{
 		Connection c = config.getConnection();
@@ -93,6 +94,7 @@ public class UsuarioDAO implements IUsuarioDAO{
 		return lista;
 	}
 
+        @Override
 	public boolean inserir(Usuario usuario)
 	{
 		Connection c = config.getConnection();
@@ -120,6 +122,7 @@ public class UsuarioDAO implements IUsuarioDAO{
 		}
 	}
 	
+        @Override
 	public boolean atualizar(Usuario usuario)
 	{
 		Connection c = config.getConnection();
@@ -146,6 +149,7 @@ public class UsuarioDAO implements IUsuarioDAO{
 		}
 	}
         
+        @Override
         public boolean indicarLoginFalha(int idUsuario)
         {
             Connection c = config.getConnection();
@@ -166,6 +170,7 @@ public class UsuarioDAO implements IUsuarioDAO{
                 }
         }
         
+        @Override
         public boolean indicarLoginSucesso(int idUsuario)
         {
                 Connection c = config.getConnection();
@@ -186,6 +191,7 @@ public class UsuarioDAO implements IUsuarioDAO{
                 }
         }
         
+        @Override
         public boolean TrocarSenha(int idUsuario, String senha)
         {
                 Connection c = config.getConnection();

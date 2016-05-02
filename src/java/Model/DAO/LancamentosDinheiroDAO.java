@@ -44,8 +44,8 @@ public class LancamentosDinheiroDAO implements ILancamentosDinheiroDAO{
                 
 		return ld;
 	}
-
-	public LancamentosDinheiro getlancamentoDinheiroPorId(int id)
+        @Override
+    public LancamentosDinheiro getlancamentoDinheiroPorId(int id)
 	{
 		Connection c = config.getConnection();
 		
@@ -74,8 +74,8 @@ public class LancamentosDinheiroDAO implements ILancamentosDinheiroDAO{
 		return ld;
 	}
 
-	//@Override
-	public List<LancamentosDinheiro> lista()
+    @Override
+    public List<LancamentosDinheiro> lista()
 	{
 		Connection c = config.getConnection();
 		
