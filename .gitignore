@@ -49,3 +49,5 @@ Temporary Items
 # Para não conflitar nossos arquivos de configurações do NetBeans
 .properties
 .xml
+/build/
+/dist/

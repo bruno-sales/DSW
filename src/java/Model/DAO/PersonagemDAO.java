@@ -108,7 +108,7 @@ public class PersonagemDAO {
                         cs.setString(4, LP.getHistorico());
                         cs.setInt(5, LP.getQuantidade());
                         cs.setDouble(6, LP.getPrecoUnitario());
-                        cs.setDouble(7, LP.getOperacao());
+                        cs.setInt(7, LP.getOperacao().getValor());
                         
 			cs.execute();
 			

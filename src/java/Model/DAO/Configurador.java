@@ -13,11 +13,11 @@ public class Configurador {
     private String banco;
 
     public Configurador() {
-        url = "jdbc:mysql://localhost:3306/bolsa_gogo";
+        url = "jdbc:mysql://localhost/bolsa_gogo";
         driver = "com.mysql.jdbc.Driver";
         login = "root";
         senha = "admin";
-        senha = "bolsa_gogo";
+        banco = "bolsa_gogo";
     }
 
     /**
