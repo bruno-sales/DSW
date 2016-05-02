@@ -1,5 +1,7 @@
 package Model.DAO.Interfaces;
 
+
+import java.util.List;
 import Model.Personagem;
 
 public interface IPersonagemDAO {

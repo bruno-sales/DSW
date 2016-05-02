@@ -1,5 +1,7 @@
 package Model.DAO;
 
+import Model.DAO.Interfaces.ILancamentosPersonagemDAO;
+import Model.LancamentosDinheiro;
 import Model.Enums.EnumOperacao;
 import Model.LancamentosPersonagem;
 import java.sql.CallableStatement;
@@ -132,7 +134,7 @@ public class LancamentosPersonagemDAO implements ILancamentosPersonagemDAO{
 		}
 	}
         
-        public boolean removerPersonagem(int idUsuario, int idPersonagem, int quantidade, String historico, double precoUnitario, enum operacao) throws SQLException
+        public boolean removerPersonagem(int idUsuario, int idPersonagem, int quantidade, String historico, double precoUnitario, EnumOperacao operacao)
         {
                 //private LancamentosPersonagem LP = new LancamentosPersonagem;
                 Connection c = config.getConnection();
@@ -169,80 +171,83 @@ public class LancamentosPersonagemDAO implements ILancamentosPersonagemDAO{
         
         public boolean calculaSaldoDisponivelPersonagem(int IdUsuario, int idPersonagem, /*OUT*/ int saldo)
         {
-            Connection c = config.getConnection();
-		
-		if (c == null)
-			return false;
-         
-                try
-		{
-                        PreparedStatement ps = c.prepareStatement("SELECT SUM");
-                        ResultSet rs = ps.executeQuery();
-			
-                        int opr = operacao.getValor;
-/*SELECT SUM(CASE operacao WHEN 0 THEN quantidade WHEN 1 THEN -quantidade WHEN 2 THEN -quantidade WHEN 3 THEN quantidade END)
-
-	INTO vSaldo
-	FROM lancamentosPersonagem
-	WHERE idUsuario = vIdUsuario
-	AND idPersonagem = vIdPersonagem;
-	
-	IF vSaldo IS NULL THEN SET vSaldo = 0.0; END IF;*/
-                        switch(opr.getInt())
-                        {
-                            case 0:
-                                
-                                break;
-                            case 1:
-                                
-                                break;
-                            case 2:
-                                
-                                break;
-                            case 3:
-                                break;
-                        }
-                        
-                        PreparedStatement ps = c.prepareStatement("");
-                        ResultSet rs = ps.executeQuery();
-                        
-                        cs.execute();			
-			
-			c.close();
-			return true;
-
-		} catch (SQLException e)
-		{
-			Configurador.log(e.getMessage());
-			return false;
-		}
+//            Connection c = config.getConnection();
+//		
+//		if (c == null)
+//			return false;
+//         
+//                try
+//		{
+//                        PreparedStatement ps = c.prepareStatement("SELECT SUM");
+//                        ResultSet rs = ps.executeQuery();
+//			
+//                        int opr = operacao.getValor;
+///*SELECT SUM(CASE operacao WHEN 0 THEN quantidade WHEN 1 THEN -quantidade WHEN 2 THEN -quantidade WHEN 3 THEN quantidade END)
+//
+//	INTO vSaldo
+//	FROM lancamentosPersonagem
+//	WHERE idUsuario = vIdUsuario
+//	AND idPersonagem = vIdPersonagem;
+//	
+//	IF vSaldo IS NULL THEN SET vSaldo = 0.0; END IF;*/
+//                        switch(opr.getInt())
+//                        {
+//                            case 0:
+//                                
+//                                break;
+//                            case 1:
+//                                
+//                                break;
+//                            case 2:
+//                                
+//                                break;
+//                            case 3:
+//                                break;
+//                        }
+//                        
+//                        PreparedStatement ps = c.prepareStatement("");
+//                        ResultSet rs = ps.executeQuery();
+//                        
+//                        cs.execute();			
+//			
+//			c.close();
+//			return true;
+//
+//		} catch (SQLException e)
+//		{
+//			Configurador.log(e.getMessage());
+//			return false;
+//		}
+            return false;
         }
         
         
         public boolean CancelaOrdemCompra(int idCompra)
         {
+//            
+//            //DateTime Agora;
+//            int idUsuario;
+//            int quantidade;
+//            float precoUnitario;
+//            float valorTotal;
+//            
+//                PreparedStatement ps = c.prepareStatement
+//("SELECT idUsuario, idPersonagem, quantidade, precoUnitario INTO lIdUsuario, lQuantidade, lPrecoUnitario FROM ofertas WHERE id = idCompra"); //ou vIdCompra?
+//                ps.setInt(3,quantidade);
+//                ps.setInt(4,precoUnitario);
+//        
+//                valorTotal = quantidade * precoUnitario;
+//	
+//                ld.idUsuario = idUsuario;
+//                ld.quantidade = 3;
+//                ld.historico = "Canc Oferta Compra #" + idOfertaCompra;
+//                ld.valor = valorTotal;
+//            
+//                PreparedStatement ps = c.prepareStatement("SELECT status FROM ofertas WHERE id=idCompra"); //ou vIdCompra??
+//                
+//                //status = 2
             
-            //DateTime Agora;
-            int idUsuario;
-            int quantidade;
-            float precoUnitario;
-            float valorTotal;
-            
-                PreparedStatement ps = c.prepareStatement
-("SELECT idUsuario, idPersonagem, quantidade, precoUnitario INTO lIdUsuario, lQuantidade, lPrecoUnitario FROM ofertas WHERE id = idCompra"); //ou vIdCompra?
-                ps.setInt(3,quantidade);
-                ps.setInt(4,precoUnitario);
-        
-                valorTotal = quantidade * precoUnitario;
-	
-                ld.idUsuario = idUsuario;
-                ld.quantidade = 3;
-                ld.historico = "Canc Oferta Compra #" + idOfertaCompra;
-                ld.valor = valorTotal;
-            
-                PreparedStatement ps = c.prepareStatement("SELECT status FROM ofertas WHERE id=idCompra"); //ou vIdCompra??
-                
-                //status = 2
+            return false;
         }
 
 }
