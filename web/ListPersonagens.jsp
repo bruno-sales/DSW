@@ -20,11 +20,14 @@
         <h1>Personagens</h1>
 
         <ul>
+            <table>
             <c:forEach var="person" items ="${personagens}">
-                
-                <li><b>${person.id}</b> - ${person.nome}</li>
-                
+                <tr>
+                    <td>${person.id}</td> 
+                    <td>${person.nome}</td>
+                </tr>
             </c:forEach>
+            </table>
         </ul>
     </body>
 </html>
