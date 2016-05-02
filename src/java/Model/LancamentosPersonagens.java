@@ -4,8 +4,7 @@ import Model.Enums.EnumOperacao;
 import lombok.Data;
 import org.joda.time.DateTime;
 
-public @Data
-class LancamentosPersonagem {
+public @Data class LancamentosPersonagens {
 
     private int id;
     private DateTime data;
