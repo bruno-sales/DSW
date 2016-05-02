@@ -1,8 +1,8 @@
 package Model.DAO;
 
+import Model.DAO.Interfaces.ILancamentosDinheiroDAO;
 import Model.Enums.EnumOperacao;
 import Model.LancamentosDinheiro;
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -45,7 +45,7 @@ public class LancamentosDinheiroDAO implements ILancamentosDinheiroDAO{
 		return ld;
 	}
 
-	public LancamentosDinheiro getlancamentoDinheiroById(int id)
+	public LancamentosDinheiro getlancamentoDinheiroPorId(int id)
 	{
 		Connection c = config.getConnection();
 		

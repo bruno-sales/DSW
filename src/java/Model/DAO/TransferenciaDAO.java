@@ -1,5 +1,6 @@
 package Model.DAO;
 
+import Model.DAO.Interfaces.ITransferenciaDAO;
 import Model.Transferencia;
 import java.sql.CallableStatement;
 import java.sql.Connection;

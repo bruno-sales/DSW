@@ -49,7 +49,7 @@ public class LancamentosPersonagemDAO implements ILancamentosPersonagemDAO{
 	}
 
 	//@Override
-	public LancamentosPersonagem getlancamentosPersonagemById(int id)
+	public LancamentosPersonagem getlancamentosPersonagemPorId(int id)
 	{
 		Connection c = config.getConnection();
 		

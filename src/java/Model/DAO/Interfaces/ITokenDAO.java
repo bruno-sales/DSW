@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Model.DAO.Interfaces;
 
-/**
- *
- * @author Hazël § Rebecca
- */
-public class ITokenDAO {
+import Model.Token;
+
+public interface ITokenDAO {
+ 
+    public boolean insere(Token tk);
+    public boolean verficaValidadeToken(int idUsuario, String token);
     
 }

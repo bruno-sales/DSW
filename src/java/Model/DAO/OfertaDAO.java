@@ -1,4 +1,6 @@
 package Model.DAO;
+
+import Model.DAO.Interfaces.IOfertaDAO;
 import Model.Enums.EnumStatusOferta;
 import Model.Enums.EnumTipoOferta;
 import Model.Oferta;

@@ -1,5 +1,6 @@
 package Model.DAO;
 
+import Model.DAO.Interfaces.ITokenDAO;
 import Model.Personagem;
 import Model.Token;
 import java.sql.CallableStatement;
