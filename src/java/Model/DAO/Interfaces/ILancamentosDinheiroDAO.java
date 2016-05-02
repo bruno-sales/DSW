@@ -5,6 +5,7 @@
  */
 package Model.DAO.Interfaces;
 
+import Model.LancamentosDinheiro;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -12,7 +13,7 @@ import java.sql.SQLException;
  *
  * @author Hazël § Rebecca
  */
-public class ILancamentosDinheiroDAO {
+public interface ILancamentosDinheiroDAO {
     
     //carrega n entra, ne?
     public LancamentosDinheiro getlancamentoDinheiroDAO(int id);

@@ -45,7 +45,7 @@ public class LancamentosDinheiroDAO {
 		return ld;
 	}
 
-	public LancamentosDinheiro getlancamentoDinheiroDAO(int id)
+	public LancamentosDinheiro getlancamentoDinheiroById(int id)
 	{
 		Connection c = config.getConnection();
 		

@@ -49,7 +49,7 @@ public class LancamentosPersonagemDAO {
 	}
 
 	//@Override
-	public LancamentosPersonagem getlancamentosPersonagemDAO(int id)
+	public LancamentosPersonagem getlancamentosPersonagemById(int id)
 	{
 		Connection c = config.getConnection();
 		
@@ -132,7 +132,7 @@ public class LancamentosPersonagemDAO {
 		}
 	}
         
-        public boolean RemoverPersonagem(int idUsuario, int idPersonagem, int quantidade, String historico, double precoUnitario, enum operacao) throws SQLException
+        public boolean removerPersonagem(int idUsuario, int idPersonagem, int quantidade, String historico, double precoUnitario, enum operacao) throws SQLException
         {
                 //private LancamentosPersonagem LP = new LancamentosPersonagem;
                 Connection c = config.getConnection();
@@ -167,7 +167,7 @@ public class LancamentosPersonagemDAO {
 
         }
         
-        public boolean CalculaSaldoDisponivelPersonagem(int IdUsuario, int idPersonagem, /*OUT*/ int saldo)
+        public boolean calculaSaldoDisponivelPersonagem(int IdUsuario, int idPersonagem, /*OUT*/ int saldo)
         {
             Connection c = config.getConnection();
 		

@@ -48,8 +48,6 @@ public class GogoServlet extends HttpServlet {
 
     protected void buscarPersonagens(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-
         PersonagemDAO pDao = new PersonagemDAO();
 
         List<Personagem> lista = new ArrayList<>();

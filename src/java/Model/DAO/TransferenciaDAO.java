@@ -32,7 +32,6 @@ public class TransferenciaDAO {
         return trsf;
     }
 
-    //@Override
     public Transferencia getTransferenciaPorId(int id) {
         Connection c = config.getConnection();
 
