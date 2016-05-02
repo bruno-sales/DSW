@@ -39,7 +39,7 @@ public class CasamentoOfertasDAO implements ICasamentoOfertasDAO{
         CasamentoOfertas cof = null;
 
         try {
-            PreparedStatement ps = c.prepareStatement("SELECT * FROM casamentosOferta WHERE id = ?");
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM CasamentoOfertas WHERE id = ?");
             ps.setInt(1, id);
 
             ResultSet rs = ps.executeQuery();
@@ -68,7 +68,7 @@ public class CasamentoOfertasDAO implements ICasamentoOfertasDAO{
         List<CasamentoOfertas> lista = new ArrayList<>();
 
         try {
-            PreparedStatement ps = c.prepareStatement("SELECT * FROM casamentosOferta");
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM CasamentoOfertas");
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {

@@ -56,7 +56,7 @@ public class LancamentosDinheiroDAO implements ILancamentosDinheiroDAO{
 		
 		try
 		{
-			PreparedStatement ps = c.prepareStatement("SELECT * FROM lancamentosDinheiro WHERE id = ?");
+			PreparedStatement ps = c.prepareStatement("SELECT * FROM LancamentosDinheiro WHERE id = ?");
 			ps.setInt(1, id);
 
 			ResultSet rs = ps.executeQuery();
@@ -86,7 +86,7 @@ public class LancamentosDinheiroDAO implements ILancamentosDinheiroDAO{
 		
 		try
 		{
-			PreparedStatement ps = c.prepareStatement("SELECT * FROM lancamentosDinheiro");
+			PreparedStatement ps = c.prepareStatement("SELECT * FROM LancamentosDinheiro");
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next())
