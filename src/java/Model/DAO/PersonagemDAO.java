@@ -7,13 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import Model.Personagem;
-import Model.LancamentosPersonagem;
 import java.sql.CallableStatement;
 
 public class PersonagemDAO {
 
     private final Configurador config;
-    private LancamentosPersonagem LP;
 
     public PersonagemDAO() {
         config = new Configurador();
@@ -90,36 +88,4 @@ public class PersonagemDAO {
 
         return lista;
     }
-    
-    public boolean inserir(int idUsuario, int idPersonagem, int quantidade)
-	{
-                LP = new LancamentosPersonagem();
-		Connection c = config.getConnection();
-		
-		if (c == null)
-			return false;
-
-		try
-		{
-			CallableStatement cs = c.prepareCall("{call AdicionarPersonagem(?, ?, ?, ?, ?)}");
-			cs.setInt(1, LP.getIdPersonagem());
-			cs.setInt(2, LP.getIdUsuario());
-                        //data
-                        cs.setString(4, LP.getHistorico());
-                        cs.setInt(5, LP.getQuantidade());
-                        cs.setDouble(6, LP.getPrecoUnitario());
-                        cs.setInt(7, LP.getOperacao().getValor());
-                        
-			cs.execute();
-			
-			c.close();
-			return true;
-
-		} catch (SQLException e)
-		{
-			Configurador.log(e.getMessage());
-			return false;
-		}
-	}
-       
 }
