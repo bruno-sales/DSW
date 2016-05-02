@@ -19,7 +19,6 @@
     <body>
         <h1>Personagens</h1>
 
-        <ul>
             <table>
             <c:forEach var="person" items ="${personagens}">
                 <tr>
@@ -28,6 +27,5 @@
                 </tr>
             </c:forEach>
             </table>
-        </ul>
     </body>
 </html>
