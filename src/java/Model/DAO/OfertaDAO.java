@@ -28,15 +28,10 @@ public class OfertaDAO implements IOfertaDAO{
                 oft.setQuantidadeOriginal(rs.getInt("quantidadeOriginal"));
                 oft.setIdPersonagem(rs.getInt("idPersonagem"));
                 
-                switch(rs.getInt("tipo"))
-                {
-                    case 0:
-                    oft.setTipoOferta(EnumTipoOferta.COMPRA);
-                        break;
-                    case 1:
-                    oft.setTipoOferta(EnumTipoOferta.VENDA);
-                        break;
-                }
+                int codigo = rs.getInt("tipo");
+                EnumTipoOferta tipo = EnumTipoOferta.get(codigo);
+                oft.setTipoOferta(tipo);
+
                 switch(rs.getInt("status"))
                 {
                     case 0:
