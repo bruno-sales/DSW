@@ -13,7 +13,7 @@ public enum ETipoOferta {
     } 
     
     public static ETipoOferta get(int codigo)
-    {
+    { 
         for (ETipoOferta tipo : values())
             if (tipo.getCodigo() == codigo)
                 return tipo;

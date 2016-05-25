@@ -32,6 +32,17 @@ public class OfertaDAO implements IOfertaDAO{
                 ETipoOferta tipo = ETipoOferta.get(codigo);
                 oft.setTipoOferta(tipo);
 
+
+                switch(rs.getInt("tipo"))
+                {
+                    case 0:
+                    oft.setTipoOferta(ETipoOferta.COMPRA);
+                        break;
+                    case 1:
+                    oft.setTipoOferta(ETipoOferta.VENDA);
+                        break;
+                }
+                
                 switch(rs.getInt("status"))
                 {
                     case 0:
