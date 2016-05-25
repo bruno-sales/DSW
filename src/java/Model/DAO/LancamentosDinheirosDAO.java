@@ -1,6 +1,6 @@
 package Model.DAO;
 
-import Model.Enums.EnumOperacao;
+import Model.Enums.EOperacao;
 import Model.LancamentosDinheiros;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,16 +29,16 @@ public class LancamentosDinheirosDAO implements ILancamentosDinheirosDAO{
                 switch(rs.getInt("operacao"))
                 {
                     case 0:
-                    ld.setOperacao(EnumOperacao.CREDITO);
+                    ld.setOperacao(EOperacao.CREDITO);
                         break;
                     case 1:
-                    ld.setOperacao(EnumOperacao.DEBITO);
+                    ld.setOperacao(EOperacao.DEBITO);
                         break;
                     case 2:
-                    ld.setOperacao(EnumOperacao.BLOQUEIO);
+                    ld.setOperacao(EOperacao.BLOQUEIO);
                         break;
                     case 3:
-                    ld.setOperacao(EnumOperacao.DESBLOQUEIO);
+                    ld.setOperacao(EOperacao.DESBLOQUEIO);
                         break;
                 }
                 

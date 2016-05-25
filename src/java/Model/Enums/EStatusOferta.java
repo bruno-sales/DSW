@@ -2,19 +2,18 @@ package Model.Enums;
 
 import lombok.Getter;
 
-public enum EnumTipoOferta {
-    COMPRA(0), VENDA(1);
+public enum EStatusOferta {
+    ABERTA(0), LIQUIDADA(1), CANCELADA(2);
     
     private final @Getter int codigo;
-    
-    EnumTipoOferta(int codigo)
+    EStatusOferta(int codigo)
     { 
         this.codigo = codigo; 
     } 
     
-    public static EnumTipoOferta get(int codigo)
-    {
-        for (EnumTipoOferta tipo : values())
+    public static EStatusOferta get(int codigo)
+    { 
+        for (EStatusOferta tipo : values())
             if (tipo.getCodigo() == codigo)
                 return tipo;
         

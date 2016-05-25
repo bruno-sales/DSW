@@ -1,8 +1,8 @@
 package Model.DAO;
 
 import Model.DAO.Interfaces.IOfertaDAO;
-import Model.Enums.EnumStatusOferta;
-import Model.Enums.EnumTipoOferta;
+import Model.Enums.EStatusOferta;
+import Model.Enums.ETipoOferta;
 import Model.Oferta;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,19 +29,19 @@ public class OfertaDAO implements IOfertaDAO{
                 oft.setIdPersonagem(rs.getInt("idPersonagem"));
                 
                 int codigo = rs.getInt("tipo");
-                EnumTipoOferta tipo = EnumTipoOferta.get(codigo);
+                ETipoOferta tipo = ETipoOferta.get(codigo);
                 oft.setTipoOferta(tipo);
 
                 switch(rs.getInt("status"))
                 {
                     case 0:
-                    oft.setStatus(EnumStatusOferta.ABERTA);
+                    oft.setStatus(EStatusOferta.ABERTA);
                         break;
                     case 1:
-                    oft.setStatus(EnumStatusOferta.LIQUIDADA);
+                    oft.setStatus(EStatusOferta.LIQUIDADA);
                         break;
                     case 2:
-                    oft.setStatus(EnumStatusOferta.CANCELADA);
+                    oft.setStatus(EStatusOferta.CANCELADA);
                         break;
                 }
                 //tk.setData(rs.getDateTime("data"));

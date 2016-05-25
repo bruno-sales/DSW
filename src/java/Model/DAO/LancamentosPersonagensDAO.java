@@ -1,6 +1,6 @@
 package Model.DAO;
 
-import Model.Enums.EnumOperacao;
+import Model.Enums.EOperacao;
 import Model.LancamentosPersonagens;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -31,16 +31,16 @@ public class LancamentosPersonagensDAO implements ILancamentosPersonagensDAO{
                 switch(rs.getInt("operacao"))
                 {
                     case 0:
-                    lp.setOperacao(EnumOperacao.CREDITO);
+                    lp.setOperacao(EOperacao.CREDITO);
                         break;
                     case 1:
-                    lp.setOperacao(EnumOperacao.DEBITO);
+                    lp.setOperacao(EOperacao.DEBITO);
                         break;
                     case 2:
-                    lp.setOperacao(EnumOperacao.BLOQUEIO);
+                    lp.setOperacao(EOperacao.BLOQUEIO);
                         break;
                     case 3:
-                    lp.setOperacao(EnumOperacao.DESBLOQUEIO);
+                    lp.setOperacao(EOperacao.DESBLOQUEIO);
                         break;
                 }
                 return lp;
@@ -132,7 +132,7 @@ public class LancamentosPersonagensDAO implements ILancamentosPersonagensDAO{
 	}
         
         @Override
-        public boolean removerPersonagem(int idUsuario, int idPersonagem, int quantidade, String historico, double precoUnitario, EnumOperacao operacao)
+        public boolean removerPersonagem(int idUsuario, int idPersonagem, int quantidade, String historico, double precoUnitario, EOperacao operacao)
         {
                 //private LancamentosPersonagem LP = new LancamentosPersonagem;
                 Connection c = config.getConnection();
@@ -148,7 +148,7 @@ public class LancamentosPersonagensDAO implements ILancamentosPersonagensDAO{
                         //data
                         cs.setString(4, historico);
                         cs.setDouble(5, precoUnitario);
-                        cs.setInt(6, operacao.getValor());
+ //                       cs.setInt(6, operacao.get());
 			                        
                         cs.execute();			
 			

@@ -1,6 +1,6 @@
 package Model;
-import Model.Enums.EnumTipoOferta;
-import Model.Enums.EnumStatusOferta;
+import Model.Enums.ETipoOferta;
+import Model.Enums.EStatusOferta;
 import lombok.Data;
 import org.joda.time.DateTime;
 
@@ -14,8 +14,8 @@ public @Data class Oferta {
     private int quantidade;
     private DateTime data;
     private float valor;
-    private EnumTipoOferta tipoOferta;
-    private EnumStatusOferta status;
+    private ETipoOferta tipoOferta;
+    private EStatusOferta status;
             
     
     
