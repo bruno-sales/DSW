@@ -6,6 +6,7 @@ public enum EStatusOferta {
     ABERTA(0), LIQUIDADA(1), CANCELADA(2);
     
     private final @Getter int codigo;
+    
     EStatusOferta(int codigo)
     { 
         this.codigo = codigo; 

@@ -1,5 +1,6 @@
 package Model.DAO;
 
+import Util.Configurador;
 import Model.CasamentoOfertas;
 import Model.DAO.Interfaces.ICasamentoOfertasDAO;
 import java.sql.Connection;

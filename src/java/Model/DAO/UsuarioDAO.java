@@ -1,5 +1,6 @@
 package Model.DAO;
 
+import Util.Configurador;
 import Model.DAO.Interfaces.IUsuarioDAO;
 import Model.Usuario;
 import java.sql.CallableStatement;

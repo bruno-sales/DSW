@@ -1,5 +1,6 @@
 package Model.DAO;
 
+import Util.Configurador;
 import Model.Enums.EOperacao;
 import Model.LancamentosPersonagens;
 import java.sql.CallableStatement;
@@ -11,161 +12,144 @@ import java.util.ArrayList;
 import java.util.List;
 import Model.DAO.Interfaces.ILancamentosPersonagensDAO;
 
-public class LancamentosPersonagensDAO implements ILancamentosPersonagensDAO{
+public class LancamentosPersonagensDAO implements ILancamentosPersonagensDAO {
+
     private final Configurador config;
-    
+
     public LancamentosPersonagensDAO() {
         config = new Configurador();
     }
-    
-    private LancamentosPersonagens carrega(ResultSet rs) throws SQLException
-	{
-                LancamentosPersonagens lp = new LancamentosPersonagens();
-                //lp.setData(rs.getDateTime("data"));
-                lp.setHistorico(rs.getString("historico"));
-                lp.setQuantidade(rs.getInt("quantidade"));
-		lp.setPrecoUnitario(rs.getFloat("precoUnitario"));
-                lp.setIdPersonagem(rs.getInt("idPersonagem"));
-                lp.setIdUsuario(rs.getInt("idUsuario"));
-                
-                switch(rs.getInt("operacao"))
-                {
-                    case 0:
-                    lp.setOperacao(EOperacao.CREDITO);
-                        break;
-                    case 1:
-                    lp.setOperacao(EOperacao.DEBITO);
-                        break;
-                    case 2:
-                    lp.setOperacao(EOperacao.BLOQUEIO);
-                        break;
-                    case 3:
-                    lp.setOperacao(EOperacao.DESBLOQUEIO);
-                        break;
-                }
-                return lp;
-	}
 
-	@Override
-	public LancamentosPersonagens getlancamentosPersonagemPorId(int id)
-	{
-		Connection c = config.getConnection();
-		
-		if (c == null)
-			return null;
-		
-		LancamentosPersonagens lp = null;
-		
-		try
-		{
-			PreparedStatement ps = c.prepareStatement("SELECT * FROM lancamentosPersonagem WHERE idUsuario = ?");
-			ps.setInt(1, id);
+    private LancamentosPersonagens carrega(ResultSet rs) throws SQLException {
+        LancamentosPersonagens lp = new LancamentosPersonagens();
+        //lp.setData(rs.getDateTime("data"));
+        lp.setHistorico(rs.getString("historico"));
+        lp.setQuantidade(rs.getInt("quantidade"));
+        lp.setPrecoUnitario(rs.getFloat("precoUnitario"));
+        lp.setIdPersonagem(rs.getInt("idPersonagem"));
+        lp.setIdUsuario(rs.getInt("idUsuario"));
 
-			ResultSet rs = ps.executeQuery();
+        //Recuperando enumerador da operacao
+        int codigoOperacao = rs.getInt("operacao");
+        EOperacao tipoOperacao = EOperacao.get(codigoOperacao);
+        lp.setOperacao(tipoOperacao);
 
-			if (rs.next())
-				lp = carrega(rs);
+        return lp;
+    }
 
-			c.close();
+    @Override
+    public LancamentosPersonagens getlancamentosPersonagemPorId(int id) {
+        Connection c = config.getConnection();
 
-		} catch (SQLException e)
-		{
-			Configurador.log(e.getMessage());
-		}
-		    
-		return lp;
-	}
-        
-        @Override
-	public List<LancamentosPersonagens> lista()
-	{
-		Connection c = config.getConnection();
-		
-		if (c == null)
-			return null;
-		
-		List<LancamentosPersonagens> lista = new ArrayList<>();
-		
-		try
-		{
-			PreparedStatement ps = c.prepareStatement("SELECT * FROM lancamentosPersonagem");
-			ResultSet rs = ps.executeQuery();
-
-			while (rs.next())
-				lista.add(carrega(rs));
-
-			c.close();
-
-		} catch (SQLException e)
-		{
-			Configurador.log(e.getMessage());
-		}
-		    
-		return lista;
-	}
-
-        @Override
-	public boolean adicionarPersonagens(int idUsuario, int idPersonagem, int quantidade)
-	{
-		Connection c = config.getConnection();
-		
-		if (c == null)
-			return false;
-	       
-		try
-		{
-			CallableStatement cs = c.prepareCall("{call AdicionarPersonagem(?, ?, ?)}");
-			cs.setInt(1, idUsuario);
-                        cs.setInt(2, idPersonagem);
-			cs.setInt(3, quantidade);
-                        
-                        cs.execute();			
-			
-			c.close();
-			return true;
-
-		} catch (SQLException e)
-		{
-			Configurador.log(e.getMessage());
-			return false;
-		}
-	}
-        
-        @Override
-        public boolean removerPersonagem(int idUsuario, int idPersonagem, int quantidade, String historico, double precoUnitario, EOperacao operacao)
-        {
-                //private LancamentosPersonagem LP = new LancamentosPersonagem;
-                Connection c = config.getConnection();
-		
-		if (c == null)
-			return false;
-         
-                try
-		{			
-                        CallableStatement cs = c.prepareCall("{call RemoverPersonagem(?, ?, ?, ?, ?, ?)}");
-			cs.setInt(1, idUsuario);
-                        cs.setInt(2, idPersonagem);
-                        //data
-                        cs.setString(4, historico);
-                        cs.setDouble(5, precoUnitario);
- //                       cs.setInt(6, operacao.get());
-			                        
-                        cs.execute();			
-			
-			c.close();
-			return true;
-
-		} catch (SQLException e)
-		{
-			Configurador.log(e.getMessage());
-			return false;
-		}
-
+        if (c == null) {
+            return null;
         }
-        
-        @Override
-        public boolean calculaSaldoDisponivelPersonagem(int IdUsuario, int idPersonagem, /*OUT*/ int saldo)
-        {
+
+        LancamentosPersonagens lp = null;
+
+        try {
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM lancamentosPersonagem WHERE idUsuario = ?");
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                lp = carrega(rs);
+            }
+
+            c.close();
+
+        } catch (SQLException e) {
+            Configurador.log(e.getMessage());
+        }
+
+        return lp;
+    }
+
+    @Override
+    public List<LancamentosPersonagens> lista() {
+        Connection c = config.getConnection();
+
+        if (c == null) {
+            return null;
+        }
+
+        List<LancamentosPersonagens> lista = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM lancamentosPersonagem");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                lista.add(carrega(rs));
+            }
+
+            c.close();
+
+        } catch (SQLException e) {
+            Configurador.log(e.getMessage());
+        }
+
+        return lista;
+    }
+
+    @Override
+    public boolean adicionarPersonagens(int idUsuario, int idPersonagem, int quantidade) {
+        Connection c = config.getConnection();
+
+        if (c == null) {
+            return false;
+        }
+
+        try {
+            CallableStatement cs = c.prepareCall("{call AdicionarPersonagem(?, ?, ?)}");
+            cs.setInt(1, idUsuario);
+            cs.setInt(2, idPersonagem);
+            cs.setInt(3, quantidade);
+
+            cs.execute();
+
+            c.close();
+            return true;
+
+        } catch (SQLException e) {
+            Configurador.log(e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean removerPersonagem(int idUsuario, int idPersonagem, int quantidade, String historico, double precoUnitario, EOperacao operacao) {
+        //private LancamentosPersonagem LP = new LancamentosPersonagem;
+        Connection c = config.getConnection();
+
+        if (c == null) {
+            return false;
+        }
+
+        try {
+            CallableStatement cs = c.prepareCall("{call RemoverPersonagem(?, ?, ?, ?, ?, ?)}");
+            cs.setInt(1, idUsuario);
+            cs.setInt(2, idPersonagem);
+            //data
+            cs.setString(4, historico);
+            cs.setDouble(5, precoUnitario);
+ //                       cs.setInt(6, operacao.get());
+
+            cs.execute();
+
+            c.close();
+            return true;
+
+        } catch (SQLException e) {
+            Configurador.log(e.getMessage());
+            return false;
+        }
+
+    }
+
+    @Override
+    public boolean calculaSaldoDisponivelPersonagem(int IdUsuario, int idPersonagem, /*OUT*/ int saldo) {
 //            Connection c = config.getConnection();
 //		
 //		if (c == null)
@@ -213,12 +197,11 @@ public class LancamentosPersonagensDAO implements ILancamentosPersonagensDAO{
 //			Configurador.log(e.getMessage());
 //			return false;
 //		}
-            return false;
-        }
-        
-        
-        public boolean CancelaOrdemCompra(int idCompra)
-        {
+        return false;
+    }
+
+    @Override
+    public boolean CancelaOrdemCompra(int idCompra) {
 //            
 //            //DateTime Agora;
 //            int idUsuario;
@@ -241,8 +224,8 @@ public class LancamentosPersonagensDAO implements ILancamentosPersonagensDAO{
 //                PreparedStatement ps = c.prepareStatement("SELECT status FROM ofertas WHERE id=idCompra"); //ou vIdCompra??
 //                
 //                //status = 2
-            
-            return false;
-        }
+
+        return false;
+    }
 
 }

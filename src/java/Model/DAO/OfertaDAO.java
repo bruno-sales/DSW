@@ -1,5 +1,6 @@
 package Model.DAO;
 
+import Util.Configurador;
 import Model.DAO.Interfaces.IOfertaDAO;
 import Model.Enums.EStatusOferta;
 import Model.Enums.ETipoOferta;
@@ -10,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.joda.time.DateTime;
 
 public class OfertaDAO implements IOfertaDAO{
     
@@ -21,43 +23,28 @@ public class OfertaDAO implements IOfertaDAO{
     
     private Oferta carrega(ResultSet rs) throws SQLException
 	{
-		Oferta oft = new Oferta();
-		oft.setId(rs.getInt("id"));
-		oft.setIdUsuario(rs.getInt("idUsuario"));
-                oft.setQuantidade(rs.getInt("quantidade"));
-                oft.setQuantidadeOriginal(rs.getInt("quantidadeOriginal"));
-                oft.setIdPersonagem(rs.getInt("idPersonagem"));
+		Oferta oferta = new Oferta();
                 
-                int codigo = rs.getInt("tipo");
-                ETipoOferta tipo = ETipoOferta.get(codigo);
-                oft.setTipoOferta(tipo);
-
-
-                switch(rs.getInt("tipo"))
-                {
-                    case 0:
-                    oft.setTipoOferta(ETipoOferta.COMPRA);
-                        break;
-                    case 1:
-                    oft.setTipoOferta(ETipoOferta.VENDA);
-                        break;
-                }
+		oferta.setId(rs.getInt("id"));
+		oferta.setIdUsuario(rs.getInt("idUsuario"));
+                oferta.setQuantidade(rs.getInt("quantidade"));
+                oferta.setQuantidadeOriginal(rs.getInt("quantidadeOriginal"));
+                oferta.setIdPersonagem(rs.getInt("idPersonagem"));
                 
-                switch(rs.getInt("status"))
-                {
-                    case 0:
-                    oft.setStatus(EStatusOferta.ABERTA);
-                        break;
-                    case 1:
-                    oft.setStatus(EStatusOferta.LIQUIDADA);
-                        break;
-                    case 2:
-                    oft.setStatus(EStatusOferta.CANCELADA);
-                        break;
-                }
-                //tk.setData(rs.getDateTime("data"));
+                //Recuperando enumerador do tipo
+                int codigoTipo = rs.getInt("tipo");
+                ETipoOferta tipoOferta = ETipoOferta.get(codigoTipo);
+                oferta.setTipoOferta(tipoOferta);
+
+                //Recuperando enumerador do status
+                int codigoStatus = rs.getInt("status");
+                EStatusOferta statusOferta = EStatusOferta.get(codigoStatus);
+                oferta.setStatus(statusOferta);
+
+                DateTime dataOferta = DateTime.parse(rs.getDate("data").toString()) ;
+                oferta.setData(dataOferta);
                                  
-		return oft;
+		return oferta;
 	}
 
 	@Override

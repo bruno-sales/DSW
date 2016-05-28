@@ -1,5 +1,6 @@
 package Model.DAO;
 
+import Util.Configurador;
 import Model.DAO.Interfaces.IPersonagemDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
