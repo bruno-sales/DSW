@@ -14,5 +14,5 @@ public interface IUsuarioDAO {
     public boolean indicarLoginFalha(int idUsuario);
     public boolean indicarLoginSucesso(int idUsuario);
     public boolean TrocarSenha(int idUsuario, String senha);
-    
+    public Usuario verificaLogin(String email, String senha);
 }

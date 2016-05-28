@@ -26,8 +26,7 @@ public class ActionGogo extends Action {
 
     /**
      * Recupera os persongens da pagina atual
-     *
-     * @return
+     * @return SUCCESS
      */
     @DisableUserVerification
     @Any("/jsp/listpersonagens.jsp")
@@ -40,4 +39,5 @@ public class ActionGogo extends Action {
 
         return SUCCESS;
     }
+    
 }
