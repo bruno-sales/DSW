@@ -1,23 +1,13 @@
-<%-- 
-    Document   : listarLivros.jsp
-    Created on : 11/07/2011, 16:26:40
-    Author     : 2010012
---%>
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<%@include file="header.jsp"%>
 
 <%@taglib uri="/WEB-INF/c.tld" prefix="c"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-    "http://www.w3.org/TR/html4/loose.dtd">
+-->
+    <h2>Personagens</h2>
 
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Test Page</title>
-    </head>
-    <body>
-        <h1>Personagens</h1>
-
-            <table id="TabelaPersonagens">
+            <table id="tabelaPersonagens">
             <c:forEach var="person" items ="${requestScope.personas}">
                 <tr>
                     <td>${person.id}</td> 
@@ -25,5 +15,5 @@
                 </tr>
             </c:forEach>
             </table>
-    </body>
-</html>
+
+<%@include file="footer.jsp"%>
