@@ -14,8 +14,8 @@
 
         <link href='http://fonts.googleapis.com/css?family=Raleway:300,200' rel='stylesheet' type='text/css'>
     
-	<link rel="stylesheet" type="text/css" href="../media/layout.css">
-        <link rel="stylesheet" type="text/css" href="../media/reset.css">
+	<link rel="stylesheet" type="text/css" href="media/layout.css">
+        <link rel="stylesheet" type="text/css" href="media/reset.css">
   </head>
 	
   <body>

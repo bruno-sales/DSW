@@ -3,19 +3,13 @@
 <%@include file="header.jsp"%>
 
 <%@taglib uri="/WEB-INF/c.tld" prefix="c"%>
-<%@taglib uri="/WEB-INF/simplemvc.tld" prefix="mvc"%>
 
 <div class="menu2">
         <div class="mainmenu2 clearfix">
             <h1 class="menuitem2">Cadastro de Usuario</h1>
         </div>
 
-<mvc:error/>
-<mvc:notice/>
-
-<!--int id; String foto; boolean administrador;--> 
-
-<form name="formularioCadastro" action="ALGUMACOISA.DO/JAVA"><!--o que vai aqui?-->
+<form name="formularioCadastro" action="Servlet?t=cadastrarUsuario" method="POST">
         <div class="form2">
         <div class="forceColor2"></div>
         <div class="topbar2">
@@ -29,10 +23,10 @@
                 <input name="email" type="text" class="input" id="password" placeholder="email@exemplo.com.br"
                         pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/>
                 <input name="senha" type="password" class="input" id="password" required pattern="[a-z]{5}"
-                        placeholder="Minimo 5 caracteres"
+                        placeholder="Senha (Minimo 5 caracteres)"
                         onchange="formularioCadastro.pwd2.pattern = this.value;">
                 <input name="pwd2" type="password" class="input" id="password" required pattern="[a-z]{5}"
-                        placeholder="Minimo 5 caracteres" onchange="this.setCustomValidity(this.validity.patternMismatch ?
+                        placeholder="Repita a senha" onchange="this.setCustomValidity(this.validity.patternMismatch ?
                             'As senhas não conferem.' : '')"/>
             </div>
                 
@@ -40,7 +34,18 @@
         </div>
 </form>
 
-<button id="findpass2"><a href="/Gogo/retrieve.do">&nbsp &nbsp  Retornar a lista &nbsp &nbsp</a></button> <!--numseiqualéo.do-->
+     <div id="errorMsg">            
+        <%
+        String mensagem;
+        mensagem = request.getParameter("mensagem");
+        if(mensagem == null || mensagem.equals("")){  }
+        else{
+             out.print(mensagem);
+            }
+        %>
+        </div>
+        
+<button id="findpass2"><a href="login.jsp">&nbsp &nbsp  Retornar a pagina de login &nbsp &nbsp</a></button> 
 
 
 <%@include file="footer.jsp"%>

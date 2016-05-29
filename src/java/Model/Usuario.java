@@ -3,7 +3,7 @@ package Model;
 import lombok.Data;
 import org.joda.time.DateTime;
 
-public @Data class Usuario extends org.apache.struts.action.ActionForm {
+public @Data class Usuario {
 
     private int id;
     private String nome;

@@ -4,7 +4,7 @@ body {
   height: 100%;
   position: absolute;
   font-family: Raleway;
-  background: url(../mickey.jpg) no-repeat fixed;
+  background: url(mickey.jpg) no-repeat fixed;
   background-size: cover;
   background-position: 50%;
   -webkit-font-smoothing: antialiased;
