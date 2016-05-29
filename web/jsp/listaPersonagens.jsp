@@ -17,7 +17,7 @@
     <body>
         <h1>Personagens</h1>
 
-            <table>
+            <table id="TabelaPersonagens">
             <c:forEach var="person" items ="${requestScope.personas}">
                 <tr>
                     <td>${person.id}</td> 
