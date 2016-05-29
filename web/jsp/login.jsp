@@ -2,32 +2,31 @@
 
 <%@include file="header.jsp"%>
 
-<%@taglib uri="/WEB-INF/c.tld" prefix="c"%>
-<%@taglib uri="/WEB-INF/simplemvc.tld" prefix="mvc"%>
+<%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 
     <div class="menu">
         <div class="mainmenu clearfix">
             <h1 class="menuitem">Login</h1>
         </div>
     </div>
-<mvc:error/>
-<mvc:notice/>
 
-    <form method ="post" action="Login/login.do" class="login">
+<html:form action="/login" styleClass="login">
         <div class="form">
         <div class="forceColor"></div>
         <div class="topbar">
         <div class="spanColor"></div>
-            <input name="email" type="text" class="input" id="password" placeholder="E-mail"/>
-            <input name="pwd" type="password" class="input" id="password" placeholder="Senha"/>
+            <html:text property="email" styleClass="input" styleId="teste"/>
+            <html:text property="senha" styleClass="input" styleId="teste2"/>
         </div>
                 
-            <button class="submit" id="submit" >Entrar</button>
+            <html:submit styleClass="submit" styleId="submit" >Entrar</html:submit>
         </div>        
         
-        <button id="findpass"><a href="/Gogo/retrieve.do">Esqueceu sua senha?</a></button> <!--numseiqualéo.do-->
-        <button id="linkCadastro"><a href="/Gogo/retrieve.do">Cadastrar-se</a></button>
+        <button id="findpass"><a href="login.jsp">Esqueceu sua senha?</a></button> <!--numseiqualéo.do-->
+        <button id="linkCadastro"><a href="cadastroUsuario.jsp">Cadastrar-se</a></button>
         
-    </form>
+    </html:form>
         
 <%@include file="footer.jsp"%>
