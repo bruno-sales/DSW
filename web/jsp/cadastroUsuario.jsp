@@ -86,7 +86,7 @@
 </form>
 
 <p>
-  <a href="/compactDisc/retrieve.do">Retorna para a lista</a>
+  <a href="/Gogo/retrieve.do">Retorna para a lista</a>
 </p>
 
 <%@include file="footer.jsp"%>

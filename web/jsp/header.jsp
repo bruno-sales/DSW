@@ -8,8 +8,8 @@
 
 <html>
   <head>
-	<title>Header JSP</title>
-	<link rel="stylesheet" type="text/css" href="/css/layout.css">
+	<title>Bolsa Gogo</title>
+	<link rel="stylesheet" type="text/css" href="../media/layout.css">
   </head>
 	
   <body>
