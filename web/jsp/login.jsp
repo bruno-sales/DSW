@@ -17,15 +17,20 @@
         <div class="forceColor"></div>
         <div class="topbar">
         <div class="spanColor"></div>
-            <html:text property="email" styleClass="input" styleId="teste"/>
-            <html:text property="senha" styleClass="input" styleId="teste2"/>
+        <input name="email" type="text" 
+               value="<bean:write name="login" property="email" />"
+               class="input" id="email" placeholder="E-mail"/>
+        
+        <input name="senha" type="password" 
+               value="<bean:write name="login" property="senha" />"
+               class="input" id="password" placeholder="Senha"/>        
         </div>
-                
+               
             <html:submit styleClass="submit" styleId="submit" >Entrar</html:submit>
         </div>        
         
         <button id="findpass"><a href="login.jsp">Esqueceu sua senha?</a></button> <!--numseiqualéo.do-->
-        <button id="linkCadastro"><a href="cadastroUsuario.jsp">Cadastrar-se</a></button>
+        <button id="linkCadastro"><a href="cadastroUsuario.jsp?t=cadastro">Cadastrar-se</a></button>
         
     </html:form>
         

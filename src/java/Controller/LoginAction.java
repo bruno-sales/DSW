@@ -19,10 +19,10 @@ import org.apache.struts.action.ActionMapping;
  */
 public class LoginAction extends org.apache.struts.action.Action {
 
-    /* forward name="success" path="" */
     private static final String SUCCESS = "success";
     private final static String FAILURE = "failure";
-    
+    private final static String REGISTERED = "registered";
+
     /**
      * This is the action called from the Struts framework.
      *
@@ -37,30 +37,47 @@ public class LoginAction extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        
-        int i = 0;
-        
-        Usuario formBean = (Usuario)form;
-        String login = formBean.getEmail();
-        String senha = formBean.getSenha();
+
+        String tarefa = request.getParameter("t");
+        if(tarefa != null)
+        {
+            switch(tarefa){
+                case "cadastrar":
+                    boolean sucesso = CadastrarUsuario(form,request,response);
+                    return sucesso == true ? mapping.findForward(SUCCESS) : mapping.findForward(FAILURE);
+                    
+            }
+        }                
+
+        Usuario formUser = (Usuario) form;
+        String login = formUser.getEmail();
+        String senha = formUser.getSenha();
 
         //se algum nulo, retorna erro
         if (login == null || senha == null) {
             return mapping.findForward(FAILURE);
         }
-        
+
         UsuarioDAO userDao = new UsuarioDAO();
         //Metodo interno de verificação de Login
         Usuario usuario = userDao.verificaLogin(login, senha);
-               
-        
-        if(usuario == null)
-        {
-           //userDao.indicarLoginFalha(idUsuario);            
+
+        if (usuario == null) {
+            //userDao.indicarLoginFalha(idUsuario);            
             return mapping.findForward(FAILURE);
         }
-                       
+
         return mapping.findForward(SUCCESS);
     }
 
+    public boolean CadastrarUsuario(ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) 
+    {
+        Usuario formUser = (Usuario) form;        
+        UsuarioDAO uDao = new UsuarioDAO();
+        
+        boolean retorno = uDao.inserir(formUser);       
+
+        return retorno;
+    }
 }
