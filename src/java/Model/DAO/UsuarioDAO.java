@@ -29,7 +29,7 @@ public class UsuarioDAO implements IUsuarioDAO {
         user.setEmail(rs.getString("email"));
         user.setSenha(rs.getString("senha"));
         user.setFoto(rs.getString("foto"));
-        user.setAdministrador(rs.getBoolean("administrador"));
+        user.setAdministrator(rs.getBoolean("administrator"));
         user.setNumeroLogins(rs.getInt("numeroLogins"));
         user.setUltimoLogin(DateTime.parse(rs.getString("ultimoLogin")));
 

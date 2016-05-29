@@ -12,12 +12,12 @@ public @Data class Usuario {
     private String email;
     private String senha;
     private String foto;
-    private boolean administrador;
+    private boolean administrator;
     private int numeroLogins;
     private DateTime ultimoLogin;
 
     public boolean isAdministrator() {
-        return this.administrador;
+        return this.administrator;
     }
 
 }
