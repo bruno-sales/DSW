@@ -37,7 +37,7 @@ body .menu .mainmenu:after {
 
 body .errorMsg{
   float: left;
-  width: 62%;
+  width: 64%;
   padding-top: 42px;
   padding-bottom: 10px;
   text-align: center;
@@ -49,7 +49,7 @@ body .errorMsg{
 
 body .menu .mainmenu .menuitem {
   float: left;
-  width: 60%;
+  width: 63%;
   padding-top: 110px;
   padding-bottom: 10px;
   text-align: center;

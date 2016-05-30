@@ -143,7 +143,6 @@ public class UsuarioDAO implements IUsuarioDAO {
         }
     }
     
-    //Por idUsuario????????
     @Override
     public boolean indicarLoginFalha(int idUsuario) {
         Connection c = config.getConnection();

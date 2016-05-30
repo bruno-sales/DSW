@@ -78,7 +78,7 @@ public class PersonagemDAO implements IPersonagemDAO{
         List<Personagem> lista = new ArrayList<>();
 
         try {
-            PreparedStatement ps = c.prepareStatement("SELECT * FROM Personagens");
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM Personagens LIMIT 7");
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {

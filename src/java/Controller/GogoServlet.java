@@ -6,11 +6,9 @@ import Model.Personagem;
 import Model.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -63,7 +61,8 @@ public class GogoServlet extends HttpServlet {
         }
 
     }
-
+    
+    //Método controlador de validação de login
     public void validarLogin(HttpServletRequest request,
             HttpServletResponse response) throws IOException, ServletException {
         //Recuperar dados do formulario
@@ -80,7 +79,7 @@ public class GogoServlet extends HttpServlet {
             Usuario usuario = userDao.verificaLogin(login, senha);
 
             if (usuario == null) {
-                response.sendRedirect("login.jsp?mensagem=*Usuario inexistente!");
+                response.sendRedirect("login.jsp?mensagem=*Preencha os campos para efetuar login!");
             } else {
 
                 Cookie loginCookie = new Cookie("user", usuario.getNome());
@@ -95,7 +94,8 @@ public class GogoServlet extends HttpServlet {
             }
         }
     }
-
+    
+    //Método de controle para cadastro do usuário
     public void cadastrarUsuario(HttpServletRequest request,
             HttpServletResponse response) throws IOException, ServletException {
 
@@ -115,16 +115,18 @@ public class GogoServlet extends HttpServlet {
         novoUser.setTelefone(telefone);
         novoUser.setSenha(senha);
 
+        //Caso ocorra erro ao criar novo usuário, o retorno será falso
         boolean retorno = uDao.inserir(novoUser);
 
         if (retorno == false) {
-            response.sendRedirect("cadastroUsuario.jsp?mensagem=Ocorreu um erro! Tente novamente");
+            response.sendRedirect("cadastroUsuario.jsp?mensagem=Nao foi possivel efetuar o cadastro! Tente novamente");
         } else {
             response.sendRedirect("login.jsp");
         }
 
     }
 
+    //Método para listar todos os persoagens
     protected void buscarPersonagens(HttpServletRequest request,
             HttpServletResponse response) throws IOException, ServletException {
         PersonagemDAO pDao = new PersonagemDAO();
@@ -139,9 +141,11 @@ public class GogoServlet extends HttpServlet {
 
     }
 
+    //Método para efetuar logoff
     public void fazerLogoff(HttpServletRequest request,
             HttpServletResponse response) throws IOException, ServletException {
 
+        //Recuperar cookie da requisição
         Cookie loginCookie = null;
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
@@ -153,10 +157,12 @@ public class GogoServlet extends HttpServlet {
             }
         }
         if (loginCookie != null) {
+            //Expirar cookie
             loginCookie.setMaxAge(0);
             response.addCookie(loginCookie);
         }
         
+        //Redirecionar para página de login
         response.sendRedirect("login.jsp");
     }
 

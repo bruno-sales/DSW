@@ -4,6 +4,7 @@
 
 <%@taglib uri="/WEB-INF/c.tld" prefix="c"%>
 
+<!-- Recuperar cookie do navegador do usuário -->
 <%    String usuario = null;
     Cookie[] cookies = request.getCookies();
     if (cookies != null) {
@@ -13,7 +14,8 @@
             }
         }
     }
-   if (usuario == null) {
+    //Se não existir usuário, redireciona para a página de login
+    if (usuario == null) {
         response.sendRedirect("login.jsp");
     }
 %>
@@ -25,7 +27,7 @@
             <h1 class="menuitem2">Personagens</h1>
         </div>
 
-    <button id="findpass2"><a href="Servlet?t=listarPersonagens">Listar Personagens</a></button>
+    <a href="Servlet?t=listarPersonagens"><button id="findpass2">Listar Personagens</button></a>
     
     <div class="form2">
         <div class="forceColor2"></div>
@@ -37,6 +39,6 @@
         </div>
     </div>
     
-    <button id="findpass3"><a href="Servlet?t=logoff">Logoff</a></button>
+    <a href="Servlet?t=logoff"><button id="findpass3">Logoff</button></a>
     
 <%@include file="footer.jsp"%>

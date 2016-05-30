@@ -120,7 +120,6 @@ public class LancamentosPersonagensDAO implements ILancamentosPersonagensDAO {
 
     @Override
     public boolean removerPersonagem(int idUsuario, int idPersonagem, int quantidade, String historico, double precoUnitario, EOperacao operacao) {
-        //private LancamentosPersonagem LP = new LancamentosPersonagem;
         Connection c = config.getConnection();
 
         if (c == null) {
@@ -134,7 +133,7 @@ public class LancamentosPersonagensDAO implements ILancamentosPersonagensDAO {
             //data
             cs.setString(4, historico);
             cs.setDouble(5, precoUnitario);
- //                       cs.setInt(6, operacao.get());
+            cs.setInt(6, operacao.getCodigo());
 
             cs.execute();
 

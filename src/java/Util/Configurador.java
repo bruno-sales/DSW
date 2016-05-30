@@ -6,11 +6,11 @@ import java.sql.SQLException;
 
 public class Configurador {
 
-    private String url;
-    private String driver;
-    private String login;
-    private String senha;
-    private String banco;
+    private final String url;
+    private final String driver;
+    private final String login;
+    private final String senha;
+    private final String banco;
 
     public Configurador() {
         url = "jdbc:mysql://localhost/bolsa_gogo";

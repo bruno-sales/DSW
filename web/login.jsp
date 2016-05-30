@@ -26,10 +26,11 @@
         </div>
     </form>                
     
-        <button id="findpass"><a href="login.jsp">Esqueceu sua senha?</a></button>
-        <button id="linkCadastro"><a href="cadastroUsuario.jsp">Cadastrar-se</a></button>
+        <a href="login.jsp"><button id="findpass">Esqueceu sua senha?</button></a>
+        <a href="cadastroUsuario.jsp"><button id="linkCadastro">Cadastrar-se</button></a>
         
-        <div class="errorMsg">            
+        <div class="errorMsg">      
+            <!-- Carregar mensagem de erro, se houver -->
             <c:if test="${not empty param.mensagem}">
             <c:out value="${param.mensagem}"/>
             </c:if> 
