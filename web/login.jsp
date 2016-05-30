@@ -29,7 +29,7 @@
         <button id="findpass"><a href="login.jsp">Esqueceu sua senha?</a></button>
         <button id="linkCadastro"><a href="cadastroUsuario.jsp">Cadastrar-se</a></button>
         
-        <div id="errorMsg">            
+        <div class="errorMsg">            
             <c:if test="${not empty param.mensagem}">
             <c:out value="${param.mensagem}"/>
             </c:if> 

@@ -34,6 +34,19 @@ body .menu .mainmenu:after {
   content: "";
   display: block;
 }
+
+body .errorMsg{
+  float: left;
+  width: 62%;
+  padding-top: 42px;
+  padding-bottom: 10px;
+  text-align: center;
+  cursor: pointer;
+  color: white;
+  font-size: 1rem;
+  position: fixed;
+}
+
 body .menu .mainmenu .menuitem {
   float: left;
   width: 60%;

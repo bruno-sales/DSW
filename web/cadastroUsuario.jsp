@@ -34,7 +34,7 @@
         </div>
 </form>
 
-     <div id="errorMsg">            
+     <div class="errorMsg">            
         <c:if test="${not empty param.mensagem}">
         <c:out value="${param.mensagem}"/>
         </c:if>000

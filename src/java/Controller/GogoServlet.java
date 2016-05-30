@@ -71,7 +71,7 @@ public class GogoServlet extends HttpServlet {
 
         //se algum nulo, retorna erro
         if (login == null || senha == null) {
-            response.sendRedirect("login.jsp?mensagem=*Login ou senha invalido!");
+            response.sendRedirect("login.jsp?mensagem=*Login ou senha invalida!");
         } else {
 
             UsuarioDAO userDao = new UsuarioDAO();
@@ -79,7 +79,7 @@ public class GogoServlet extends HttpServlet {
             Usuario usuario = userDao.verificaLogin(login, senha);
 
             if (usuario == null) {
-                response.sendRedirect("login.jsp?mensagem=*Login ou senha invalido!");
+                response.sendRedirect("login.jsp?mensagem=*Usuario inexistente!");
             } else {
 
                 Cookie loginCookie = new Cookie("user", usuario.getNome());
