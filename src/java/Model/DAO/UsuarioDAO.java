@@ -31,7 +31,7 @@ public class UsuarioDAO implements IUsuarioDAO {
         user.setFoto(rs.getString("foto"));
         user.setAdministrator(rs.getBoolean("administrator"));
         user.setNumeroLogins(rs.getInt("numeroLogins"));
-        user.setUltimoLogin(DateTime.parse(rs.getString("ultimoLogin")));
+        //user.setUltimoLogin(DateTime.parse(rs.getDate("ultimoLogin").toString()));
 
         return user;
     }

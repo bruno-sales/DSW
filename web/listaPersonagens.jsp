@@ -7,6 +7,7 @@
 -->
     <h2>Personagens</h2>
 
+<a href="Servlet?t=listarPersonagens">Listar personagens</a>
             <table id="tabelaPersonagens">
             <c:forEach var="person" items ="${requestScope.personas}">
                 <tr>

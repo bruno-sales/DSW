@@ -24,6 +24,7 @@ public class GogoServlet extends HttpServlet {
     private static final String LOGIN = "login";
     private static final String LOGOFF = "logoff";
     private static final String CADASTRARUSUARIO = "cadastrarUsuario";
+    private static final String LISTARPERSONAGENS = "listarPersonagens";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -50,6 +51,9 @@ public class GogoServlet extends HttpServlet {
                     break;
                 case CADASTRARUSUARIO:
                     cadastrarUsuario(request, response);
+                    break;
+                case LISTARPERSONAGENS:
+                    buscarPersonagens(request, response);
                     break;
                 default:
                     response.sendRedirect("login.jsp");
@@ -80,9 +84,9 @@ public class GogoServlet extends HttpServlet {
         }else
         {
         request.setAttribute("usuario", usuario);
-
+        
         // Redireciona
-        RequestDispatcher rd = request.getRequestDispatcher("/listPersonagem.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/listaPersonagens.jsp");
         rd.forward(request, response);
         }
         }
@@ -117,6 +121,22 @@ public class GogoServlet extends HttpServlet {
         
     }
     
+    protected void buscarPersonagens(HttpServletRequest request,
+            HttpServletResponse response) throws IOException, ServletException 
+    {
+        PersonagemDAO pDao = new PersonagemDAO();
+
+        List<Personagem> lista = new ArrayList<>();
+        
+        lista = pDao.lista();
+                
+        request.setAttribute("personas", lista);
+                
+        // Redireciona
+        RequestDispatcher rd = request.getRequestDispatcher("/listaPersonagens.jsp");
+        rd.forward(request, response);
+        
+    }
          
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
