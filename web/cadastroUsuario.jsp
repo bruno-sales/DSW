@@ -35,17 +35,12 @@
 </form>
 
      <div id="errorMsg">            
-        <%
-        String mensagem;
-        mensagem = request.getParameter("mensagem");
-        if(mensagem == null || mensagem.equals("")){  }
-        else{
-             out.print(mensagem);
-            }
-        %>
+        <c:if test="${not empty param.mensagem}">
+        <c:out value="${param.mensagem}"/>
+        </c:if>000
         </div>
         
-<button id="findpass2"><a href="login.jsp">&nbsp &nbsp  Retornar a pagina de login &nbsp &nbsp</a></button> 
+<button id="findpass2"><a href="Servlet?t=listarPersonagens">&nbsp Ir a lista de personagens! &nbsp</a></button> 
 
 
 <%@include file="footer.jsp"%>

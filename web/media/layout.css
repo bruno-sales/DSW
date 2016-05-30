@@ -58,6 +58,19 @@ body .menu2 .mainmenu2 .menuitem2 {
   position: fixed;
 }
 
+body .boasVindas {
+  float: center;
+  width: 160%;
+  padding-right: 10px;
+  padding-top: 50px;
+  padding-bottom: 10px;
+  text-align: center;
+  cursor: pointer;
+  color: white;
+  font-size: 1.5rem;
+  position: fixed;
+}
+
 a {
   color: rgba(0, 0, 0, 0.7);
   text-decoration:none; 
@@ -105,7 +118,28 @@ body #findpass2{
   transform: translate3d(0, -50%, 0);
 }
 
-body #findpass#findpass2:focus {
+body #findpass3{
+  top: 9%;
+  right: 5%;
+  padding: 10px 20px;
+  width: auto;
+  background: white;
+  color: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  background: rgba(255, 255, 255, 0.5);
+  border: none;
+  font-size: 1.2rem;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  -moz-transform: translate3d(0, -50%, 0);
+  -ms-transform: translate3d(0, -50%, 0);
+  -webkit-transform: translate3d(0, -50%, 0);
+  transform: translate3d(0, -50%, 0);
+}
+
+body #findpass#findpass2#findpass3:focus {
   outline: none;
 }
 

@@ -30,13 +30,8 @@
         <button id="linkCadastro"><a href="cadastroUsuario.jsp">Cadastrar-se</a></button>
         
         <div id="errorMsg">            
-        <%
-        String mensagem;
-        mensagem = request.getParameter("mensagem");
-        if(mensagem == null || mensagem.equals("")){  }
-        else{
-             out.print(mensagem);
-            }
-        %>
+            <c:if test="${not empty param.mensagem}">
+            <c:out value="${param.mensagem}"/>
+            </c:if> 
         </div>
 <%@include file="footer.jsp"%>
