@@ -48,6 +48,7 @@ public class GogoServlet extends HttpServlet {
                     validarLogin(request, response);
                     break;
                 case LOGOFF:
+                    fazerLogoff(request, response);
                     break;
                 case CADASTRARUSUARIO:
                     cadastrarUsuario(request, response);
@@ -138,17 +139,38 @@ public class GogoServlet extends HttpServlet {
 
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void fazerLogoff(HttpServletRequest request,
+            HttpServletResponse response) throws IOException, ServletException {
+
+        Cookie loginCookie = null;
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("user")) {
+                    loginCookie = cookie;
+                    break;
+                }
+            }
+        }
+        if (loginCookie != null) {
+            loginCookie.setMaxAge(0);
+            response.addCookie(loginCookie);
+        }
+        
+        response.sendRedirect("login.jsp");
+    }
+
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+/**
+ * Handles the HTTP <code>GET</code> method.
+ *
+ * @param request servlet request
+ * @param response servlet response
+ * @throws ServletException if a servlet-specific error occurs
+ * @throws IOException if an I/O error occurs
+ */
+@Override
+        protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -162,7 +184,7 @@ public class GogoServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -173,7 +195,7 @@ public class GogoServlet extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo() {
+        public String getServletInfo() {
         return "Servle da aplicacao";
     }// </editor-fold>
 

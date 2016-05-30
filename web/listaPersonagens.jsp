@@ -13,10 +13,11 @@
             }
         }
     }
-/*    if (usuario == null) {
+   if (usuario == null) {
         response.sendRedirect("login.jsp");
-    }*/
+    }
 %>
+
 <h3 class="boasVindas">Bem-vindo <%=usuario%></h3>
 
 <div class="menu2">
