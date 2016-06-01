@@ -15,8 +15,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
- * @author bruno
+ * TODO
+ * Implementar as seguintes funcionalidades
+ * - Login n está registrando as coisas que deveriam. N de erros, ultimo login... Verificar metodo interno. Usar a procedure.
+ * - Funcao de recuperar senha via email
+ * - Edição de usuario
+ * - Listagem paginada
+ * - TODA A PARAFERNALHA DAS TRANSAÇÕES
+ * - Listar usuario, dar acesso apenas a um sysadmin
+ * - Lista de ofertas abertas
+ * - Lista de ofertas: historico do usuario
+ * - Extrato da CC do usuario
+ * - Cotação historica do personagem
+ * 
  */
 public class GogoServlet extends HttpServlet {
 
