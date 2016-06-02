@@ -80,9 +80,9 @@ public class GogoServlet extends HttpServlet {
         String login = request.getParameter("email");
         String senha = request.getParameter("senha");
 
-        //se algum nulo, retorna erro
+        //se algum vazio, retorna erro
         if (login == null || senha == null) {
-            response.sendRedirect("login.jsp?mensagem=*Login ou senha invalida!");
+            response.sendRedirect("login.jsp?mensagem=*Preencha os campos para efetuar login!");
         } else {
 
             UsuarioDAO userDao = new UsuarioDAO();
@@ -90,7 +90,7 @@ public class GogoServlet extends HttpServlet {
             Usuario usuario = userDao.verificaLogin(login, senha);
 
             if (usuario == null) {
-                response.sendRedirect("login.jsp?mensagem=*Preencha os campos para efetuar login!");
+                response.sendRedirect("login.jsp?mensagem=*Login ou senha invalida!");
             } else {
 
                 Cookie loginCookie = new Cookie("user", usuario.getNome());

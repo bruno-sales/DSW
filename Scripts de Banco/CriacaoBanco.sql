@@ -1,3 +1,5 @@
+DROP DATABASE IF EXISTS bolsa_gogo;
+
 CREATE DATABASE bolsa_gogo;
 
 USE bolsa_gogo;
@@ -9,7 +11,7 @@ CREATE TABLE DebugMessages
 
 CREATE TABLE usuarios 
 (
-	id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	idUsuario int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	nome varchar(80) NOT NULL,
 	telefone varchar(20) NOT NULL,
 	cpf varchar(14) NOT NULL,

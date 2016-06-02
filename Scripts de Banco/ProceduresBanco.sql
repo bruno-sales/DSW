@@ -71,11 +71,9 @@ DROP PROCEDURE IF EXISTS IndicarLoginSucesso;
 DELIMITER //
 CREATE PROCEDURE IndicarLoginSucesso(vIdUsuario int)
 BEGIN
-	DECLARE vAgora DATETIME;
-	DECLARE CONTINUE HANDLER FOR SQLEXCEPTION ROLLBACK;
-	START TRANSACTION;
-	
+	DECLARE vAgora DATETIME;	
 	SET vAgora = Now();
+	
 	UPDATE usuarios
 	SET numeroLogins = 0,
 	 ultimoLogin = vAgora

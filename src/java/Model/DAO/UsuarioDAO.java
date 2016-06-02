@@ -22,7 +22,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 
     private Usuario carrega(ResultSet rs) throws SQLException {
         Usuario user = new Usuario();
-        user.setId(rs.getInt("id"));
+        user.setIdUsuario(rs.getInt("idUsuario"));
         user.setNome(rs.getString("nome"));
         user.setTelefone(rs.getString("telefone"));
         user.setCpf(rs.getString("cpf"));
@@ -31,7 +31,9 @@ public class UsuarioDAO implements IUsuarioDAO {
         user.setFoto(rs.getString("foto"));
         user.setAdministrator(rs.getBoolean("administrator"));
         user.setNumeroLogins(rs.getInt("numeroLogins"));
-        //user.setUltimoLogin(DateTime.parse(rs.getDate("ultimoLogin").toString()));
+        
+        DateTime dataUltimoLogin = new DateTime(rs.getDate("ultimoLogin"));        
+        user.setUltimoLogin(dataUltimoLogin);
 
         return user;
     }
@@ -128,7 +130,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 
         try {
             CallableStatement cs = c.prepareCall("{call EditarUsuario(?, ?, ?, ?, ?)}");
-            cs.setInt(1, usuario.getId());
+            cs.setInt(1, usuario.getIdUsuario());
             cs.setString(2, usuario.getNome());
             cs.setString(3, usuario.getTelefone());
             cs.setString(4, usuario.getCpf());
@@ -175,6 +177,8 @@ public class UsuarioDAO implements IUsuarioDAO {
             CallableStatement cs = c.prepareCall("{call IndicarLoginSucesso(?)}");
             cs.setInt(1, idUsuario);
 
+            cs.execute();
+            c.close();
             return true;
 
         } catch (SQLException e) {
@@ -224,6 +228,8 @@ public class UsuarioDAO implements IUsuarioDAO {
 
             if (rs.next()) {
                 usuario = carrega(rs);
+                
+                indicarLoginSucesso(usuario.getIdUsuario());
             }
 
             c.close();

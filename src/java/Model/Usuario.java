@@ -5,7 +5,7 @@ import org.joda.time.DateTime;
 
 public @Data class Usuario {
 
-    private int id;
+    private int idUsuario;
     private String nome;
     private String telefone;
     private String cpf;
