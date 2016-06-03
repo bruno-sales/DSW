@@ -15,19 +15,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * TODO
- * Implementar as seguintes funcionalidades
- * - Login n está registrando as coisas que deveriam. N de erros, ultimo login... Verificar metodo interno. Usar a procedure.
- * - Funcao de recuperar senha via email
- * - Edição de usuario
- * - Listagem paginada
- * - TODA A PARAFERNALHA DAS TRANSAÇÕES
- * - Listar usuario, dar acesso apenas a um sysadmin
- * - Lista de ofertas abertas
- * - Lista de ofertas: historico do usuario
- * - Extrato da CC do usuario
- * - Cotação historica do personagem
- * 
+ * TODO Implementar as seguintes funcionalidades 
+ * - Funcao de recuperar senha via email - Edição de usuario -
+ * Listagem paginada - TODA A PARAFERNALHA DAS TRANSAÇÕES - Listar usuario, dar
+ * acesso apenas a um sysadmin - Lista de ofertas abertas - Lista de ofertas:
+ * historico do usuario - Extrato da CC do usuario - Cotação historica do
+ * personagem
+ *
  */
 public class GogoServlet extends HttpServlet {
 
@@ -72,40 +66,8 @@ public class GogoServlet extends HttpServlet {
         }
 
     }
-    
-    //Método controlador de validação de login
-    public void validarLogin(HttpServletRequest request,
-            HttpServletResponse response) throws IOException, ServletException {
-        //Recuperar dados do formulario
-        String login = request.getParameter("email");
-        String senha = request.getParameter("senha");
 
-        //se algum vazio, retorna erro
-        if (login == null || senha == null) {
-            response.sendRedirect("login.jsp?mensagem=*Preencha os campos para efetuar login!");
-        } else {
-
-            UsuarioDAO userDao = new UsuarioDAO();
-            //Metodo interno de verificação de Login
-            Usuario usuario = userDao.verificaLogin(login, senha);
-
-            if (usuario == null) {
-                response.sendRedirect("login.jsp?mensagem=*Login ou senha invalida!");
-            } else {
-
-                Cookie loginCookie = new Cookie("user", usuario.getNome());
-                //cookie expirando em 30 mins                
-                loginCookie.setMaxAge(30 * 60);
-
-                //cria o cookie
-                response.addCookie(loginCookie);
-
-                //redireciona
-                response.sendRedirect("listaPersonagens.jsp");
-            }
-        }
-    }
-    
+// <editor-fold defaultstate="collapsed" desc="Região com os metodos de cadastro">
     //Método de controle para cadastro do usuário
     public void cadastrarUsuario(HttpServletRequest request,
             HttpServletResponse response) throws IOException, ServletException {
@@ -135,8 +97,10 @@ public class GogoServlet extends HttpServlet {
             response.sendRedirect("login.jsp");
         }
 
-    }
+    }//</editor-fold>
 
+// <editor-fold defaultstate="collapsed" desc="Região com os metodos de busca">
+    
     //Método para listar todos os persoagens
     protected void buscarPersonagens(HttpServletRequest request,
             HttpServletResponse response) throws IOException, ServletException {
@@ -150,8 +114,61 @@ public class GogoServlet extends HttpServlet {
         RequestDispatcher rd = request.getRequestDispatcher("/listaPersonagens.jsp");
         rd.forward(request, response);
 
-    }
+    }//</editor-fold>
+    
+// <editor-fold defaultstate="collapsed" desc="Região com os metodos de autenticação, login e logoff">
+    
+    //Método controlador de validação de login
+    public void validarLogin(HttpServletRequest request,
+            HttpServletResponse response) throws IOException, ServletException {
+        //Recuperar dados do formulario
+        String login = request.getParameter("email");
+        String senha = request.getParameter("senha");
 
+        //se algum vazio, retorna erro
+        if (login == null || senha == null) {
+            response.sendRedirect("login.jsp?mensagem=*Preencha os campos para efetuar login!");
+        } else {
+
+            UsuarioDAO userDao = new UsuarioDAO();
+
+            //Metodo interno de verificação de Validade de email            
+            Usuario usuario = userDao.getUsuarioPorEmail(login);
+
+            if (usuario == null) {
+                response.sendRedirect("login.jsp?mensagem=*Login ou senha invalida!");
+            } else {
+                /*Se este usuario ultrapassou o limite de tentativas de login, 
+                 Redirecionar a pagina de esqueci minha senha*/
+                if (usuario.getNumeroLogins() > 3) {
+                    response.sendRedirect("login.jsp?mensagem=*Este usuario ultrapassou o "
+                            + "numero de tentativas de login, favor trocar senha");
+
+                } else {
+
+                    //Metodo interno para verificação de autenticação             
+                    boolean autenticado = userDao.verificaLogin(usuario.getIdUsuario(), senha);
+
+                    if (autenticado) //Autenticação validada
+                    {
+                        Cookie loginCookie = new Cookie("user", usuario.getNome());
+                        //cookie expirando em 30 mins                
+                        loginCookie.setMaxAge(30 * 60);
+
+                        //cria o cookie
+                        response.addCookie(loginCookie);
+
+                        //redireciona
+                        response.sendRedirect("listaPersonagens.jsp");
+                    } else //Autenticação invalida
+                    {
+                        response.sendRedirect("login.jsp?mensagem=*Login ou senha invalida!");
+                    }
+                }
+            }
+        }
+    }
+    
     //Método para efetuar logoff
     public void fazerLogoff(HttpServletRequest request,
             HttpServletResponse response) throws IOException, ServletException {
@@ -172,22 +189,24 @@ public class GogoServlet extends HttpServlet {
             loginCookie.setMaxAge(0);
             response.addCookie(loginCookie);
         }
-        
+
         //Redirecionar para página de login
         response.sendRedirect("login.jsp");
-    }
+    }// </editor-fold>
 
+    
+    
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-/**
- * Handles the HTTP <code>GET</code> method.
- *
- * @param request servlet request
- * @param response servlet response
- * @throws ServletException if a servlet-specific error occurs
- * @throws IOException if an I/O error occurs
- */
-@Override
-        protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -201,7 +220,7 @@ public class GogoServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-        protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -212,7 +231,7 @@ public class GogoServlet extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-        public String getServletInfo() {
+    public String getServletInfo() {
         return "Servle da aplicacao";
     }// </editor-fold>
 

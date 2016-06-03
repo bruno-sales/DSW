@@ -113,7 +113,7 @@ BEGIN
 	SET vAgora = Now();
 	
 	UPDATE Usuario
-	SET senha = vSenha
+	SET senha = vSenha, numeroLogins = 0
 	WHERE idUsuario = vIdUsuario;
 	
 	DELETE FROM tokens

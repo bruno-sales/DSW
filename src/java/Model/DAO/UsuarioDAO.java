@@ -31,8 +31,8 @@ public class UsuarioDAO implements IUsuarioDAO {
         user.setFoto(rs.getString("foto"));
         user.setAdministrator(rs.getBoolean("administrator"));
         user.setNumeroLogins(rs.getInt("numeroLogins"));
-        
-        DateTime dataUltimoLogin = new DateTime(rs.getDate("ultimoLogin"));        
+
+        DateTime dataUltimoLogin = new DateTime(rs.getDate("ultimoLogin"));
         user.setUltimoLogin(dataUltimoLogin);
 
         return user;
@@ -49,7 +49,7 @@ public class UsuarioDAO implements IUsuarioDAO {
         Usuario usuario = null;
 
         try {
-            PreparedStatement ps = c.prepareStatement("SELECT * FROM Usuarios WHERE id = ?");
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM Usuarios WHERE idUsuario = ?");
             ps.setLong(1, id);
 
             ResultSet rs = ps.executeQuery();
@@ -144,7 +144,7 @@ public class UsuarioDAO implements IUsuarioDAO {
             return false;
         }
     }
-    
+
     @Override
     public boolean indicarLoginFalha(int idUsuario) {
         Connection c = config.getConnection();
@@ -156,7 +156,8 @@ public class UsuarioDAO implements IUsuarioDAO {
         try {
             CallableStatement cs = c.prepareCall("{call IndicarLoginFalha(?)}");
             cs.setInt(1, idUsuario);
-
+            cs.execute();
+            c.close();
             return true;
 
         } catch (SQLException e) {
@@ -209,8 +210,42 @@ public class UsuarioDAO implements IUsuarioDAO {
     }
 
     @Override
-    public Usuario verificaLogin(String email, String senha) {
+    public boolean verificaLogin(int idUsuario, String senha) {
 
+        Connection c = config.getConnection();
+
+        boolean autenticado = false;
+        
+        if (c == null) {
+            return false;
+        }
+
+        try {
+
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM Usuarios WHERE idUsuario = ? and senha = ?");
+            ps.setInt(1, idUsuario);
+            ps.setString(2, senha);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) { // Autenticação reconhecida
+                autenticado = indicarLoginSucesso(idUsuario);                
+
+            } else { //Senha não bate com email
+                indicarLoginFalha(idUsuario);
+            }
+
+            c.close();
+
+        } catch (SQLException e) {
+            Configurador.log(e.getMessage());
+        }
+
+        return autenticado;
+    }
+
+    @Override
+    public Usuario getUsuarioPorEmail(String email) {
         Connection c = config.getConnection();
 
         if (c == null) {
@@ -220,16 +255,13 @@ public class UsuarioDAO implements IUsuarioDAO {
         Usuario usuario = null;
 
         try {
-            PreparedStatement ps = c.prepareStatement("SELECT * FROM Usuarios WHERE email = ? and senha = ?");
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM Usuarios WHERE email = ?");
             ps.setString(1, email);
-            ps.setString(2, senha);
 
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
                 usuario = carrega(rs);
-                
-                indicarLoginSucesso(usuario.getIdUsuario());
             }
 
             c.close();
