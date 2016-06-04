@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import Model.Personagem;
 
-public class PersonagemDAO implements IPersonagemDAO{
+public class PersonagemDAO implements IPersonagemDAO {
 
     private final Configurador config;
 
@@ -29,12 +29,13 @@ public class PersonagemDAO implements IPersonagemDAO{
         return persona;
 
     }
+
     /**
      * Carrega os dados do personagem a partir de um ID
+     *
      * @param id Idpersonagem
      * @return Objeto Personagem
      */
-    
     @Override
     public Personagem getPersonagemPorId(int id) {
         Connection c = config.getConnection();
@@ -65,10 +66,13 @@ public class PersonagemDAO implements IPersonagemDAO{
 
     /**
      * Retorna a lista de Personagens armazenados no sistema
+     *
+     * @param pagina
+     * @param tamanho
      * @return Lista de personagens
      */
     @Override
-    public List<Personagem> lista() {
+    public List<Personagem> lista(int pagina, int tamanho) {
         Connection c = config.getConnection();
 
         if (c == null) {
@@ -78,7 +82,10 @@ public class PersonagemDAO implements IPersonagemDAO{
         List<Personagem> lista = new ArrayList<>();
 
         try {
-            PreparedStatement ps = c.prepareStatement("SELECT * FROM Personagens LIMIT 7");
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM Personagens ORDER BY nome LIMIT ? OFFSET ?");
+            ps.setInt(1, tamanho);
+            ps.setInt(2, pagina * tamanho);
+
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -91,5 +98,35 @@ public class PersonagemDAO implements IPersonagemDAO{
         }
 
         return lista;
+    }
+
+    /**
+     * Obtem a quantidade de itens cadastrados
+     * @return 
+     */
+    @Override
+    public int countItens() {
+        Connection c = config.getConnection();        
+        if (c == null) {
+            return 0;
+        }
+
+        int qtd = 0;
+
+        try {
+            PreparedStatement ps = c.prepareStatement("SELECT Count(*) AS qtd FROM Personagens");
+           
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                qtd = rs.getInt("qtd");
+            }
+            c.close();
+
+        } catch (SQLException e) {
+            Configurador.log(e.getMessage());
+        }
+
+        return qtd;
     }
 }

@@ -7,7 +7,7 @@
     <servlet-mapping>
         <servlet-name>Servlet</servlet-name>
         <url-pattern>/Servlet</url-pattern>
-        <url-pattern>/GogoServlet</url-pattern>
+        <url-pattern>/Gogo</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

@@ -28,7 +28,7 @@ public class UsuarioDAO implements IUsuarioDAO {
         user.setCpf(rs.getString("cpf"));
         user.setEmail(rs.getString("email"));
         user.setSenha(rs.getString("senha"));
-        user.setFoto(rs.getString("foto"));
+        user.setFoto(rs.getBlob("foto"));
         user.setAdministrator(rs.getBoolean("administrator"));
         user.setNumeroLogins(rs.getInt("numeroLogins"));
 
@@ -134,7 +134,7 @@ public class UsuarioDAO implements IUsuarioDAO {
             cs.setString(2, usuario.getNome());
             cs.setString(3, usuario.getTelefone());
             cs.setString(4, usuario.getCpf());
-            cs.setString(5, usuario.getFoto());
+            cs.setBlob(5, usuario.getFoto());
             cs.execute();
             c.close();
             return true;

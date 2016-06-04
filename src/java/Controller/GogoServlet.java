@@ -15,16 +15,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * TODO Implementar as seguintes funcionalidades 
- * - Funcao de recuperar senha via email - Edição de usuario -
- * Listagem paginada - TODA A PARAFERNALHA DAS TRANSAÇÕES - Listar usuario, dar
- * acesso apenas a um sysadmin - Lista de ofertas abertas - Lista de ofertas:
- * historico do usuario - Extrato da CC do usuario - Cotação historica do
- * personagem
+ * TODO Implementar as seguintes funcionalidades - Funcao de recuperar senha via
+ * email - Edição de usuario - TODA A PARAFERNALHA DAS
+ * TRANSAÇÕES - Listar usuario, dar acesso apenas a um sysadmin - Lista de
+ * ofertas abertas - Lista de ofertas: historico do usuario - Extrato da CC do
+ * usuario - Cotação historica do personagem
  *
  */
 public class GogoServlet extends HttpServlet {
 
+    public static final int PAGESIZE = 5;
     private static final String LOGIN = "login";
     private static final String LOGOFF = "logoff";
     private static final String CADASTRARUSUARIO = "cadastrarUsuario";
@@ -99,15 +99,43 @@ public class GogoServlet extends HttpServlet {
 
     }//</editor-fold>
 
+// <editor-fold defaultstate="collapsed" desc="Região com os metodos de edição">
+//Método de controle para cadastro do usuário
+    public void atualizarUsuario(HttpServletRequest request,
+            HttpServletResponse response) throws IOException, ServletException {
+
+    }//</editor-fold>
+
 // <editor-fold defaultstate="collapsed" desc="Região com os metodos de busca">
-    
     //Método para listar todos os persoagens
     protected void buscarPersonagens(HttpServletRequest request,
             HttpServletResponse response) throws IOException, ServletException {
         PersonagemDAO pDao = new PersonagemDAO();
 
-        List<Personagem> lista = pDao.lista();
-
+        //Paginadores
+        int page;
+        int count = pDao.countItens();
+        
+        try
+        { //Tenta converter o numero da pagina
+            page = Integer.parseInt(request.getParameter("page"));
+        }
+        catch(NumberFormatException nf) //Define como pagina 0, se não.
+        {
+            page = 0;
+        }
+        
+        //Obter Lista
+        List<Personagem> lista = pDao.lista(page,PAGESIZE);
+        
+        //Paginadores
+        boolean hasNext = (count > (page+1) * PAGESIZE);
+        boolean hasPrior = (page > 0);
+        
+        //Guardar informações na memoria de requisição
+        request.setAttribute("page", page);
+	request.setAttribute("hasNextPage", hasNext);
+	request.setAttribute("hasPriorPage", hasPrior);
         request.setAttribute("personas", lista);
 
         // Redireciona
@@ -115,12 +143,12 @@ public class GogoServlet extends HttpServlet {
         rd.forward(request, response);
 
     }//</editor-fold>
-    
+
 // <editor-fold defaultstate="collapsed" desc="Região com os metodos de autenticação, login e logoff">
-    
     //Método controlador de validação de login
     public void validarLogin(HttpServletRequest request,
             HttpServletResponse response) throws IOException, ServletException {
+
         //Recuperar dados do formulario
         String login = request.getParameter("email");
         String senha = request.getParameter("senha");
@@ -168,7 +196,7 @@ public class GogoServlet extends HttpServlet {
             }
         }
     }
-    
+
     //Método para efetuar logoff
     public void fazerLogoff(HttpServletRequest request,
             HttpServletResponse response) throws IOException, ServletException {
@@ -194,8 +222,6 @@ public class GogoServlet extends HttpServlet {
         response.sendRedirect("login.jsp");
     }// </editor-fold>
 
-    
-    
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
