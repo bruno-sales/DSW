@@ -33,8 +33,10 @@ public class ServicoEmail {
 
     }
 
-    public void EnviarEmail(String destinatario, String titulo, String mensagem) {
+    public boolean EnviarEmail(String destinatario, String titulo, String mensagem) {
 
+        boolean enviado;
+        
         try {
 
             // Cria sessão para o email
@@ -66,7 +68,11 @@ public class ServicoEmail {
             // Transportar mensagem, enviar.
             Transport.send(message);
             
+            enviado = true;
         } catch (MessagingException mex) {
+            enviado = false;
         }
+        
+        return enviado;
     }
 }

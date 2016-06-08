@@ -43,7 +43,7 @@ DROP PROCEDURE IF EXISTS InserirToken;
 DELIMITER //
 CREATE PROCEDURE InserirToken(vIdUsuario int, vToken varchar(255), vDataValidade datetime)
 BEGIN
-INSERT INTO Tokens (idUsuario, token, dataValidade)
+INSERT INTO Tokens (idUsuario, token, validade)
 VALUES (vIdUsuario, vToken, vDataValidade);
 END //
 DELIMITER ;

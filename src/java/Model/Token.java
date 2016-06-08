@@ -20,7 +20,7 @@ class Token {
         }
 
         this.token = senha;
-        this.dataValidade = DateTime.now().plusDays(1); //Define validade do Token para até amanhã
+        this.dataValidade = DateTime.now().plusDays(3); //Define validade do Token para 3 dias
         this.idUsuario = idUser;
     }
 

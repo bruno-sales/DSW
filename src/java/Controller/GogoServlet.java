@@ -1,9 +1,12 @@
 package Controller;
 
 import Model.DAO.PersonagemDAO;
+import Model.DAO.TokenDAO;
 import Model.DAO.UsuarioDAO;
 import Model.Personagem;
+import Model.Token;
 import Model.Usuario;
+import Util.ServicoEmail;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -16,10 +19,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * TODO Implementar as seguintes funcionalidades - Funcao de recuperar senha via
- * email - Edição de usuario - TODA A PARAFERNALHA DAS
- * TRANSAÇÕES - Listar usuario, dar acesso apenas a um sysadmin - Lista de
- * ofertas abertas - Lista de ofertas: historico do usuario - Extrato da CC do
- * usuario - Cotação historica do personagem
+ * email - Edição de usuario - TODA A PARAFERNALHA DAS TRANSAÇÕES - Listar
+ * usuario, dar acesso apenas a um sysadmin - Lista de ofertas abertas - Lista
+ * de ofertas: historico do usuario - Extrato da CC do usuario - Cotação
+ * historica do personagem
  *
  */
 public class GogoServlet extends HttpServlet {
@@ -29,6 +32,9 @@ public class GogoServlet extends HttpServlet {
     private static final String LOGOFF = "logoff";
     private static final String CADASTRARUSUARIO = "cadastrarUsuario";
     private static final String LISTARPERSONAGENS = "listarPersonagens";
+    private static final String VERIFICARTOKEN = "verificarToken";
+    private static final String ENVIARTOKEN = "enviarToken";
+    private static final String RECUPERARSENHA = "recuperarSenha";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,27 +50,58 @@ public class GogoServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         try (PrintWriter out = response.getWriter()) {
+
             String tarefa = request.getParameter("t");
 
-            switch (tarefa) {
-                case LOGIN:
-                    validarLogin(request, response);
-                    break;
-                case LOGOFF:
-                    fazerLogoff(request, response);
-                    break;
-                case CADASTRARUSUARIO:
-                    cadastrarUsuario(request, response);
-                    break;
-                case LISTARPERSONAGENS:
-                    buscarPersonagens(request, response);
-                    break;
-                default:
-                    response.sendRedirect("login.jsp");
-                    break;
+            //Recuperar cookie da requisição
+            Cookie loginCookie = null;
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("user")) {
+                        loginCookie = cookie;
+                        break;
+                    }
+                }
             }
-        }
+            if (loginCookie != null) //Tarefas que só podem ser realizadas com autenticação
+            {
+                switch (tarefa) {
+                    case LOGOFF:
+                        fazerLogoff(request, response);
+                        break;
+                    case LISTARPERSONAGENS:
+                        buscarPersonagens(request, response);
+                        break;
+                    default:
+                        response.sendRedirect("login.jsp");
+                        break;
+                }
+            } else //Tarefas realizadas sem autenticação
+            {
+                switch (tarefa) {
+                    case LOGIN:
+                        validarLogin(request, response);
+                        break;
+                    case CADASTRARUSUARIO:
+                        cadastrarUsuario(request, response);
+                        break;
+                    case VERIFICARTOKEN:
+                        validarLogin(request, response);
+                        break;
+                    case ENVIARTOKEN:
+                        enviarToken(request, response);
+                        break;
+                    case RECUPERARSENHA:
+                        validarLogin(request, response);
+                        break;
+                    default:
+                        response.sendRedirect("login.jsp");
+                        break;
+                }
+            }
 
+        }
     }
 
 // <editor-fold defaultstate="collapsed" desc="Região com os metodos de cadastro">
@@ -115,27 +152,25 @@ public class GogoServlet extends HttpServlet {
         //Paginadores
         int page;
         int count = pDao.countItens();
-        
-        try
-        { //Tenta converter o numero da pagina
+
+        try { //Tenta converter o numero da pagina
             page = Integer.parseInt(request.getParameter("page"));
-        }
-        catch(NumberFormatException nf) //Define como pagina 0, se não.
+        } catch (NumberFormatException nf) //Define como pagina 0, se não.
         {
             page = 0;
         }
-        
+
         //Obter Lista
-        List<Personagem> lista = pDao.lista(page,PAGESIZE);
-        
+        List<Personagem> lista = pDao.lista(page, PAGESIZE);
+
         //Paginadores
-        boolean hasNext = (count > (page+1) * PAGESIZE);
+        boolean hasNext = (count > (page + 1) * PAGESIZE);
         boolean hasPrior = (page > 0);
-        
+
         //Guardar informações na memoria de requisição
         request.setAttribute("page", page);
-	request.setAttribute("hasNextPage", hasNext);
-	request.setAttribute("hasPriorPage", hasPrior);
+        request.setAttribute("hasNextPage", hasNext);
+        request.setAttribute("hasPriorPage", hasPrior);
         request.setAttribute("personas", lista);
 
         // Redireciona
@@ -220,6 +255,46 @@ public class GogoServlet extends HttpServlet {
 
         //Redirecionar para página de login
         response.sendRedirect("login.jsp");
+    }
+
+    
+    //Método para efetuar o envio de um novo token ao email
+    public void enviarToken(HttpServletRequest request,
+            HttpServletResponse response) throws IOException, ServletException {
+
+        String email = request.getParameter("email");
+
+        if (email == null) {
+            response.sendRedirect("recuperarSenha.jsp?mensagem=Insira o email");
+        } else {
+            UsuarioDAO userDao = new UsuarioDAO();
+            Usuario usuario = userDao.getUsuarioPorEmail(email);
+
+            if (usuario == null) {
+                response.sendRedirect("recuperarSenha.jsp?mensagem=email invalido");
+            } else {
+                Token token = new Token(usuario.getIdUsuario());
+                TokenDAO tkDao = new TokenDAO();
+
+                if (tkDao.insere(token)) //Se a criação do token foi OK, pode enviar email
+                {
+                    //Monta o email
+                    ServicoEmail mail = new ServicoEmail();
+                    boolean emailEnviado = mail.EnviarEmail(email, "Bolsa Gogo - Recuperar Senha",
+                            "Olá, você requisitou um token para trocar sua senha na Bolsa Gogo. "
+                            + "Seu token é: " + token.getToken());
+
+                    if (emailEnviado) {
+                        request.setAttribute("mensagem", "Um token foi enviado a este email");
+                    } else {
+                        request.setAttribute("mensagem", "Ocorreu um erro ao enviar um token a este email");
+                    }
+                    // Redireciona
+                    RequestDispatcher rd = request.getRequestDispatcher("/recuperarSenha.jsp");
+                    rd.forward(request, response);
+                }
+            }
+        }
     }// </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

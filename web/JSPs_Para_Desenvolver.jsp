@@ -18,7 +18,7 @@
             <li>Perfil do Usuario</li>
             <li>Editar Usuario</li>
             <li>Lista de Usuario (Somente acessada pelo sysAdmin)</li>
-            <li>Recuperar Senha</li>
+            <li>Layout de Recuperar Senha</li>
             <li>Pagina de ofertas (compra e venda, listadas na mesma pagina)</li>
             <li>Extrato da conta correte do usuario</li>
             <li>Cotação historica de um personagem</li>

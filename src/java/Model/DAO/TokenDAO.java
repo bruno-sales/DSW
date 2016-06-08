@@ -32,10 +32,12 @@ public class TokenDAO implements ITokenDAO{
         }
 
         try {                        
+            java.sql.Date tokenSqlDate = new java.sql.Date(tk.getDataValidade().toDate().getTime());
+            
             CallableStatement cs = c.prepareCall("{call InserirToken(?, ?, ?)}");
             cs.setInt(1, tk.getIdUsuario());
             cs.setString(2, tk.getToken());
-            cs.setString(3, tk.getDataValidade().toString());
+            cs.setDate(3, tokenSqlDate);
             cs.execute();
 
             c.close();
