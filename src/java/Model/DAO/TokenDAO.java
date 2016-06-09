@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.joda.time.DateTime;
 
 public class TokenDAO implements ITokenDAO{
 
@@ -58,6 +59,8 @@ public class TokenDAO implements ITokenDAO{
     @Override
     public boolean verficaValidadeToken(int idUsuario, String token)
     {
+        java.sql.Date dataAgora = new java.sql.Date(DateTime.now().toDate().getTime());
+        
         boolean tokenValido = false;
         
         Connection c = config.getConnection();
@@ -66,9 +69,10 @@ public class TokenDAO implements ITokenDAO{
             return false;
         }
         try {
-            PreparedStatement ps = c.prepareStatement("SELECT * FROM Token WHERE idUsuario = ? and Token = ");
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM Tokens WHERE idUsuario = ? and Token = ? and validade >= ?");
             ps.setInt(1, idUsuario);
-            ps.setString(1, token);
+            ps.setString(2, token);
+            ps.setDate(3, dataAgora);
 
             ResultSet rs = ps.executeQuery();
 

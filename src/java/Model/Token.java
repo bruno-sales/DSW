@@ -11,6 +11,10 @@ class Token {
     private String token;
     private DateTime dataValidade;
 
+    public Token()
+    {        
+    }
+    
     public Token(int idUser) 
     {
         String senha = "";

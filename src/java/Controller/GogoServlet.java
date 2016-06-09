@@ -87,7 +87,7 @@ public class GogoServlet extends HttpServlet {
                         cadastrarUsuario(request, response);
                         break;
                     case VERIFICARTOKEN:
-                        validarLogin(request, response);
+                        verificarToken(request, response);
                         break;
                     case ENVIARTOKEN:
                         enviarToken(request, response);
@@ -257,7 +257,6 @@ public class GogoServlet extends HttpServlet {
         response.sendRedirect("login.jsp");
     }
 
-    
     //Método para efetuar o envio de um novo token ao email
     public void enviarToken(HttpServletRequest request,
             HttpServletResponse response) throws IOException, ServletException {
@@ -293,6 +292,38 @@ public class GogoServlet extends HttpServlet {
                     RequestDispatcher rd = request.getRequestDispatcher("/recuperarSenha.jsp");
                     rd.forward(request, response);
                 }
+            }
+        }
+    }
+
+    //Método verificar validade de um token
+    public void verificarToken(HttpServletRequest request,
+            HttpServletResponse response) throws IOException, ServletException {
+
+        String email = request.getParameter("email");
+        String token = request.getParameter("token");
+        
+        if (email == null || token == null) {
+            response.sendRedirect("recuperarSenha.jsp?mensagem=Insira o email");
+        } else {
+            UsuarioDAO userDao = new UsuarioDAO();
+            Usuario usuario = userDao.getUsuarioPorEmail(email);
+
+            if (usuario == null) {
+                response.sendRedirect("recuperarSenha.jsp?mensagem=Email invalido");
+            } else {
+                TokenDAO tkDao = new TokenDAO();
+
+                //Se a validação do token foi OK, pode liberar campos para troca de senha
+                if (tkDao.verficaValidadeToken(usuario.getIdUsuario(), token)) {
+                    request.setAttribute("tokenValido", true);
+                } else {
+                    request.setAttribute("tokenValido", false);
+                    request.setAttribute("mensagem", "Token invalido ou expirado. Favor gerar um novo token");
+                }
+                // Redireciona
+                RequestDispatcher rd = request.getRequestDispatcher("/recuperarSenha.jsp");
+                rd.forward(request, response);
             }
         }
     }// </editor-fold>

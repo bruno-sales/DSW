@@ -33,7 +33,7 @@ CREATE TABLE tokens
 	token varchar(255) NOT NULL,
 	validade datetime NOT NULL,
 
-	CONSTRAINT FOREIGN KEY (idUsuario) REFERENCES usuarios(id) ON DELETE CASCADE
+	CONSTRAINT FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario) ON DELETE CASCADE
 );
 
 CREATE TABLE transferencias 
@@ -46,7 +46,7 @@ CREATE TABLE transferencias
 	numeroConta varchar(10) NOT NULL,
 	valor float NOT NULL,
 
-	CONSTRAINT FOREIGN KEY (idUsuario) REFERENCES usuarios(id)
+	CONSTRAINT FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario)
 );
 
 CREATE TABLE personagens
@@ -68,7 +68,7 @@ CREATE TABLE lancamentosPersonagem
 	precoUnitario float NOT NULL,
 	operacao int NOT NULL,
 
-	CONSTRAINT FOREIGN KEY (idUsuario) REFERENCES usuarios(id),
+	CONSTRAINT FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario),
 	CONSTRAINT FOREIGN KEY (idPersonagem) REFERENCES personagens(id)
 );
 
@@ -81,7 +81,7 @@ CREATE TABLE lancamentosDinheiro
 	valor float NOT NULL,
 	operacao int NOT NULL,
 
-	CONSTRAINT FOREIGN KEY (idUsuario) REFERENCES usuarios(id)
+	CONSTRAINT FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario)
 );
 
 CREATE TABLE ofertas
@@ -97,7 +97,7 @@ CREATE TABLE ofertas
 	status int NOT NULL,
 	idOrdemOriginal int,
 
-	CONSTRAINT FOREIGN KEY (idUsuario) REFERENCES usuarios(id),
+	CONSTRAINT FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario),
 	CONSTRAINT FOREIGN KEY (idPersonagem) REFERENCES personagens(id),
 	CONSTRAINT FOREIGN KEY (idOrdemOriginal) REFERENCES ofertas(id)
 );
