@@ -64,43 +64,33 @@ public class GogoServlet extends HttpServlet {
                     }
                 }
             }
-            if (loginCookie != null) //Tarefas que só podem ser realizadas com autenticação
-            {
-                switch (tarefa) {
-                    case LOGOFF:
-                        fazerLogoff(request, response);
-                        break;
-                    case LISTARPERSONAGENS:
-                        buscarPersonagens(request, response);
-                        break;
-                    default:
-                        response.sendRedirect("login.jsp");
-                        break;
-                }
-            } else //Tarefas realizadas sem autenticação
-            {
-                switch (tarefa) {
-                    case LOGIN:
-                        validarLogin(request, response);
-                        break;
-                    case CADASTRARUSUARIO:
-                        cadastrarUsuario(request, response);
-                        break;
-                    case VERIFICARTOKEN:
-                        verificarToken(request, response);
-                        break;
-                    case ENVIARTOKEN:
-                        enviarToken(request, response);
-                        break;
-                    case RECUPERARSENHA:
-                        recuperarSenha(request, response);
-                        break;
-                    default:
-                        response.sendRedirect("login.jsp");
-                        break;
-                }
-            }
 
+            switch (tarefa) {
+                case LOGOFF:
+                    fazerLogoff(request, response);
+                    break;
+                case LISTARPERSONAGENS:
+                    buscarPersonagens(request, response);
+                    break;
+                case LOGIN:
+                    validarLogin(request, response);
+                    break;
+                case CADASTRARUSUARIO:
+                    cadastrarUsuario(request, response);
+                    break;
+                case VERIFICARTOKEN:
+                    verificarToken(request, response);
+                    break;
+                case ENVIARTOKEN:
+                    enviarToken(request, response);
+                    break;
+                case RECUPERARSENHA:
+                    recuperarSenha(request, response);
+                    break;
+                default:
+                    response.sendRedirect("login.jsp");
+                    break;
+            }
         }
     }
 
@@ -302,7 +292,7 @@ public class GogoServlet extends HttpServlet {
 
         String email = request.getParameter("email");
         String token = request.getParameter("token");
-        
+
         if (email == null || token == null) {
             response.sendRedirect("recuperarSenha.jsp?mensagem=Insira o email");
         } else {
@@ -334,10 +324,10 @@ public class GogoServlet extends HttpServlet {
             HttpServletResponse response) throws IOException, ServletException {
 
         String senha = request.getParameter("senha");
-        
+
         if (senha == null) {
             response.sendRedirect("recuperarSenha.jsp?mensagem=Insira a nova senha");
-        } else {            
+        } else {
             String usuario = request.getParameter("usuarioId");
             int usuarioId = Integer.parseInt(usuario);
 
@@ -345,10 +335,10 @@ public class GogoServlet extends HttpServlet {
                 response.sendRedirect("recuperarSenha.jsp?mensagem=Ocorreu um erro ao recuperar o usuario");
             } else {
 
-            UsuarioDAO userDao = new UsuarioDAO();
+                UsuarioDAO userDao = new UsuarioDAO();
                 //Se a troca de senha foi OK, redireciona pra login
                 if (userDao.TrocarSenha(usuarioId, senha)) {
-                     response.sendRedirect("login.jsp?mensagem=Senha alterada com sucesso");
+                    response.sendRedirect("login.jsp?mensagem=Senha alterada com sucesso");
                 } else {
                     response.sendRedirect("recuperarSenha.jsp?mensagem=Ocorreu um erro ao alterar a senha");
                 }
