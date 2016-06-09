@@ -201,6 +201,8 @@ public class UsuarioDAO implements IUsuarioDAO {
             cs.setInt(1, idUsuario);
             cs.setString(2, senha);
 
+            cs.execute();
+            c.close();
             return true;
 
         } catch (SQLException e) {

@@ -44,7 +44,9 @@
 
 
 <c:if test="${requestScope.tokenValido}">
-    <form action="Gogo?t=recuperarSenha" method="POST">
+    <form action="Gogo?t=recuperarSenha" method="Post">
+        <input name="usuarioId" type="text" style="visibility: hidden;" value="${requestScope.usuarioId}"/>
+        
           <input name="senha" type="password" 
            class="input" id="password" required pattern="[a-zA-Z0-9]{5}"
            placeholder="Senha (Minimo 5 caracteres)"

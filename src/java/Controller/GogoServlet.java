@@ -93,7 +93,7 @@ public class GogoServlet extends HttpServlet {
                         enviarToken(request, response);
                         break;
                     case RECUPERARSENHA:
-                        validarLogin(request, response);
+                        recuperarSenha(request, response);
                         break;
                     default:
                         response.sendRedirect("login.jsp");
@@ -131,7 +131,7 @@ public class GogoServlet extends HttpServlet {
         if (retorno == false) {
             response.sendRedirect("cadastroUsuario.jsp?mensagem=Nao foi possivel efetuar o cadastro! Tente novamente");
         } else {
-            response.sendRedirect("login.jsp");
+            response.sendRedirect("login.jsp?mensagem=Usuario cadastrado com sucesso");
         }
 
     }//</editor-fold>
@@ -203,8 +203,8 @@ public class GogoServlet extends HttpServlet {
             } else {
                 /*Se este usuario ultrapassou o limite de tentativas de login, 
                  Redirecionar a pagina de esqueci minha senha*/
-                if (usuario.getNumeroLogins() > 3) {
-                    response.sendRedirect("login.jsp?mensagem=*Este usuario ultrapassou o "
+                if (usuario.getNumeroLogins() >= 3) {
+                    response.sendRedirect("recuperarSenha.jsp?mensagem=*Este usuario ultrapassou o "
                             + "numero de tentativas de login, favor trocar senha");
 
                 } else {
@@ -317,6 +317,7 @@ public class GogoServlet extends HttpServlet {
                 //Se a validação do token foi OK, pode liberar campos para troca de senha
                 if (tkDao.verficaValidadeToken(usuario.getIdUsuario(), token)) {
                     request.setAttribute("tokenValido", true);
+                    request.setAttribute("usuarioId", usuario.getIdUsuario());
                 } else {
                     request.setAttribute("tokenValido", false);
                     request.setAttribute("mensagem", "Token invalido ou expirado. Favor gerar um novo token");
@@ -324,6 +325,33 @@ public class GogoServlet extends HttpServlet {
                 // Redireciona
                 RequestDispatcher rd = request.getRequestDispatcher("/recuperarSenha.jsp");
                 rd.forward(request, response);
+            }
+        }
+    }
+
+    //Método verificar validade de um token
+    public void recuperarSenha(HttpServletRequest request,
+            HttpServletResponse response) throws IOException, ServletException {
+
+        String senha = request.getParameter("senha");
+        
+        if (senha == null) {
+            response.sendRedirect("recuperarSenha.jsp?mensagem=Insira a nova senha");
+        } else {            
+            String usuario = request.getParameter("usuarioId");
+            int usuarioId = Integer.parseInt(usuario);
+
+            if (usuarioId == 0) {
+                response.sendRedirect("recuperarSenha.jsp?mensagem=Ocorreu um erro ao recuperar o usuario");
+            } else {
+
+            UsuarioDAO userDao = new UsuarioDAO();
+                //Se a troca de senha foi OK, redireciona pra login
+                if (userDao.TrocarSenha(usuarioId, senha)) {
+                     response.sendRedirect("login.jsp?mensagem=Senha alterada com sucesso");
+                } else {
+                    response.sendRedirect("recuperarSenha.jsp?mensagem=Ocorreu um erro ao alterar a senha");
+                }
             }
         }
     }// </editor-fold>
