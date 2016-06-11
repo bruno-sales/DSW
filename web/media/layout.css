@@ -89,6 +89,48 @@ a {
   text-decoration:none; 
 }
 
+body #ant{
+  top: 70%;
+  left: 22%;
+  padding: 10px 20px;
+  width: auto;
+  background: white;
+  color: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  background: rgba(255, 255, 255, 0.5);
+  border: none;
+  font-size: 1.2rem;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  -moz-transform: translate3d(0, -50%, 0);
+  -ms-transform: translate3d(0, -50%, 0);
+  -webkit-transform: translate3d(0, -50%, 0);
+  transform: translate3d(0, -50%, 0);
+}
+
+body #prox{
+  top: 70%;
+  left: 34%;
+  padding: 10px 20px;
+  width: auto;
+  background: white;
+  color: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  background: rgba(255, 255, 255, 0.5);
+  border: none;
+  font-size: 1.2rem;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  -moz-transform: translate3d(0, -50%, 0);
+  -ms-transform: translate3d(0, -50%, 0);
+  -webkit-transform: translate3d(0, -50%, 0);
+  transform: translate3d(0, -50%, 0);
+}
+
 body #findpass{
   top: 70%;
   left: 23%;
@@ -398,7 +440,8 @@ body .article h1 {
   -ms-transform: translate3d(-50%, 0, 0);
   -webkit-transform: translate3d(-50%, 0, 0);
   transform: translate3d(-50%, 0, 0);
-  width: 350px;
+  width: 500px;
+  height: 400px;
   padding: 20px;
   overflow: hidden;
   background-color: black;
@@ -463,7 +506,7 @@ body .article h1 {
 }
 .form2 .topbar2 .input {
   display: block;
-  width: 100%;
+  width: 45%;
   position: relative;
   border-top-left-radius: 6px;
   border-bottom-left-radius: 6px;

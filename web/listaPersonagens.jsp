@@ -41,11 +41,11 @@
 
         <c:if test="${requestScope.hasPriorPage}">
             <a href='Gogo?t=listarPersonagens&page=${requestScope.page-1}'>
-                <button id="findpass">Anterior</button></a> | 
+                <button id="ant">Anterior</button></a> | 
         </c:if>
         <c:if test="${requestScope.hasNextPage}">
             <a href='Gogo?t=listarPersonagens&page=${requestScope.page+1}'>
-                <button id="findpass">Próxima</button></a> |
+                <button id="prox">Próxima</button></a> |
         </c:if> 
             
     <a href="Servlet?t=logoff"><button id="findpass3">Logoff</button></a>
