@@ -16,7 +16,7 @@ public class ServicoEmail {
     private final String host = "smtp.gmail.com";
     private final String socketPort = "465";
     private final String socketClass = "javax.net.ssl.SSLSocketFactory";
-    private final String port = "465";
+    private final String port = "587";
     private final Properties props;
 
     public ServicoEmail() {
@@ -26,11 +26,11 @@ public class ServicoEmail {
          * Parâmetros de conexão com servidor Gmail
          */
         props.put("mail.smtp.host", host);
-        props.put("mail.smtp.socketFactory.port", socketPort);
-        props.put("mail.smtp.socketFactory.class", socketClass);
+        //props.put("mail.smtp.socketFactory.port", socketPort);
+        //props.put("mail.smtp.socketFactory.class", socketClass);
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", port);
-
+        props.put("mail.smtp.starttls.enable","true");
     }
 
     public boolean EnviarEmail(String destinatario, String titulo, String mensagem) {
@@ -70,6 +70,7 @@ public class ServicoEmail {
             
             enviado = true;
         } catch (MessagingException mex) {
+            String bla = mex.getMessage();
             enviado = false;
         }
         
