@@ -1,8 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
-<!--<%@include file="header.jsp"%>-->
+<%@include file="header.jsp"%>
 
 <%@taglib uri="/WEB-INF/c.tld" prefix="c"%>
+
+
+<div class="menu2">
+    <div class="mainmenu2 clearfix">
+        <h1 class="menuitem2">Recuperar Senha</h1>
+    </div>
 
 <script>
     function habilitaPainelEntradaToken() {
@@ -19,11 +23,28 @@
     }
 </script>
 
-<div id="painelEnvioToken">
-    <form name="formularioToken" action="Gogo?t=enviarToken" method="POST">
-        <input name="email" type="text"                
-               class="input" id="email" placeholder="E-mail"/>   
-        <button id="findpass3">Enviar Token</button>
+
+<form name="formularioCadastro" action="Servlet?t=cadastrarUsuario" method="POST">
+        <div class="form2">
+            <div class="forceColor2"></div>
+            <div class="topbar2">
+                <div class="spanColor2"></div>
+                <input name="nome" type="text" class="input" id="password" placeholder="Nome"
+                       pattern="[a-zA-Z\s]+$"/>
+            </div>
+            <button class="submit" id="submit">Entrar</button>
+        </div>
+    </form>
+
+
+<form name="formularioCadastro" action="Servlet?t=cadastrarUsuario" method="POST">
+        <div class="form2">
+            <div class="forceColor2"></div>
+            <div class="topbar2">
+                <div class="spanColor2"></div>
+                <input name="email" type="text" class="input" id="email" placeholder="E-mail"/>
+            </div>
+        <button class="submit" id="submit">Enviar Token</button>
     </form>
 </div>
 
@@ -38,7 +59,7 @@
 </div>
 
 <button id="btNovoToken" style="display: none" onclick="habilitaPainelEnvioToken()">Obter novo Token</button>
-<button id="btTemToken" onclick="habilitaPainelEntradaToken()">JÃ¡ possuo um Token</button>
+<button id="btTemToken" onclick="habilitaPainelEntradaToken()">Já possuo um Token</button>
 
 
 
@@ -56,7 +77,7 @@
                class="input" id="password" required pattern="[a-zA-Z0-9]{5}"
                placeholder="Repita a senha" 
                onchange="this.setCustomValidity(this.validity.patternMismatch ?
-                               'As senhas nÃ£o conferem.' : '')"/>   
+                               'As senhas não conferem.' : '')"/>   
 
         <button id="findpass3">Alterar minha senha</button>
     </form>
