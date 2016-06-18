@@ -9,23 +9,24 @@
         <h1 class="menuitem2">Meu Perfil</h1>
     </div>
     
-        <form name="formularioCadastro" action="Servlet?t=cadastrarUsuario" method="POST">
+        
         <div class="form2" id="FormPerfilUsuario">
             <div class="forceColor2"></div>
             <div class="topbar2">
                 <div class="spanColor2"></div>
-                <label name="nome" type="text" class="input">Nome Usuário</label>
-                <label name="telefone" type="text" class="input">Telefone (XX)XXXX-XXXX</label>
-                <label name="cpf" type="text" class="input">CPF XXX.XXX.XXX-XX</label>
-                <label name="email" type="text" class="input">email@exemplo.com.br</label>
-                <label name="senha" type="password" class="input">*****</label>
-                <label name="foto" type="file" class="input" id="imagem">Sua imagem!</label>
+                <label name="nome" type="text" class="input">Nome: <%= user.getNome()%></label>
+                <label name="telefone" type="text" class="input">Telefone: <%= user.getTelefone()%></label>
+                <label name="cpf" type="text" class="input">CPF: <%= user.getCpf()%></label>
+                <label name="email" type="text" class="input">Email: <%= user.getEmail()%></label>
+                <label name="senha" type="password" class="input">Senha: *****</label>
+                <label name="foto" type="file" class="input" id="imagem">
+                    <img src="Gogo?t=carregarFotoUsuario&userId=<%= user.getIdUsuario()%>"/>                    
+                </label>
             </div>
         </div>
-    </form>
 
 
-    <a href="login.jsp"><button id="btAlterarPerfil">Alterar Perfil</button></a>
+    <a href="editarUsuario.jsp"><button id="btAlterarPerfil">Alterar Perfil</button></a>
     
 <%@include file="footer.jsp"%>
     

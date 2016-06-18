@@ -7,9 +7,9 @@ import Model.Personagem;
 import Model.Token;
 import Model.Usuario;
 import Util.ServicoEmail;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,13 +21,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 /**
- * TODO Implementar as seguintes funcionalidades - TODA A
- * PARAFERNALHA DAS TRANSAÇÕES - Listar usuario, dar acesso apenas a um sysadmin
- * - Lista de ofertas abertas - Lista de ofertas: historico do usuario - Extrato
- * da CC do usuario - Cotação historica do personagem
+ * TODO Implementar as seguintes funcionalidades - TODA A PARAFERNALHA DAS
+ * TRANSAÇÕES - Listar usuario, dar acesso apenas a um sysadmin - Lista de
+ * ofertas abertas - Lista de ofertas: historico do usuario - Extrato da CC do
+ * usuario - Cotação historica do personagem
  *
  */
-@MultipartConfig(maxFileSize = 16177215) 
+@MultipartConfig(maxFileSize = 16177215)
 public class GogoServlet extends HttpServlet {
 
     public static final int PAGESIZE = 5;
@@ -35,6 +35,7 @@ public class GogoServlet extends HttpServlet {
     private static final String LOGOFF = "logoff";
     private static final String CADASTRARUSUARIO = "cadastrarUsuario";
     private static final String EDITARUSUARIO = "editarUsuario";
+    private static final String CARREGARFOTOUSUARIO = "carregarFotoUsuario";
     private static final String LISTARPERSONAGENS = "listarPersonagens";
     private static final String VERIFICARTOKEN = "verificarToken";
     private static final String ENVIARTOKEN = "enviarToken";
@@ -53,51 +54,53 @@ public class GogoServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-            String tarefa = request.getParameter("t");
+        String tarefa = request.getParameter("t");
 
-            /*
-            //Recuperar cookie da requisição
-            Cookie loginCookie = null;
-            Cookie[] cookies = request.getCookies();
-            if (cookies != null) {
-                for (Cookie cookie : cookies) {
-                    if (cookie.getName().equals("user")) {
-                        loginCookie = cookie;
-                        break;
-                    }
-                }
-            }*/
+        /*
+         //Recuperar cookie da requisição
+         Cookie loginCookie = null;
+         Cookie[] cookies = request.getCookies();
+         if (cookies != null) {
+         for (Cookie cookie : cookies) {
+         if (cookie.getName().equals("user")) {
+         loginCookie = cookie;
+         break;
+         }
+         }
+         }*/
+        switch (tarefa) {
+            case LOGOFF:
+                fazerLogoff(request, response);
+                break;
+            case LISTARPERSONAGENS:
+                buscarPersonagens(request, response);
+                break;
+            case LOGIN:
+                validarLogin(request, response);
+                break;
+            case CADASTRARUSUARIO:
+                cadastrarUsuario(request, response);
+                break;
+            case EDITARUSUARIO:
+                editarUsuario(request, response);
+                break;
+            case CARREGARFOTOUSUARIO:
+                carregarFotoUsuario(request, response);
+                break;
+            case VERIFICARTOKEN:
+                verificarToken(request, response);
+                break;
+            case ENVIARTOKEN:
+                enviarToken(request, response);
+                break;
+            case RECUPERARSENHA:
+                recuperarSenha(request, response);
+                break;
+            default:
+                response.sendRedirect("login.jsp");
+                break;
+        }
 
-            switch (tarefa) {
-                case LOGOFF:
-                    fazerLogoff(request, response);
-                    break;
-                case LISTARPERSONAGENS:
-                    buscarPersonagens(request, response);
-                    break;
-                case LOGIN:
-                    validarLogin(request, response);
-                    break;
-                case CADASTRARUSUARIO:
-                    cadastrarUsuario(request, response);
-                    break;
-                case EDITARUSUARIO:
-                    editarUsuario(request, response);
-                    break;
-                case VERIFICARTOKEN:
-                    verificarToken(request, response);
-                    break;
-                case ENVIARTOKEN:
-                    enviarToken(request, response);
-                    break;
-                case RECUPERARSENHA:
-                    recuperarSenha(request, response);
-                    break;
-                default:
-                    response.sendRedirect("login.jsp");
-                    break;
-            }
-        
     }
 
 // <editor-fold defaultstate="collapsed" desc="Região com os metodos de cadastro">
@@ -152,32 +155,32 @@ public class GogoServlet extends HttpServlet {
             // settar o fileUpload na variavel de stream
             inputStream = foto.getInputStream();
         }
-        
+
         int idUsuario = 0;
-        
-            Cookie[] cookies = request.getCookies();
-            if (cookies != null) {
-                for (Cookie cookie : cookies) {
-                    if (cookie.getName().equals("userId")) {
-                        idUsuario = Integer.parseInt(cookie.getValue());
-                        break;
-                    }
+
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("userId")) {
+                    idUsuario = Integer.parseInt(cookie.getValue());
+                    break;
                 }
             }
-                
+        }
+
         usuario.setIdUsuario(idUsuario);
         usuario.setNome(nome);
         usuario.setCpf(cpf);
         usuario.setTelefone(telefone);
         usuario.setFoto(inputStream);
-        
+
         //Caso ocorra erro ao criar novo usuário, o retorno será falso
         boolean retorno = uDao.atualizar(usuario);
 
         if (retorno == false) {
             response.sendRedirect("editarUsuario.jsp?mensagem=Nao foi possivel concluir a edicao! Tente novamente");
         } else {
-            response.sendRedirect("listaPersonagens.jsp");
+            response.sendRedirect("perfilUsuario.jsp");
         }
     }//</editor-fold>
 
@@ -214,6 +217,38 @@ public class GogoServlet extends HttpServlet {
         // Redireciona
         RequestDispatcher rd = request.getRequestDispatcher("/listaPersonagens.jsp");
         rd.forward(request, response);
+
+    }
+
+    private void carregarFotoUsuario(HttpServletRequest request, HttpServletResponse response) {
+
+        try{            
+            
+        UsuarioDAO uDao = new UsuarioDAO();
+        Usuario usuario;
+        
+        int userId = Integer.parseInt(request.getParameter("userId"));         
+        
+        usuario = uDao.getUsuarioPorId(userId);
+        
+        response.setContentType("image/jpeg");
+
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+        int nRead;
+        byte[] data = new byte[16384];
+
+        while ((nRead = usuario.getFoto().read(data, 0, data.length)) != -1) {
+            buffer.write(data, 0, nRead);
+        }
+
+        buffer.flush();
+
+        response.getOutputStream().write(data);
+        }catch(IOException io)
+        {
+            
+        }
 
     }//</editor-fold>
 
@@ -253,12 +288,12 @@ public class GogoServlet extends HttpServlet {
                     if (autenticado) //Autenticação validada
                     {
                         Cookie loginCookie = new Cookie("user", usuario.getNome());
-                        Cookie userIdCookie = new Cookie("userId", ""+usuario.getIdUsuario());
-                        
+                        Cookie userIdCookie = new Cookie("userId", "" + usuario.getIdUsuario());
+
                         //cookie expirando em 30 mins                
-                        loginCookie.setMaxAge(30 * 60);         
+                        loginCookie.setMaxAge(30 * 60);
                         userIdCookie.setMaxAge(30 * 60);
-                        
+
                         //cria o cookie
                         response.addCookie(loginCookie);
                         response.addCookie(userIdCookie);
