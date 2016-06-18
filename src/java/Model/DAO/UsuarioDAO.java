@@ -32,7 +32,7 @@ public class UsuarioDAO implements IUsuarioDAO {
         user.setAdministrator(rs.getBoolean("administrator"));
         user.setNumeroLogins(rs.getInt("numeroLogins"));
 
-        DateTime dataUltimoLogin = new DateTime(rs.getDate("ultimoLogin"));
+        DateTime dataUltimoLogin = new DateTime(rs.getTimestamp("ultimoLogin"));
         user.setUltimoLogin(dataUltimoLogin);
 
         return user;

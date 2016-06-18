@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 /**
- * TODO Implementar as seguintes funcionalidades - - Edição de usuario - TODA A
+ * TODO Implementar as seguintes funcionalidades - TODA A
  * PARAFERNALHA DAS TRANSAÇÕES - Listar usuario, dar acesso apenas a um sysadmin
  * - Lista de ofertas abertas - Lista de ofertas: historico do usuario - Extrato
  * da CC do usuario - Cotação historica do personagem

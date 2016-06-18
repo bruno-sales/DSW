@@ -89,4 +89,33 @@ public class LancamentosDinheirosDAO implements ILancamentosDinheirosDAO {
 
         return lista;
     }
+
+    @Override
+    public List<LancamentosDinheiros> getlancamentosDinheiroPorIdUsuario(int idUsuario) {
+        Connection c = config.getConnection();
+
+        if (c == null) {
+            return null;
+        }
+
+        List<LancamentosDinheiros> lista = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM LancamentosDinheiro where idUsuario = ?");
+            ps.setInt(1, idUsuario);
+            
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                lista.add(carrega(rs));
+            }
+
+            c.close();
+
+        } catch (SQLException e) {
+            Configurador.log(e.getMessage());
+        }
+
+        return lista;   
+    }
 }
