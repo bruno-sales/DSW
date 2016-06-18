@@ -87,7 +87,7 @@ DELIMITER ;
 --   
 DROP PROCEDURE IF EXISTS EditarUsuario;
 DELIMITER //
-CREATE PROCEDURE EditarUsuario(vIdUsuario INT, vNome varchar(80), vTelefone varchar(20), vCpf varchar(14), vFoto varchar(255))
+CREATE PROCEDURE EditarUsuario(vIdUsuario INT, vNome varchar(80), vTelefone varchar(20), vCpf varchar(14), vFoto blob)
 BEGIN
 	UPDATE usuarios
 	SET	nome = vNome,

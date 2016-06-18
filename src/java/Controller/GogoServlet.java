@@ -8,29 +8,33 @@ import Model.Token;
 import Model.Usuario;
 import Util.ServicoEmail;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
- * TODO Implementar as seguintes funcionalidades - Funcao de recuperar senha via
- * email - Edição de usuario - TODA A PARAFERNALHA DAS TRANSAÇÕES - Listar
- * usuario, dar acesso apenas a um sysadmin - Lista de ofertas abertas - Lista
- * de ofertas: historico do usuario - Extrato da CC do usuario - Cotação
- * historica do personagem
+ * TODO Implementar as seguintes funcionalidades - - Edição de usuario - TODA A
+ * PARAFERNALHA DAS TRANSAÇÕES - Listar usuario, dar acesso apenas a um sysadmin
+ * - Lista de ofertas abertas - Lista de ofertas: historico do usuario - Extrato
+ * da CC do usuario - Cotação historica do personagem
  *
  */
+@MultipartConfig(maxFileSize = 16177215) 
 public class GogoServlet extends HttpServlet {
 
     public static final int PAGESIZE = 5;
     private static final String LOGIN = "login";
     private static final String LOGOFF = "logoff";
     private static final String CADASTRARUSUARIO = "cadastrarUsuario";
+    private static final String EDITARUSUARIO = "editarUsuario";
     private static final String LISTARPERSONAGENS = "listarPersonagens";
     private static final String VERIFICARTOKEN = "verificarToken";
     private static final String ENVIARTOKEN = "enviarToken";
@@ -49,10 +53,9 @@ public class GogoServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        try (PrintWriter out = response.getWriter()) {
-
             String tarefa = request.getParameter("t");
 
+            /*
             //Recuperar cookie da requisição
             Cookie loginCookie = null;
             Cookie[] cookies = request.getCookies();
@@ -63,7 +66,7 @@ public class GogoServlet extends HttpServlet {
                         break;
                     }
                 }
-            }
+            }*/
 
             switch (tarefa) {
                 case LOGOFF:
@@ -78,6 +81,9 @@ public class GogoServlet extends HttpServlet {
                 case CADASTRARUSUARIO:
                     cadastrarUsuario(request, response);
                     break;
+                case EDITARUSUARIO:
+                    editarUsuario(request, response);
+                    break;
                 case VERIFICARTOKEN:
                     verificarToken(request, response);
                     break;
@@ -91,7 +97,7 @@ public class GogoServlet extends HttpServlet {
                     response.sendRedirect("login.jsp");
                     break;
             }
-        }
+        
     }
 
 // <editor-fold defaultstate="collapsed" desc="Região com os metodos de cadastro">
@@ -127,10 +133,52 @@ public class GogoServlet extends HttpServlet {
     }//</editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="Região com os metodos de edição">
-//Método de controle para cadastro do usuário
-    public void atualizarUsuario(HttpServletRequest request,
+//Método de controle para editar o usuário
+    public void editarUsuario(HttpServletRequest request,
             HttpServletResponse response) throws IOException, ServletException {
+        UsuarioDAO uDao = new UsuarioDAO();
 
+        Usuario usuario = new Usuario();
+
+        String nome = request.getParameter("nome");
+        String cpf = request.getParameter("cpf");
+        String telefone = request.getParameter("telefone");
+
+        InputStream inputStream = null;
+
+        Part foto = request.getPart("foto");
+
+        if (foto != null) {
+            // settar o fileUpload na variavel de stream
+            inputStream = foto.getInputStream();
+        }
+        
+        int idUsuario = 0;
+        
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("userId")) {
+                        idUsuario = Integer.parseInt(cookie.getValue());
+                        break;
+                    }
+                }
+            }
+                
+        usuario.setIdUsuario(idUsuario);
+        usuario.setNome(nome);
+        usuario.setCpf(cpf);
+        usuario.setTelefone(telefone);
+        usuario.setFoto(inputStream);
+        
+        //Caso ocorra erro ao criar novo usuário, o retorno será falso
+        boolean retorno = uDao.atualizar(usuario);
+
+        if (retorno == false) {
+            response.sendRedirect("editarUsuario.jsp?mensagem=Nao foi possivel concluir a edicao! Tente novamente");
+        } else {
+            response.sendRedirect("listaPersonagens.jsp");
+        }
     }//</editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="Região com os metodos de busca">
@@ -205,11 +253,15 @@ public class GogoServlet extends HttpServlet {
                     if (autenticado) //Autenticação validada
                     {
                         Cookie loginCookie = new Cookie("user", usuario.getNome());
+                        Cookie userIdCookie = new Cookie("userId", ""+usuario.getIdUsuario());
+                        
                         //cookie expirando em 30 mins                
-                        loginCookie.setMaxAge(30 * 60);
-
+                        loginCookie.setMaxAge(30 * 60);         
+                        userIdCookie.setMaxAge(30 * 60);
+                        
                         //cria o cookie
                         response.addCookie(loginCookie);
+                        response.addCookie(userIdCookie);
 
                         //redireciona
                         response.sendRedirect("listaPersonagens.jsp");

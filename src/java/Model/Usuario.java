@@ -1,6 +1,6 @@
 package Model;
 
-import java.sql.Blob;
+import java.io.InputStream;
 import lombok.Data;
 import org.joda.time.DateTime;
 
@@ -12,7 +12,7 @@ public @Data class Usuario {
     private String cpf;
     private String email;
     private String senha;
-    private Blob foto;
+    private InputStream foto;
     private boolean administrator;
     private int numeroLogins;
     private DateTime ultimoLogin;

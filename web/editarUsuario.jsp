@@ -10,11 +10,12 @@
     </div>
 
     
-    <form name="formularioCadastro" action="Servlet?t=cadastrarUsuario" method="POST">
+    <form name="formularioCadastro" action="Servlet?t=editarUsuario" method="POST" enctype="multipart/form-data">
         <div class="form2">
             <div class="forceColor2"></div>
             <div class="topbar2">
                 <div class="spanColor2"></div>
+                
                 <input name="nome" type="text" class="input" id="password" placeholder="Nome"
                        pattern="[a-zA-Z\s]+$"/>
                 <input name="telefone" type="text" class="input" id="password" placeholder="Telefone (XX)XXXX-XXXX"
@@ -22,7 +23,7 @@
                 <input name="cpf" type="text" class="input" id="password" placeholder="CPF XXX.XXX.XXX-XX"
                        pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"/>
                 <!--input da foto-->
-                <input type="text" class="input" id="imagem" placeholder="Escolha uma nova imagem!">
+                <input name="foto" type="file" class="input" id="imagem" placeholder="Escolha uma nova imagem!">
                 
             </div>
 

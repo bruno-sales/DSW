@@ -28,7 +28,7 @@ public class UsuarioDAO implements IUsuarioDAO {
         user.setCpf(rs.getString("cpf"));
         user.setEmail(rs.getString("email"));
         user.setSenha(rs.getString("senha"));
-        user.setFoto(rs.getBlob("foto"));
+        user.setFoto(rs.getBinaryStream("foto"));
         user.setAdministrator(rs.getBoolean("administrator"));
         user.setNumeroLogins(rs.getInt("numeroLogins"));
 
