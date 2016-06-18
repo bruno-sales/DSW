@@ -1,10 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 <%@include file="header.jsp"%>
 
 <%@taglib uri="/WEB-INF/c.tld" prefix="c"%>
 
-<!-- Recuperar cookie do navegador do usuÃ¡rio -->
+<!-- Recuperar cookie do navegador do usuário -->
 <%    String usuario = null;
     Cookie[] cookies = request.getCookies();
     if (cookies != null) {
@@ -14,7 +12,7 @@
             }
         }
     }
-    //Se nÃ£o existir usuÃ¡rio, redireciona para a pÃ¡gina de login
+    //Se não existir usuário, redireciona para a página de login
     if (usuario == null) {
         response.sendRedirect("login.jsp");
     }
@@ -26,7 +24,33 @@
     <div class="mainmenu2 clearfix">
         <h1 class="menuitem2">Personagens</h1>
     </div>
+<!--
+    <nav id="colorNav">
+	<ul>
+		<li class="green">
+			<a href="#" class="icon-home"></a>
+			<ul>
+				<li><a href="#">Dropdown item 1</a></li>
+				<li><a href="#">Dropdown item 2</a></li>
+				<!-- More dropdown options -->
+<!--			</ul>
+		</li>
 
+		<!-- More menu items -->
+<!--
+	</ul>
+</nav>-->
+    <ul>
+        <li>
+            <a href="Servlet?t=logoff"><button id="itemMenu" class="itemMenu1">Meu Perfil</button></a>
+        </li>
+        <li>
+            <a href="Servlet?t=logoff"><button id="itemMenu" class="itemMenu2">Editar Perfil</button></a>
+        </li>
+        <li>
+            <a href="Servlet?t=logoff"><button id="itemMenu" class="itemMenu3">Logoff</button></a>
+        </li>
+    </ul>
     <a href="Servlet?t=listarPersonagens"><button id="findpass2">Listar Personagens</button></a>
 
     <div class="form2">
@@ -45,9 +69,7 @@
         </c:if>
         <c:if test="${requestScope.hasNextPage}">
             <a href='Gogo?t=listarPersonagens&page=${requestScope.page+1}'>
-                <button id="prox">PrÃ³xima</button></a> |
+                <button id="prox">Próxima</button></a> |
         </c:if> 
-            
-    <a href="Servlet?t=logoff"><button id="findpass3">Logoff</button></a>
-
+    
     <%@include file="footer.jsp"%>

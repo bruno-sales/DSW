@@ -1,6 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
-<%@include file="header.jsp"%>
+<%@include file="headerLogin.jsp"%>
 
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 
@@ -19,7 +17,7 @@
                    class="input" id="email" placeholder="E-mail"/>
 
             <input name="senha" type="password" 
-                   class="input" id="password" placeholder="Senha"/>        
+                   class="input" placeholder="Senha"/>        
         </div>
 
         <input type="submit" class="submit" id="submit" />

@@ -1,3 +1,7 @@
+head {
+  font-family: Lucida Sans Unicode;
+}
+
 body {
   font-size: 62.5%;
   width: 100%;
@@ -10,6 +14,24 @@ body {
   -webkit-font-smoothing: antialiased;
   font-smoothing: antialiased;
 }
+body .itemMenu1 {
+  top: 9%;
+  right: 4%;
+  padding: 7px 15px;
+}
+
+body .itemMenu2 {
+  top: 15%;
+  right: 4%;
+  padding: 7px 15px;
+}
+
+body .itemMenu3 {
+  top: 21%;
+  right: 4%;
+  padding: 7px 15px;
+}
+
 body .menu {
   position: absolute;
   width: 100%;
@@ -90,7 +112,7 @@ a {
 }
 
 body #ant{
-  top: 70%;
+  top: 73%;
   left: 22%;
   padding: 10px 20px;
   width: auto;
@@ -111,7 +133,7 @@ body #ant{
 }
 
 body #prox{
-  top: 70%;
+  top: 73%;
   left: 34%;
   padding: 10px 20px;
   width: auto;
@@ -173,10 +195,28 @@ body #findpass2{
   transform: translate3d(0, -50%, 0);
 }
 
-body #findpass3{
-  top: 9%;
-  right: 5%;
+#btAlterarPerfil{
+  bottom: 9%;
+  left: 70%;
   padding: 10px 20px;
+  width: auto;
+  background: white;
+  color: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  background: rgba(255, 255, 255, 0.5);
+  border: none;
+  font-size: 1.2rem;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  -moz-transform: translate3d(0, -50%, 0);
+  -ms-transform: translate3d(0, -50%, 0);
+  -webkit-transform: translate3d(0, -50%, 0);
+  transform: translate3d(0, -50%, 0);
+}
+
+body #itemMenu{
   width: auto;
   background: white;
   color: rgba(0, 0, 0, 0.7);
@@ -328,6 +368,7 @@ body .article h1 {
   -webkit-transition-delay: 0s, 250ms, 250ms;
   transition: width 150ms ease-in-out, background-color 150ms ease-in-out 250ms, border 150ms ease-in-out 250ms;
 }
+
 .form .topbar .input {
   display: block;
   width: 100%;
@@ -364,8 +405,18 @@ body .article h1 {
 .form .topbar .input:hover {
   border: 1px solid white;
 }
+
+#submitToken{
+    top: 8%;
+}
+
+#submitAplicarAlteracoes{
+    width: 40%;
+    left: 5%;
+}
+
 .form .submit {
-  padding: 10px 20px;
+  padding: 8px 20px;
   width: 100%;
   font-size: 1.2rem;
   font-family: Raleway;
@@ -431,6 +482,30 @@ body .article h1 {
   color: white;
 }
 
+#FormEnviarToken{
+  height: 210px;
+}
+
+#FormEditarUsuario{
+    left: 35%;
+    width: 735px;
+    height: 330px;
+}
+
+#FormPerfilUsuario{
+    left: 35%;
+    width: 735px;
+    height: 330px;
+}
+
+body #imagem {
+  position: absolute;
+  top: 20px;
+  left: 63%;
+  width: 250px;
+  height: 280px;
+}
+
 .form2 {
   margin: 0 auto;
   position: fixed;
@@ -440,8 +515,8 @@ body .article h1 {
   -ms-transform: translate3d(-50%, 0, 0);
   -webkit-transform: translate3d(-50%, 0, 0);
   transform: translate3d(-50%, 0, 0);
-  width: 500px;
-  height: 400px;
+  width: 350px;
+  height: 480px;
   padding: 20px;
   overflow: hidden;
   background-color: black;
@@ -504,9 +579,12 @@ body .article h1 {
   -webkit-transition-delay: 0s, 250ms, 250ms;
   transition: width 150ms ease-in-out, background-color 150ms ease-in-out 250ms, border 150ms ease-in-out 250ms;
 }
+#inputEditarUsuario{
+  width: 30%;
+}
 .form2 .topbar2 .input {
   display: block;
-  width: 45%;
+  width: 60%;
   position: relative;
   border-top-left-radius: 6px;
   border-bottom-left-radius: 6px;
