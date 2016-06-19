@@ -6,10 +6,10 @@
 
 <div class="menu2">
     <div class="mainmenu2 clearfix">
-        <h1 class="menuitem2">Minhas Ofertas</h1>
+        <h1 class="menuitem2">Cota&ccedil;&atilde;o Hist&oacute;rica de Personagens</h1>
     </div>
 
-    <a href="Servlet?t=listarOfertas"><button id="btListarOfertas">Listar Ofertas</button></a>
+    <a href="Servlet?t=listarOfertas"><button id="btListarOfertas">Exibir Hist&oacute;rico</button></a>
 
     <div class="form2" id="FormListaOfertas">
         <div class="forceColor2"></div>
@@ -18,10 +18,10 @@
             <%                PersonagemDAO pDao = new PersonagemDAO();
 
             %>
-            <c:forEach var="oferta" items ="${requestScope.ofertas}">
+            <c:forEach var="cotacao_Historica" items ="${requestScope.cotacaoHistoricaPersonagens}">
                 <label name="nome" type="text" class="input">
                     
-                    <% Oferta test = (Oferta) pageContext.getAttribute("oferta");
+                    <% Oferta test = (Oferta) pageContext.getAttribute("cotacao_Historica");
 
                         String nomePersona = pDao.getPersonagemPorId(test.getIdPersonagem()).getNome();
                         String tipoOferta = test.getTipoOferta().name();

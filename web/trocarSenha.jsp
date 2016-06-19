@@ -28,7 +28,7 @@
     </form>
     
     
-    <div class="errorMsg2">
+    <div class="errorMsgTrocarSenha">
         <!-- Carregar mensagem de erro, se houver -->
         <c:if test="${not empty param.mensagem}">
             <c:out value="${param.mensagem}"/>

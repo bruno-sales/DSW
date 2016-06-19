@@ -20,7 +20,7 @@
         <!--Corrigir bugzinho da frase de inserir imagem--><li>Editar Usuario</li>
         <!--Fazer listagem e restrição--><li>Lista de Usuario (Somente acessada pelo sysAdmin)</li>
         <!--Meh--><li>Layout de Recuperar Senha</li>
-        <!--Fazer listagem e corrigir possiveis bugs--><li>Pagina de ofertas (compra e venda, listadas na mesma pagina)</li>
+        <!--<li>Pagina de ofertas (compra e venda, listadas na mesma pagina)</li>-->
             <li>Extrato da conta corrente do usuario</li>
             <li>Cotação historica de um personagem</li>
             <li>Pagina historico de ofertas do usuario</li>

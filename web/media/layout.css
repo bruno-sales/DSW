@@ -17,19 +17,31 @@ body {
 }
 body .itemMenu1 {
   top: 9%;
-  right: 4%;
+  right: 2%;
   padding: 7px 15px;
 }
 
 body .itemMenu2 {
   top: 15%;
-  right: 4%;
+  right: 2%;
   padding: 7px 15px;
 }
 
 body .itemMenu3 {
   top: 21%;
-  right: 4%;
+  right: 2%;
+  padding: 7px 15px;
+}
+
+body .itemMenu4 {
+  top: 27%;
+  right: 2%;
+  padding: 7px 15px;
+}
+
+body .itemMenu5 {
+  top: 33%;
+  right: 2%;
   padding: 7px 15px;
 }
 
@@ -70,6 +82,18 @@ body .errorMsg{
   position: fixed;
 }
 
+body .errorMsgTrocarSenha{
+  float: left;
+  width: 64%;
+  top: 42px;
+  padding-bottom: 10px;
+  text-align: center;
+  cursor: pointer;
+  color: white;
+  font-size: 1rem;
+  position: fixed;
+}
+
 body .menu .mainmenu .menuitem {
   float: left;
   width: 63%;
@@ -88,6 +112,10 @@ body .menu .mainmenu .menuitem {
 
 #tituloPerfilUsuario{
   top: 90px;
+}
+
+#tituloTipoOferta{
+    
 }
 
 body .menu2 .mainmenu2 .menuitem2 {
@@ -246,9 +274,9 @@ body #findpass2{
   transform: translate3d(0, -50%, 0);
 }
 
-body #btOfertasCompra{
-  bottom: 15%;
-  left: 890px;
+#btAlterarPerfil{
+  bottom: 9%;
+  left: 70%;
   padding: 10px 20px;
   width: auto;
   background: white;
@@ -267,9 +295,9 @@ body #btOfertasCompra{
   transform: translate3d(0, -50%, 0);
 }
 
-body #btOfertasVenda{
-  bottom: 7%;
-  left: 897px;
+body #btListarOfertas{
+  bottom: 9%;
+  left: 950px;
   padding: 10px 20px;
   width: auto;
   background: white;
@@ -588,17 +616,9 @@ body .article h1 {
     height: 410px;
 }
 
-#FormListaOfertasCompra{
-    top: 160px;
-    left: -493px;
-    width: 350px;
-    height: 410px;
-}
-
-#FormListaOfertasVenda{
-    top: 180px;
-    left: -63px;
-    width: 350px;
+#FormListaOfertas{
+    left: 60px;
+    width: 600px;
     height: 410px;
 }
 
