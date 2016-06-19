@@ -46,7 +46,7 @@
     
 %>
 
-<h3 class="boasVindas">Bem-vindo <%= user.getNome()%>, <br>
+<h3 class="boasVindas">Bem-vindo, <%= user.getNome()%> <br>
     Ultimo Login: <%= user.getUltimoLogin().toString("dd/MM/yyyy HH:mm") %></h3>
     
     <ul>

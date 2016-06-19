@@ -14,12 +14,12 @@
             <div class="forceColor2"></div>
             <div class="topbar2">
                 <div class="spanColor2"></div>
-                <label name="nome" type="text" class="input">Nome: <%= user.getNome()%></label>
-                <label name="telefone" type="text" class="input">Telefone: <%= user.getTelefone()%></label>
-                <label name="cpf" type="text" class="input">CPF: <%= user.getCpf()%></label>
-                <label name="email" type="text" class="input">Email: <%= user.getEmail()%></label>
-                <label name="senha" type="password" class="input">Senha: *****</label>
-                <label name="foto" type="file" class="input" id="imagem">
+                <label name="nome" type="text" class="input" id="inputPerfilUsuario">Nome: <%= user.getNome()%></label>
+                <label name="telefone" type="text" class="input" id="inputPerfilUsuario">Telefone: <%= user.getTelefone()%></label>
+                <label name="cpf" type="text" class="input" id="inputPerfilUsuario">CPF: <%= user.getCpf()%></label>
+                <label name="email" type="text" class="input" id="inputPerfilUsuario">Email: <%= user.getEmail()%></label>
+                <label name="senha" type="password" class="input" id="inputPerfilUsuario">Senha: *****</label>
+                <label name="foto" type="file" class="input" id="inputImagem">
                     <img src="Gogo?t=carregarFotoUsuario&userId=<%= user.getIdUsuario()%>"/>                    
                 </label>
             </div>

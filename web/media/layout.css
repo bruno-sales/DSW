@@ -11,6 +11,7 @@ body {
   background: url(mickey.jpg) no-repeat fixed;
   background-size: cover;
   background-position: 50%;
+  background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
   font-smoothing: antialiased;
 }
@@ -81,28 +82,57 @@ body .menu .mainmenu .menuitem {
   position: fixed;
 }
 
+#tituloEditarUsuario{
+  top: 90px;
+}
+
+#tituloPerfilUsuario{
+  top: 90px;
+}
+
 body .menu2 .mainmenu2 .menuitem2 {
   float: left;
+  top: 80px;
   width: 64%;
-  padding-top: 70px;
-  padding-bottom: 10px;
   text-align: center;
   cursor: pointer;
   color: white;
   font-size: 2.5rem;
-  position: fixed;
+  position: relative;
 }
 
 body .boasVindas {
-  float: center;
-  width: 160%;
-  padding-right: 10px;
+  width: 270px;
+  right: 200px;
   padding-top: 50px;
   padding-bottom: 10px;
   text-align: center;
   cursor: pointer;
   color: white;
   font-size: 1.5rem;
+  position: fixed;
+}
+body .nomeUsuario{
+  width: 270px;
+  right: 200px;
+  padding-top: 80px;
+  padding-bottom: 10px;
+  text-align: center;
+  cursor: pointer;
+  color: white;
+  font-size: 1.5rem;
+  position: fixed;
+}
+
+body .ultimoLogin{
+  width: 350px;
+  padding-right: 5px;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  text-align: center;
+  cursor: pointer;
+  color: white;
+  font-size: 1.2rem;
   position: fixed;
 }
 
@@ -216,6 +246,48 @@ body #findpass2{
   transform: translate3d(0, -50%, 0);
 }
 
+body #btOfertasCompra{
+  bottom: 15%;
+  left: 890px;
+  padding: 10px 20px;
+  width: auto;
+  background: white;
+  color: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  background: rgba(255, 255, 255, 0.5);
+  border: none;
+  font-size: 1.2rem;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  -moz-transform: translate3d(0, -50%, 0);
+  -ms-transform: translate3d(0, -50%, 0);
+  -webkit-transform: translate3d(0, -50%, 0);
+  transform: translate3d(0, -50%, 0);
+}
+
+body #btOfertasVenda{
+  bottom: 7%;
+  left: 897px;
+  padding: 10px 20px;
+  width: auto;
+  background: white;
+  color: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  background: rgba(255, 255, 255, 0.5);
+  border: none;
+  font-size: 1.2rem;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  -moz-transform: translate3d(0, -50%, 0);
+  -ms-transform: translate3d(0, -50%, 0);
+  -webkit-transform: translate3d(0, -50%, 0);
+  transform: translate3d(0, -50%, 0);
+}
+
 body #itemMenu{
   width: auto;
   background: white;
@@ -234,7 +306,7 @@ body #itemMenu{
   transform: translate3d(0, -50%, 0);
 }
 
-body #findpass#findpass2#findpass3:focus {
+body #findpass#findpass2#findpass3#btOfertasCompra#btOfertasVenda:focus {
   outline: none;
 }
 
@@ -487,30 +559,46 @@ body .article h1 {
 }
 
 #FormEditarUsuario{
-    left: 35%;
-    width: 735px;
-    height: 330px;
+    left: 150px;
+    width: 710px;
+    height: 380px;
+}
+
+#FormCadastroUsuario{
+    top: 160px;
+    left: -511px;
 }
 
 #FormPerfilUsuario{
-    left: 35%;
-    width: 735px;
-    height: 330px;
+    width: 700px;
+    left: 130px;
+    height: 350px;
 }
 
-body #imagem {
-  position: absolute;
-  top: 20px;
-  left: 63%;
-  width: 250px;
-  height: 280px;
+#FormListaPersonagens{
+    left: -511px;
+    width: 350px;
+    height: 410px;
+}
+
+#FormListaOfertasCompra{
+    top: 160px;
+    left: -493px;
+    width: 350px;
+    height: 410px;
+}
+
+#FormListaOfertasVenda{
+    top: 180px;
+    left: -63px;
+    width: 350px;
+    height: 410px;
 }
 
 .form2 {
   margin: 0 auto;
-  position: fixed;
-  top: 20%;
-  left: 32%;
+  position: relative;
+  top: 130px;
   -moz-transform: translate3d(-50%, 0, 0);
   -ms-transform: translate3d(-50%, 0, 0);
   -webkit-transform: translate3d(-50%, 0, 0);
@@ -579,12 +667,30 @@ body #imagem {
   -webkit-transition-delay: 0s, 250ms, 250ms;
   transition: width 150ms ease-in-out, background-color 150ms ease-in-out 250ms, border 150ms ease-in-out 250ms;
 }
-#inputEditarUsuario{
-  width: 30%;
+
+#inputPerfilUsuario{
+  width: 60%;
 }
+
+#inputEditarUsuario{
+  width: 60%;
+}
+
+#inputImagem {
+  position: absolute;
+  top: 20px;
+  left: 62%;
+  width: 250px;
+  height: 280px;
+}
+
+#inputOpcoesImgs{
+  width: 60%;
+}
+
 .form2 .topbar2 .input {
   display: block;
-  width: 60%;
+  width: 100%;
   position: relative;
   border-top-left-radius: 6px;
   border-bottom-left-radius: 6px;
@@ -597,7 +703,7 @@ body #imagem {
   border-bottom: 1px solid rgba(255, 255, 255, 0.4);
   border-right: 1px solid rgba(255, 255, 255, 0.4);
   margin-bottom: 25px;
-  color: rgba(255, 255, 255, 0.4);
+  color: white;
   padding: 10px 20px;
 }
 .form2 .topbar2 .input::-webkit-input-placeholder {

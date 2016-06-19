@@ -4,11 +4,11 @@
 
 <div class="menu2">
     <div class="mainmenu2 clearfix">
-        <h1 class="menuitem2">Cadastro de Usuario</h1>
+        <h1 class="menuitem2" id="tituloCadastroUsuario">Cadastro de Usuario</h1>
     </div>
 
     <form name="formularioCadastro" action="Servlet?t=cadastrarUsuario" method="POST">
-        <div class="form2">
+        <div class="form2" id="FormCadastroUsuario">
             <div class="forceColor2"></div>
             <div class="topbar2">
                 <div class="spanColor2"></div>
