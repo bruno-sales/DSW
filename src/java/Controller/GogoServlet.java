@@ -40,6 +40,7 @@ public class GogoServlet extends HttpServlet {
     private static final String VERIFICARTOKEN = "verificarToken";
     private static final String ENVIARTOKEN = "enviarToken";
     private static final String RECUPERARSENHA = "recuperarSenha";
+    private static final String TROCARSENHA = "trocarSenha";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -86,6 +87,9 @@ public class GogoServlet extends HttpServlet {
                 break;
             case CARREGARFOTOUSUARIO:
                 carregarFotoUsuario(request, response);
+                break;                
+            case TROCARSENHA:
+                trocarSenha(request, response);
                 break;
             case VERIFICARTOKEN:
                 verificarToken(request, response);
@@ -182,6 +186,42 @@ public class GogoServlet extends HttpServlet {
         } else {
             response.sendRedirect("perfilUsuario.jsp");
         }
+    }
+
+
+
+    private void trocarSenha(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
+        UsuarioDAO uDao = new UsuarioDAO();
+
+        Usuario usuario;
+
+        String senhaAntiga = request.getParameter("senhaAtual");
+        String novaSenha = request.getParameter("novaSenha");
+
+        int idUsuario = 0;
+
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("userId")) {
+                    idUsuario = Integer.parseInt(cookie.getValue());
+                    break;
+                }
+            }
+        }   
+        
+        usuario = uDao.getUsuarioPorId(idUsuario);
+        
+        if(usuario == null || usuario.getSenha().equals(senhaAntiga) == false)
+        {
+            response.sendRedirect("trocarSenha.jsp?mensagem=Senha antiga esta incorreta");            
+        }else
+        {
+            uDao.TrocarSenha(idUsuario, novaSenha);            
+            response.sendRedirect("trocarSenha.jsp?mensagem=Senha alterada com sucesso");
+        }
+        
+        
     }//</editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="Região com os metodos de busca">
@@ -471,5 +511,6 @@ public class GogoServlet extends HttpServlet {
     public String getServletInfo() {
         return "Servle da aplicacao";
     }// </editor-fold>
+
 
 }

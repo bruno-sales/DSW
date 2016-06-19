@@ -17,6 +17,9 @@ public @Data class Oferta {
     private ETipoOferta tipoOferta;
     private EStatusOferta status;
             
-    
+    public String getNomeTipoOferta()
+    {
+        return this.tipoOferta.name();
+    }
     
 }

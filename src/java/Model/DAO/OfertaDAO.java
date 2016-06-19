@@ -13,95 +13,122 @@ import java.util.ArrayList;
 import java.util.List;
 import org.joda.time.DateTime;
 
-public class OfertaDAO implements IOfertaDAO{
-    
+public class OfertaDAO implements IOfertaDAO {
+
     private final Configurador config;
- 
+
     public OfertaDAO() {
-         config = new Configurador();
-     }
-    
-    private Oferta carrega(ResultSet rs) throws SQLException
-	{
-		Oferta oferta = new Oferta();
-                
-		oferta.setId(rs.getInt("id"));
-		oferta.setIdUsuario(rs.getInt("idUsuario"));
-                oferta.setQuantidade(rs.getInt("quantidade"));
-                oferta.setQuantidadeOriginal(rs.getInt("quantidadeOriginal"));
-                oferta.setIdPersonagem(rs.getInt("idPersonagem"));
-                
-                //Recuperando enumerador do tipo
-                int codigoTipo = rs.getInt("tipo");
-                ETipoOferta tipoOferta = ETipoOferta.get(codigoTipo);
-                oferta.setTipoOferta(tipoOferta);
+        config = new Configurador();
+    }
 
-                //Recuperando enumerador do status
-                int codigoStatus = rs.getInt("status");
-                EStatusOferta statusOferta = EStatusOferta.get(codigoStatus);
-                oferta.setStatus(statusOferta);
+    private Oferta carrega(ResultSet rs) throws SQLException {
+        Oferta oferta = new Oferta();
 
-                DateTime dataOferta = DateTime.parse(rs.getDate("data").toString()) ;
-                oferta.setData(dataOferta);
-                                 
-		return oferta;
-	}
+        oferta.setId(rs.getInt("id"));
+        oferta.setIdUsuario(rs.getInt("idUsuario"));
+        oferta.setQuantidade(rs.getInt("quantidade"));
+        oferta.setValor(rs.getFloat("precoUnitario"));
+        oferta.setQuantidadeOriginal(rs.getInt("quantidadeOriginal"));
+        oferta.setIdPersonagem(rs.getInt("idPersonagem"));
 
-	@Override
-	public Oferta getOfertaPorId(int id)
-	{
-		Connection c = config.getConnection();
-		
-		if (c == null)
-			return null;
-		
-		Oferta oft = null;
-		
-		try
-		{
-			PreparedStatement ps = c.prepareStatement("SELECT * FROM Ofertas WHERE id = ?");
-			ps.setInt(1, id);
+        //Recuperando enumerador do tipo
+        int codigoTipo = rs.getInt("tipo");
+        ETipoOferta tipoOferta = ETipoOferta.get(codigoTipo);
+        oferta.setTipoOferta(tipoOferta);
 
-			ResultSet rs = ps.executeQuery();
+        //Recuperando enumerador do status
+        int codigoStatus = rs.getInt("status");
+        EStatusOferta statusOferta = EStatusOferta.get(codigoStatus);
+        oferta.setStatus(statusOferta);
 
-			if (rs.next())
-				oft = carrega(rs);
+        DateTime dataOferta = new DateTime(rs.getTimestamp("data"));
+        oferta.setData(dataOferta);
+        
 
-			c.close();
+        return oferta;
+    }
 
-		} catch (SQLException e)
-		{
-			Configurador.log(e.getMessage());
-		}
-		    
-		return oft;
-	}
+    @Override
+    public Oferta getOfertaPorId(int id) {
+        Connection c = config.getConnection();
 
-	@Override
-	public List<Oferta> lista()
-	{
-		Connection c = config.getConnection();
-		
-		if (c == null)
-			return null;
-		
-		List<Oferta> lista = new ArrayList<>();
-		
-		try
-		{
-			PreparedStatement ps = c.prepareStatement("SELECT * FROM Ofertas");
-			ResultSet rs = ps.executeQuery();
+        if (c == null) {
+            return null;
+        }
 
-			while (rs.next())
-				lista.add(carrega(rs));
+        Oferta oft = null;
 
-			c.close();
+        try {
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM Ofertas WHERE id = ?");
+            ps.setInt(1, id);
 
-		} catch (SQLException e)
-		{
-			Configurador.log(e.getMessage());
-		}
-		    
-		return lista;
-	}
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                oft = carrega(rs);
+            }
+
+            c.close();
+
+        } catch (SQLException e) {
+            Configurador.log(e.getMessage());
+        }
+
+        return oft;
+    }
+
+    @Override
+    public List<Oferta> lista() {
+        Connection c = config.getConnection();
+
+        if (c == null) {
+            return null;
+        }
+
+        List<Oferta> lista = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM Ofertas");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                lista.add(carrega(rs));
+            }
+
+            c.close();
+
+        } catch (SQLException e) {
+            Configurador.log(e.getMessage());
+        }
+
+        return lista;
+    }
+
+    @Override
+    public List<Oferta> listaOfertasUsuario(int userId) {
+        Connection c = config.getConnection();
+
+        if (c == null) {
+            return null;
+        }
+
+        List<Oferta> lista = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM Ofertas where idUsuario = ?");
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                lista.add(carrega(rs));
+            }
+
+            c.close();
+
+        } catch (SQLException e) {
+            Configurador.log(e.getMessage());
+        }
+
+        return lista;
+    }
 }

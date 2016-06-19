@@ -57,6 +57,9 @@
             <a href="editarUsuario.jsp"><button id="itemMenu" class="itemMenu2">Editar Perfil</button></a>
         </li>
         <li>
-            <a href="Servlet?t=logoff"><button id="itemMenu" class="itemMenu3">Logoff</button></a>
+            <a href="trocarSenha.jsp"><button id="itemMenu" class="itemMenu3">Trocar Senha</button></a>
+        </li>
+        <li>
+            <a href="Servlet?t=logoff"><button id="itemMenu" class="itemMenu4">Logoff</button></a>
         </li>
     </ul>

@@ -8,17 +8,17 @@
     <div class="mainmenu2 clearfix">
         <h1 class="menuitem2" id="tituloEditarUsuario">Alterar Senha</h1>
     </div>
-    <form name="formularioEditarUsuario" action="Servlet?t=editarUsuario" method="POST" enctype="multipart/form-data">
+    <form name="formularioTrocaSenha" action="Servlet?t=trocarSenha" method="POST">
         <div class="form2" id="FormTrocarSenha">
             <div class="forceColor2"></div>
             <div class="topbar2">
                 <div class="spanColor2"></div>
                 
-                <input name="senhaAtual" type="password" class="input" id="inputCadastroUsuario" placeholder="Senha atual"
-                       pattern="[a-zA-Z\s]+$"/>
+                <input name="senhaAtual" type="password" class="input" id="inputCadastroUsuario" required placeholder="Senha atual"
+                       pattern="[a-zA-Z0-9]{5}"/>
                 <input name="novaSenha" type="password" class="input" id="inputCadastroUsuario" required pattern="[a-zA-Z0-9]{5}"
                        placeholder="Nova senha (Minimo 5 caracteres)"
-                       onchange="formularioCadastro.pwd2.pattern = this.value;">
+                       onchange="formularioTrocaSenha.pwd2.pattern = this.value;"/>
                 <input name="pwd2" type="password" class="input" id="inputCadastroUsuario" required pattern="[a-zA-Z0-9]{5}"
                        placeholder="Repita a nova senha" onchange="this.setCustomValidity(this.validity.patternMismatch ?
                                        'As senhas não conferem.' : '')"/>
@@ -27,7 +27,8 @@
         </div>
     </form>
     
-    <div class="errorMsg">
+    
+    <div class="errorMsg2">
         <!-- Carregar mensagem de erro, se houver -->
         <c:if test="${not empty param.mensagem}">
             <c:out value="${param.mensagem}"/>
