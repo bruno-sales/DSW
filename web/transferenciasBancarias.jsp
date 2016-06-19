@@ -8,9 +8,7 @@
     <div class="mainmenu2 clearfix">
         <h1 class="menuitem2">Transfer&ecirc;ncia Banc&aacute;ria</h1>
     </div>
-
-    <a href="Servlet?t=listarOfertas"><button id="btListarOfertas">Listar Ofertas</button></a>
-
+    
     <form name="formularioEditarUsuario" action="Servlet?t=registrarTransferencia" method="POST">   
         <div class="form2" id="FormListaOfertas">
             <div class="forceColor2"></div>
