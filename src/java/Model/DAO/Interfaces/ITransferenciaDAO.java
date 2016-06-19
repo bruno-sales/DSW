@@ -7,5 +7,5 @@ public interface ITransferenciaDAO {
     
     public Transferencia getTransferenciaPorId(int id);
     public List<Transferencia> lista();
-    
+    public boolean registrarTransferencia(Transferencia transferencia); 
 }

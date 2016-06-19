@@ -5,7 +5,7 @@ import org.joda.time.DateTime;
 public @Data class Transferencia {
 
     private int id;
-    private double valor;
+    private float valor;
     private DateTime data;
     private int idUsuario;
     private String numeroBanco;

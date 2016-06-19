@@ -1,13 +1,16 @@
 package Controller;
 
+import Model.DAO.LancamentosPersonagensDAO;
 import Model.DAO.OfertaDAO;
 import Model.DAO.PersonagemDAO;
 import Model.DAO.TokenDAO;
+import Model.DAO.TransferenciaDAO;
 import Model.DAO.UsuarioDAO;
 import Model.Enums.ETipoOferta;
 import Model.Oferta;
 import Model.Personagem;
 import Model.Token;
+import Model.Transferencia;
 import Model.Usuario;
 import Util.ServicoEmail;
 import java.io.ByteArrayOutputStream;
@@ -45,6 +48,8 @@ public class GogoServlet extends HttpServlet {
     private static final String RECUPERARSENHA = "recuperarSenha";
     private static final String TROCARSENHA = "trocarSenha";
     private static final String LISTAROFERTAS = "listarOfertas";
+    private static final String REGISTRARTRANSFERENCIA = "registrarTransferencia";
+    private static final String REGISTRARPERSONAGEM = "registrarPersonagem";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -94,6 +99,12 @@ public class GogoServlet extends HttpServlet {
                 break;
             case LISTAROFERTAS:
                 listarOfertas(request, response);
+                break;
+            case REGISTRARTRANSFERENCIA:
+                registrarTransferencia(request, response);
+                break;
+            case REGISTRARPERSONAGEM:
+                registrarPersonagem(request, response);
                 break;
             default:
                 response.sendRedirect("login.jsp");
@@ -293,7 +304,7 @@ public class GogoServlet extends HttpServlet {
         // Redireciona
         RequestDispatcher rd = request.getRequestDispatcher("/listaOfertas.jsp");
         rd.forward(request, response);
-        
+
     }//</editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="Região com os metodos de autenticação, login e logoff">
@@ -477,6 +488,56 @@ public class GogoServlet extends HttpServlet {
         }
     }// </editor-fold>
 
+// <editor-fold defaultstate="collapsed" desc="Região com os metodos de transferencias, registros de personagens e ofertas">
+    private void registrarTransferencia(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        TransferenciaDAO tDao = new TransferenciaDAO();
+
+        int usuarioId = recuperaUserIdLogado(request);
+
+        String bancoOrigem = request.getParameter("bancoOrigem");
+        String agenciaOrigem = request.getParameter("agenciaOrigem");
+        String contaOrigem = request.getParameter("contaOrigem");
+        float valor = Float.parseFloat(request.getParameter("valor"));
+
+        Transferencia tranferencia = new Transferencia();
+        tranferencia.setIdUsuario(usuarioId);
+        tranferencia.setNumeroAgencia(agenciaOrigem);
+        tranferencia.setNumeroBanco(bancoOrigem);
+        tranferencia.setNumeroConta(contaOrigem);
+        tranferencia.setValor(valor);
+
+        //Caso ocorra erro ao criar a transferencia, o retorno será falso
+        boolean retorno = tDao.registrarTransferencia(tranferencia);
+
+        if (retorno == false) {
+            response.sendRedirect("registrarTransferencia.jsp?mensagem=NOK");
+        } else {
+            response.sendRedirect("registrarTransferencia.jsp?mensagem=OK");
+        }
+
+    }
+
+    private void registrarPersonagem(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        LancamentosPersonagensDAO lDao = new LancamentosPersonagensDAO();
+
+        int usuarioId = recuperaUserIdLogado(request);
+
+        int personagemId = Integer.parseInt(request.getParameter("personagemId"));
+        int quantidade = Integer.parseInt(request.getParameter("qtd"));
+
+        //Caso ocorra erro ao criar a transferencia, o retorno será falso
+        boolean retorno = lDao.adicionarPersonagens(usuarioId, personagemId, quantidade);
+        
+        if (retorno == false) {
+            response.sendRedirect("registrarPersonagem.jsp?mensagem=Nao foi possivel realizar esta ação, tente novamente");
+        } else {
+            response.sendRedirect("registrarPersonagem.jsp");
+        }
+
+    }// </editor-fold>
+
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -516,6 +577,7 @@ public class GogoServlet extends HttpServlet {
         return "Servle da aplicacao";
     }// </editor-fold>
 
+    //Método controlador de validação de login
     private int recuperaUserIdLogado(HttpServletRequest request) {
         int idUsuario = 0;
 
@@ -531,4 +593,5 @@ public class GogoServlet extends HttpServlet {
         return idUsuario;
 
     }
+
 }
