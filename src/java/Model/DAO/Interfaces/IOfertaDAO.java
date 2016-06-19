@@ -7,6 +7,7 @@ public interface IOfertaDAO {
     
     public Oferta getOfertaPorId(int id);
     public List<Oferta> lista();
-    public List<Oferta> listaOfertasUsuario(int userId);
+    public int CountOfertasUsuario(int userId);
+    public List<Oferta> listaOfertasUsuario(int userId,int pagina, int tamanho);
     
 }

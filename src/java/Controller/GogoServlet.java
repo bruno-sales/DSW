@@ -1,8 +1,11 @@
 package Controller;
 
+import Model.DAO.OfertaDAO;
 import Model.DAO.PersonagemDAO;
 import Model.DAO.TokenDAO;
 import Model.DAO.UsuarioDAO;
+import Model.Enums.ETipoOferta;
+import Model.Oferta;
 import Model.Personagem;
 import Model.Token;
 import Model.Usuario;
@@ -41,6 +44,7 @@ public class GogoServlet extends HttpServlet {
     private static final String ENVIARTOKEN = "enviarToken";
     private static final String RECUPERARSENHA = "recuperarSenha";
     private static final String TROCARSENHA = "trocarSenha";
+    private static final String LISTAROFERTAS = "listarOfertas";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -57,18 +61,6 @@ public class GogoServlet extends HttpServlet {
 
         String tarefa = request.getParameter("t");
 
-        /*
-         //Recuperar cookie da requisição
-         Cookie loginCookie = null;
-         Cookie[] cookies = request.getCookies();
-         if (cookies != null) {
-         for (Cookie cookie : cookies) {
-         if (cookie.getName().equals("user")) {
-         loginCookie = cookie;
-         break;
-         }
-         }
-         }*/
         switch (tarefa) {
             case LOGOFF:
                 fazerLogoff(request, response);
@@ -87,7 +79,7 @@ public class GogoServlet extends HttpServlet {
                 break;
             case CARREGARFOTOUSUARIO:
                 carregarFotoUsuario(request, response);
-                break;                
+                break;
             case TROCARSENHA:
                 trocarSenha(request, response);
                 break;
@@ -99,6 +91,9 @@ public class GogoServlet extends HttpServlet {
                 break;
             case RECUPERARSENHA:
                 recuperarSenha(request, response);
+                break;
+            case LISTAROFERTAS:
+                listarOfertas(request, response);
                 break;
             default:
                 response.sendRedirect("login.jsp");
@@ -160,17 +155,7 @@ public class GogoServlet extends HttpServlet {
             inputStream = foto.getInputStream();
         }
 
-        int idUsuario = 0;
-
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("userId")) {
-                    idUsuario = Integer.parseInt(cookie.getValue());
-                    break;
-                }
-            }
-        }
+        int idUsuario = recuperaUserIdLogado(request);
 
         usuario.setIdUsuario(idUsuario);
         usuario.setNome(nome);
@@ -188,9 +173,7 @@ public class GogoServlet extends HttpServlet {
         }
     }
 
-
-
-    private void trocarSenha(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
+    private void trocarSenha(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         UsuarioDAO uDao = new UsuarioDAO();
 
         Usuario usuario;
@@ -198,30 +181,17 @@ public class GogoServlet extends HttpServlet {
         String senhaAntiga = request.getParameter("senhaAtual");
         String novaSenha = request.getParameter("novaSenha");
 
-        int idUsuario = 0;
+        int idUsuario = recuperaUserIdLogado(request);
 
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("userId")) {
-                    idUsuario = Integer.parseInt(cookie.getValue());
-                    break;
-                }
-            }
-        }   
-        
         usuario = uDao.getUsuarioPorId(idUsuario);
-        
-        if(usuario == null || usuario.getSenha().equals(senhaAntiga) == false)
-        {
-            response.sendRedirect("trocarSenha.jsp?mensagem=Senha antiga esta incorreta");            
-        }else
-        {
-            uDao.TrocarSenha(idUsuario, novaSenha);            
+
+        if (usuario == null || usuario.getSenha().equals(senhaAntiga) == false) {
+            response.sendRedirect("trocarSenha.jsp?mensagem=Senha antiga esta incorreta");
+        } else {
+            uDao.TrocarSenha(idUsuario, novaSenha);
             response.sendRedirect("trocarSenha.jsp?mensagem=Senha alterada com sucesso");
         }
-        
-        
+
     }//</editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="Região com os metodos de busca">
@@ -262,34 +232,68 @@ public class GogoServlet extends HttpServlet {
 
     private void carregarFotoUsuario(HttpServletRequest request, HttpServletResponse response) {
 
-        try{            
-            
-        UsuarioDAO uDao = new UsuarioDAO();
-        Usuario usuario;
-        
-        int userId = Integer.parseInt(request.getParameter("userId"));         
-        
-        usuario = uDao.getUsuarioPorId(userId);
-        
-        response.setContentType("image/jpeg");
+        try {
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            UsuarioDAO uDao = new UsuarioDAO();
+            Usuario usuario;
 
-        int nRead;
-        byte[] data = new byte[16384];
+            int userId = Integer.parseInt(request.getParameter("userId"));
 
-        while ((nRead = usuario.getFoto().read(data, 0, data.length)) != -1) {
-            buffer.write(data, 0, nRead);
+            usuario = uDao.getUsuarioPorId(userId);
+
+            response.setContentType("image/jpeg");
+
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+            int nRead;
+            byte[] data = new byte[16384];
+
+            while ((nRead = usuario.getFoto().read(data, 0, data.length)) != -1) {
+                buffer.write(data, 0, nRead);
+            }
+
+            buffer.flush();
+
+            response.getOutputStream().write(data);
+        } catch (IOException io) {
+
         }
 
-        buffer.flush();
+    }
 
-        response.getOutputStream().write(data);
-        }catch(IOException io)
+    private void listarOfertas(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
+        OfertaDAO oDao = new OfertaDAO();
+
+        //Paginadores
+        int page;
+        int idUsuario = recuperaUserIdLogado(request);
+        try { //Tenta converter o numero da pagina
+            page = Integer.parseInt(request.getParameter("page"));
+        } catch (NumberFormatException nf) //Define como pagina 0, se não.
         {
-            
+            page = 0;
         }
 
+        //Obter Lista
+        List<Oferta> lista = oDao.listaOfertasUsuario(idUsuario, page, PAGESIZE);
+
+        int count = oDao.CountOfertasUsuario(idUsuario);
+
+        //Paginadores
+        boolean hasNext = (count > (page + 1) * PAGESIZE);
+        boolean hasPrior = (page > 0);
+
+        //Guardar informações na memoria de requisição
+        request.setAttribute("page", page);
+        request.setAttribute("hasNextPage", hasNext);
+        request.setAttribute("hasPriorPage", hasPrior);
+        request.setAttribute("ofertas", lista);
+
+        // Redireciona
+        RequestDispatcher rd = request.getRequestDispatcher("/listaOfertas.jsp");
+        rd.forward(request, response);
+        
     }//</editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="Região com os metodos de autenticação, login e logoff">
@@ -512,5 +516,19 @@ public class GogoServlet extends HttpServlet {
         return "Servle da aplicacao";
     }// </editor-fold>
 
+    private int recuperaUserIdLogado(HttpServletRequest request) {
+        int idUsuario = 0;
 
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("userId")) {
+                    idUsuario = Integer.parseInt(cookie.getValue());
+                    break;
+                }
+            }
+        }
+        return idUsuario;
+
+    }
 }

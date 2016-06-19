@@ -43,7 +43,6 @@ public class OfertaDAO implements IOfertaDAO {
 
         DateTime dataOferta = new DateTime(rs.getTimestamp("data"));
         oferta.setData(dataOferta);
-        
 
         return oferta;
     }
@@ -102,10 +101,38 @@ public class OfertaDAO implements IOfertaDAO {
         }
 
         return lista;
+    }  
+
+    @Override
+    public int CountOfertasUsuario(int userId) {
+        Connection c = config.getConnection();
+        if (c == null) {
+            return 0;
+        }
+
+        int qtd = 0;
+
+        try {
+            PreparedStatement ps = c.prepareStatement("SELECT count(*) AS qtd FROM Ofertas where "
+                    + "idUsuario = ?");
+                    
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                qtd = rs.getInt("qtd");
+            }
+            c.close();
+
+        } catch (SQLException e) {
+            Configurador.log(e.getMessage());
+        }
+
+        return qtd;
     }
 
     @Override
-    public List<Oferta> listaOfertasUsuario(int userId) {
+    public List<Oferta> listaOfertasUsuario(int userId, int pagina, int tamanho) {
         Connection c = config.getConnection();
 
         if (c == null) {
@@ -115,8 +142,12 @@ public class OfertaDAO implements IOfertaDAO {
         List<Oferta> lista = new ArrayList<>();
 
         try {
-            PreparedStatement ps = c.prepareStatement("SELECT * FROM Ofertas where idUsuario = ?");
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM Ofertas where "
+                    + "idUsuario = ? ORDER BY data desc LIMIT ? OFFSET ?");
+
             ps.setInt(1, userId);
+            ps.setInt(2, tamanho);
+            ps.setInt(3, pagina * tamanho);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
