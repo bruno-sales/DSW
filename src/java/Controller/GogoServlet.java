@@ -311,8 +311,8 @@ public class GogoServlet extends HttpServlet {
         request.setAttribute("ofertas", lista);
 
         // Redireciona
-        RequestDispatcher rd = request.getRequestDispatcher("/historicoOfertasUsuarios.jsp");
-        rd.forward(request, response);
+        RequestDispatcher rd = request.getRequestDispatcher("/historicoOfertasUsuario.jsp");
+        rd.forward(request, response); 
 
     }//</editor-fold>
 
