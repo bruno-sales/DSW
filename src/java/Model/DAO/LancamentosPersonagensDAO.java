@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import Model.DAO.Interfaces.ILancamentosPersonagensDAO;
+import org.joda.time.DateTime;
 
 public class LancamentosPersonagensDAO implements ILancamentosPersonagensDAO {
 
@@ -22,13 +23,16 @@ public class LancamentosPersonagensDAO implements ILancamentosPersonagensDAO {
 
     private LancamentosPersonagens carrega(ResultSet rs) throws SQLException {
         LancamentosPersonagens lp = new LancamentosPersonagens();
-        //lp.setData(rs.getDateTime("data"));
+        
         lp.setHistorico(rs.getString("historico"));
         lp.setQuantidade(rs.getInt("quantidade"));
         lp.setPrecoUnitario(rs.getFloat("precoUnitario"));
         lp.setIdPersonagem(rs.getInt("idPersonagem"));
         lp.setIdUsuario(rs.getInt("idUsuario"));
 
+        DateTime data = new DateTime(rs.getTimestamp("data"));
+        lp.setData(data);
+        
         //Recuperando enumerador da operacao
         int codigoOperacao = rs.getInt("operacao");
         EOperacao tipoOperacao = EOperacao.get(codigoOperacao);
@@ -147,6 +151,64 @@ public class LancamentosPersonagensDAO implements ILancamentosPersonagensDAO {
 
     }
 
+    
+    @Override
+    public List<LancamentosPersonagens> getLancamentosPersonagensPorIdUsuario(int idUsuario) {
+        Connection c = config.getConnection();
+
+        if (c == null) {
+            return null;
+        }
+
+        List<LancamentosPersonagens> lista = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM LancamentosPersonagem where idUsuario = ?");
+            ps.setInt(1, idUsuario);
+            
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                lista.add(carrega(rs));
+            }
+
+            c.close();
+
+        } catch (SQLException e) {
+            Configurador.log(e.getMessage());
+        }
+
+        return lista;   
+    }
+    
+    @Override
+    public int countLancamentosPersonagens(int userId) {
+        Connection c = config.getConnection();
+        if (c == null) {
+            return 0;
+        }
+
+        int qtd = 0;
+
+        try {
+            PreparedStatement ps = c.prepareStatement("SELECT count(*) AS qtd FROM LancamentosPersonagem where "
+                    + "idUsuario = ?");
+                    
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                qtd = rs.getInt("qtd");
+            }
+            c.close();
+
+        } catch (SQLException e) {
+            Configurador.log(e.getMessage());
+        }
+
+        return qtd;
+    }
+    
     @Override
     public boolean calculaSaldoDisponivelPersonagem(int IdUsuario, int idPersonagem, /*OUT*/ int saldo) {
 //            Connection c = config.getConnection();

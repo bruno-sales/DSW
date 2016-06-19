@@ -75,7 +75,7 @@
             <a href="Servlet?t=listarOfertas"><button id="itemMenu" class="itemMenu8">Minhas Ofertas</button></a>
         </li> 
         <li>
-            <a href="Servlet?t=listarOfertas"><button id="itemMenu" class="itemMenu9">Meu Extrato</button></a>
+            <a href="extratoContaCorrente.jsp"><button id="itemMenu" class="itemMenu9">Meu Extrato</button></a>
         </li>        
         <li>
             <a href="Servlet?t=listarOfertas"><button id="itemMenu" class="itemMenu10">Cotação Histórica</button></a>

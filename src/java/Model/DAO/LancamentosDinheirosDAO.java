@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import Model.DAO.Interfaces.ILancamentosDinheirosDAO;
+import org.joda.time.DateTime;
 
 public class LancamentosDinheirosDAO implements ILancamentosDinheirosDAO {
 
@@ -26,6 +27,9 @@ public class LancamentosDinheirosDAO implements ILancamentosDinheirosDAO {
         ld.setHistorico(rs.getString("historico"));
         ld.setValor(rs.getFloat("valor"));
 
+        DateTime data = new DateTime(rs.getTimestamp("data"));
+        ld.setData(data);
+        
         //Recuperando enumerador da operacao
         int codigoOperacao = rs.getInt("operacao");
         EOperacao tipoOperacao = EOperacao.get(codigoOperacao);
@@ -117,5 +121,33 @@ public class LancamentosDinheirosDAO implements ILancamentosDinheirosDAO {
         }
 
         return lista;   
+    }
+    
+    @Override
+    public int countLancamentoDinheiro(int userId) {
+        Connection c = config.getConnection();
+        if (c == null) {
+            return 0;
+        }
+
+        int qtd = 0;
+
+        try {
+            PreparedStatement ps = c.prepareStatement("SELECT count(*) AS qtd FROM lancamentosDinheiro where "
+                    + "idUsuario = ?");
+                    
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                qtd = rs.getInt("qtd");
+            }
+            c.close();
+
+        } catch (SQLException e) {
+            Configurador.log(e.getMessage());
+        }
+
+        return qtd;
     }
 }

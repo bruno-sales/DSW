@@ -13,5 +13,6 @@ public interface ILancamentosPersonagensDAO
     public boolean removerPersonagem(int idUsuario, int idPersonagem, int quantidade, String historico, double precoUnitario, EOperacao operacao);
     public boolean calculaSaldoDisponivelPersonagem(int IdUsuario, int idPersonagem, /*OUT*/ int saldo);
     public boolean CancelaOrdemCompra(int idCompra);
-    
+    public List<LancamentosPersonagens> getLancamentosPersonagensPorIdUsuario(int idUsuario);
+    public int countLancamentosPersonagens(int userId);
 }

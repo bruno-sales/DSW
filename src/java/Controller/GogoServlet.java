@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.DAO.LancamentosDinheirosDAO;
 import Model.DAO.LancamentosPersonagensDAO;
 import Model.DAO.OfertaDAO;
 import Model.DAO.PersonagemDAO;
@@ -7,6 +8,8 @@ import Model.DAO.TokenDAO;
 import Model.DAO.TransferenciaDAO;
 import Model.DAO.UsuarioDAO;
 import Model.Enums.ETipoOferta;
+import Model.LancamentosDinheiros;
+import Model.LancamentosPersonagens;
 import Model.Oferta;
 import Model.Personagem;
 import Model.Token;
@@ -16,6 +19,7 @@ import Util.ServicoEmail;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -37,6 +41,7 @@ import javax.servlet.http.Part;
 public class GogoServlet extends HttpServlet {
 
     public static final int PAGESIZE = 5;
+    public static final int PAGESIZEOFERTAS = 3;
     private static final String LOGIN = "login";
     private static final String LOGOFF = "logoff";
     private static final String CADASTRARUSUARIO = "cadastrarUsuario";
@@ -50,6 +55,7 @@ public class GogoServlet extends HttpServlet {
     private static final String LISTAROFERTAS = "listarOfertas";
     private static final String REGISTRARTRANSFERENCIA = "registrarTransferencia";
     private static final String REGISTRARPERSONAGEM = "registrarPersonagem";
+    private static final String EXTRATOCONTACORRENTE = "extratoContaCorrente";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -105,6 +111,9 @@ public class GogoServlet extends HttpServlet {
                 break;
             case REGISTRARPERSONAGEM:
                 registrarPersonagem(request, response);
+                break;
+            case EXTRATOCONTACORRENTE:
+                extratoContaCorrente(request, response);
                 break;
             default:
                 response.sendRedirect("login.jsp");
@@ -287,12 +296,12 @@ public class GogoServlet extends HttpServlet {
         }
 
         //Obter Lista
-        List<Oferta> lista = oDao.listaOfertasUsuario(idUsuario, page, PAGESIZE);
+        List<Oferta> lista = oDao.listaOfertasUsuario(idUsuario, page, PAGESIZEOFERTAS);
 
         int count = oDao.CountOfertasUsuario(idUsuario);
 
         //Paginadores
-        boolean hasNext = (count > (page + 1) * PAGESIZE);
+        boolean hasNext = (count > (page + 1) * PAGESIZEOFERTAS);
         boolean hasPrior = (page > 0);
 
         //Guardar informações na memoria de requisição
@@ -302,7 +311,7 @@ public class GogoServlet extends HttpServlet {
         request.setAttribute("ofertas", lista);
 
         // Redireciona
-        RequestDispatcher rd = request.getRequestDispatcher("/listaOfertas.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/historicoOfertasUsuarios.jsp");
         rd.forward(request, response);
 
     }//</editor-fold>
@@ -529,12 +538,63 @@ public class GogoServlet extends HttpServlet {
 
         //Caso ocorra erro ao criar a transferencia, o retorno será falso
         boolean retorno = lDao.adicionarPersonagens(usuarioId, personagemId, quantidade);
-        
+
         if (retorno == false) {
             response.sendRedirect("registrarPersonagem.jsp?mensagem=Nao foi possivel realizar esta ação, tente novamente");
         } else {
             response.sendRedirect("registrarPersonagem.jsp");
         }
+
+    }
+
+    private void extratoContaCorrente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        //Paginadores
+        int page;
+        int idUsuario = recuperaUserIdLogado(request);
+        try { //Tenta converter o numero da pagina
+            page = Integer.parseInt(request.getParameter("page"));
+        } catch (NumberFormatException nf) //Define como pagina 0, se não.
+        {
+            page = 0;
+        }
+
+        LancamentosDinheirosDAO ldDao = new LancamentosDinheirosDAO();
+        LancamentosPersonagensDAO lpDao = new LancamentosPersonagensDAO();
+        List<LancamentosDinheiros> listaDinheiros = new ArrayList<>();
+        List<LancamentosPersonagens> listaPersonagens = new ArrayList<>();
+
+        int count;
+
+        String tipo = request.getParameter("tipo");
+                
+        request.setAttribute("tipo", tipo);
+        //int mes = Integer.parseInt(request.getParameter("mes"));
+
+        //Obter Lista
+        if (tipo.equals("dinheiro")) {
+            listaDinheiros = ldDao.getlancamentosDinheiroPorIdUsuario(idUsuario);
+            count = ldDao.countLancamentoDinheiro(idUsuario);
+            request.setAttribute("extrato", listaDinheiros);
+        } else {
+            listaPersonagens = lpDao.getLancamentosPersonagensPorIdUsuario(idUsuario);
+            count = lpDao.countLancamentosPersonagens(idUsuario);
+            request.setAttribute("extrato", listaPersonagens);
+        }
+
+        //Paginadores
+        boolean hasNext = (count > (page + 1) * PAGESIZEOFERTAS);
+        boolean hasPrior = (page > 0);
+
+        //Guardar informações na memoria de requisição
+        request.setAttribute("page", page);
+        request.setAttribute("hasNextPage", hasNext);
+        request.setAttribute("hasPriorPage", hasPrior);
+        
+
+        // Redireciona
+        RequestDispatcher rd = request.getRequestDispatcher("/extratoContaCorrente.jsp");
+        rd.forward(request, response);
 
     }// </editor-fold>
 

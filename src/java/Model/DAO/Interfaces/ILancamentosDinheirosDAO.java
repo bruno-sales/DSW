@@ -8,4 +8,5 @@ public interface ILancamentosDinheirosDAO {
         public LancamentosDinheiros getlancamentoDinheiroPorId(int id);
         public List<LancamentosDinheiros> getlancamentosDinheiroPorIdUsuario(int idUsuario);
         public List<LancamentosDinheiros> lista();
+        public int countLancamentoDinheiro(int userId);
 }
