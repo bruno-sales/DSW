@@ -533,7 +533,7 @@ public class GogoServlet extends HttpServlet {
 
         int usuarioId = recuperaUserIdLogado(request);
 
-        int personagemId = Integer.parseInt(request.getParameter("personagemId"));
+        int personagemId = Integer.parseInt(request.getParameter("personagem"));
         int quantidade = Integer.parseInt(request.getParameter("qtd"));
 
         //Caso ocorra erro ao criar a transferencia, o retorno será falso
@@ -573,11 +573,11 @@ public class GogoServlet extends HttpServlet {
 
         //Obter Lista
         if (tipo.equals("dinheiro")) {
-            listaDinheiros = ldDao.getlancamentosDinheiroPorIdUsuario(idUsuario);
+            listaDinheiros = ldDao.getlancamentosDinheiroPorIdUsuario(idUsuario, page, PAGESIZEOFERTAS);
             count = ldDao.countLancamentoDinheiro(idUsuario);
             request.setAttribute("extrato", listaDinheiros);
         } else {
-            listaPersonagens = lpDao.getLancamentosPersonagensPorIdUsuario(idUsuario);
+            listaPersonagens = lpDao.getLancamentosPersonagensPorIdUsuario(idUsuario, page, PAGESIZEOFERTAS);
             count = lpDao.countLancamentosPersonagens(idUsuario);
             request.setAttribute("extrato", listaPersonagens);
         }

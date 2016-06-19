@@ -52,11 +52,11 @@
     </div>
 
     <c:if test="${requestScope.hasPriorPage}">
-        <a href='Gogo?t=extratoContaCorrente&page=${requestScope.page-1}'>
+        <a href='Gogo?t=extratoContaCorrente&page=${requestScope.page-1}&tipo=${requestScope.tipo}'>
             <button id="ant">Anterior</button></a> | 
         </c:if>
         <c:if test="${requestScope.hasNextPage}">
-        <a href='Gogo?t=extratoContaCorrente&page=${requestScope.page+1}'>
+        <a href='Gogo?t=extratoContaCorrente&page=${requestScope.page+1}&tipo=${requestScope.tipo}'>
             <button id="prox">Próxima</button></a> |
     </c:if> 
     <%@include file="footer.jsp"%>

@@ -95,7 +95,7 @@ public class LancamentosDinheirosDAO implements ILancamentosDinheirosDAO {
     }
 
     @Override
-    public List<LancamentosDinheiros> getlancamentosDinheiroPorIdUsuario(int idUsuario) {
+    public List<LancamentosDinheiros> getlancamentosDinheiroPorIdUsuario(int idUsuario, int pagina, int tamanho) {
         Connection c = config.getConnection();
 
         if (c == null) {
@@ -105,8 +105,11 @@ public class LancamentosDinheirosDAO implements ILancamentosDinheirosDAO {
         List<LancamentosDinheiros> lista = new ArrayList<>();
 
         try {
-            PreparedStatement ps = c.prepareStatement("SELECT * FROM LancamentosDinheiro where idUsuario = ?");
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM LancamentosDinheiro where idUsuario = ? "
+                    + "order by data desc LIMIT ? OFFSET ?");
             ps.setInt(1, idUsuario);
+            ps.setInt(2, tamanho);
+            ps.setInt(3, pagina * tamanho);
             
             ResultSet rs = ps.executeQuery();
 

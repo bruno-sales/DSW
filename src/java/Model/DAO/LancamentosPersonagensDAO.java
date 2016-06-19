@@ -153,7 +153,7 @@ public class LancamentosPersonagensDAO implements ILancamentosPersonagensDAO {
 
     
     @Override
-    public List<LancamentosPersonagens> getLancamentosPersonagensPorIdUsuario(int idUsuario) {
+    public List<LancamentosPersonagens> getLancamentosPersonagensPorIdUsuario(int idUsuario,int pagina, int tamanho) {
         Connection c = config.getConnection();
 
         if (c == null) {
@@ -163,8 +163,11 @@ public class LancamentosPersonagensDAO implements ILancamentosPersonagensDAO {
         List<LancamentosPersonagens> lista = new ArrayList<>();
 
         try {
-            PreparedStatement ps = c.prepareStatement("SELECT * FROM LancamentosPersonagem where idUsuario = ?");
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM LancamentosPersonagem where idUsuario = ? "
+                    + "order by data desc LIMIT ? OFFSET ?");
             ps.setInt(1, idUsuario);
+            ps.setInt(2, tamanho);
+            ps.setInt(3, pagina * tamanho);
             
             ResultSet rs = ps.executeQuery();
 

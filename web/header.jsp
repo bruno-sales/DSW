@@ -63,7 +63,7 @@
             <a href="transferenciasBancarias.jsp"><button id="itemMenu" class="itemMenu4">Registrar Transferência</button></a>
         </li>     
         <li>
-            <a href="Servlet?t=listarOfertas"><button id="itemMenu" class="itemMenu5">Cadastrar Personagem</button></a>
+            <a href="registrarPersonagem.jsp"><button id="itemMenu" class="itemMenu5">Cadastrar Personagem</button></a>
         </li> 
         <li>
             <a href="Servlet?t=listarOfertas"><button id="itemMenu" class="itemMenu6">Cadastrar Oferta de Compra</button></a>
