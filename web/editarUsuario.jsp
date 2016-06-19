@@ -15,10 +15,10 @@
                 <div class="spanColor2"></div>
                 
                 <input name="nome" type="text" class="input" id="inputEditarUsuario" placeholder="Nome"
-                       pattern="[a-zA-Z\s]+$"/>
+                       required pattern="[a-zA-Z\s]+$"/>
                 <input name="telefone" type="text" class="input" id="inputEditarUsuario" placeholder="Telefone (XX)XXXX-XXXX"
-                       pattern="\([0-9]{2}\)[0-9]{4,6}-[0-9]{3,4}$"/>
-                <input name="cpf" type="text" class="input" id="inputEditarUsuario" placeholder="CPF XXX.XXX.XXX-XX"
+                       required pattern="\([0-9]{2}\)[0-9]{4,6}-[0-9]{3,4}$"/>
+                <input name="cpf" type="text" class="input" id="inputEditarUsuario" required placeholder="CPF XXX.XXX.XXX-XX"
                 <!--input da foto-->
                 <input name="foto" type="file" class="input" id="inputImagem" placeholder="Imagem atual!">
                 

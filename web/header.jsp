@@ -60,7 +60,7 @@
             <a href="trocarSenha.jsp"><button id="itemMenu" class="itemMenu3">Trocar Senha</button></a>
         </li>       
         <li>
-            <a href="Servlet?t=listarOfertas"><button id="itemMenu" class="itemMenu4">Registrar Transferência</button></a>
+            <a href="transferenciasBancarias.jsp"><button id="itemMenu" class="itemMenu4">Registrar Transferência</button></a>
         </li>     
         <li>
             <a href="Servlet?t=listarOfertas"><button id="itemMenu" class="itemMenu5">Cadastrar Personagem</button></a>

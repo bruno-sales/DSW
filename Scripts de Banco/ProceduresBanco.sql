@@ -144,8 +144,9 @@ BEGIN
 	SET lIdTransfer = LAST_INSERT_ID();
 	
 	INSERT INTO lancamentosDinheiro (data, idUsuario, operacao, historico, valor)
-	VALUES (vAgora, vIdUsuario, 0, CONCAT("Reg transferencia #", lIdTransfer), lValorTotal);
+	VALUES (vAgora, vIdUsuario, 0, CONCAT("Reg transferencia #", lIdTransfer), vValor);
     
+	COMMIT;
 END //
 DELIMITER ;
 

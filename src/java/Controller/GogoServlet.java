@@ -520,9 +520,9 @@ public class GogoServlet extends HttpServlet {
         boolean retorno = tDao.registrarTransferencia(tranferencia);
 
         if (retorno == false) {
-            response.sendRedirect("registrarTransferencia.jsp?mensagem=NOK");
+            response.sendRedirect("transferenciasBancarias.jsp?mensagem=NOK");
         } else {
-            response.sendRedirect("registrarTransferencia.jsp?mensagem=OK");
+            response.sendRedirect("transferenciasBancarias.jsp?mensagem=OK");
         }
 
     }
