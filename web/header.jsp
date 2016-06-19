@@ -57,13 +57,30 @@
             <a href="editarUsuario.jsp"><button id="itemMenu" class="itemMenu2">Editar Perfil</button></a>
         </li>
         <li>
-            <a href="Servlet?t=listarOfertas"><button id="itemMenu" class="itemMenu3">Minhas Ofertas</button></a>
+            <a href="trocarSenha.jsp"><button id="itemMenu" class="itemMenu3">Trocar Senha</button></a>
+        </li>       
+        <li>
+            <a href="Servlet?t=listarOfertas"><button id="itemMenu" class="itemMenu4">Registrar Transferência</button></a>
+        </li>     
+        <li>
+            <a href="Servlet?t=listarOfertas"><button id="itemMenu" class="itemMenu5">Cadastrar Personagem</button></a>
+        </li> 
+        <li>
+            <a href="Servlet?t=listarOfertas"><button id="itemMenu" class="itemMenu6">Cadastrar Oferta de Compra</button></a>
+        </li> 
+        <li>
+            <a href="Servlet?t=listarOfertas"><button id="itemMenu" class="itemMenu7">Cadastrar Oferta de Venda</button></a>
+        </li> 
+        <li>
+            <a href="Servlet?t=listarOfertas"><button id="itemMenu" class="itemMenu8">Minhas Ofertas</button></a>
+        </li> 
+        <li>
+            <a href="Servlet?t=listarOfertas"><button id="itemMenu" class="itemMenu9">Meu Extrato</button></a>
+        </li>        
+        <li>
+            <a href="Servlet?t=listarOfertas"><button id="itemMenu" class="itemMenu10">Cotação Histórica</button></a>
         </li>
         <li>
-            <a href="trocarSenha.jsp"><button id="itemMenu" class="itemMenu4">Trocar Senha</button></a>
-        </li>
-        
-        <li>
-            <a href="Servlet?t=logoff"><button id="itemMenu" class="itemMenu5">Logoff</button></a>
+            <a href="Servlet?t=logoff"><button id="itemMenu" class="itemMenu11">Logoff</button></a>
         </li>
     </ul>

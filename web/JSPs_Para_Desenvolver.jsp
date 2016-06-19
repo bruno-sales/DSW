@@ -15,15 +15,14 @@
         <h1>Estas paginas terão que ser criadas</h1>
         
         <ul>
-        <!--Por os dados do usuario--><li>Perfil do Usuario</li>
         <!--    <li>Header de Login</li> -->
         <!--Corrigir bugzinho da frase de inserir imagem--><li>Editar Usuario</li>
         <!--Fazer listagem e restrição--><li>Lista de Usuario (Somente acessada pelo sysAdmin)</li>
         <!--Meh--><li>Layout de Recuperar Senha</li>
         <!--<li>Pagina de ofertas (compra e venda, listadas na mesma pagina)</li>-->
-            <li>Extrato da conta corrente do usuario</li>
-            <li>Cotação historica de um personagem</li>
-            <li>Pagina historico de ofertas do usuario</li>
+        <!--Fazer listagem e corrigir possiveis bugs--><li>Extrato da conta corrente do usuario</li>
+        <!--Fazer listagem e corrigir possiveis bugs--><li>Cotação historica de um personagem</li>
+        <!--Fazer listagem e corrigir possiveis bugs--><li>Pagina historico de ofertas do usuario</li>
         </ul>
     </body>
 </html>

@@ -4,7 +4,7 @@
 
 <div class="menu2">
     <div class="mainmenu2 clearfix">
-        <h1 class="menuitem2" id="tituloCadastroUsuario">Cadastro de Usuario</h1>
+        <h1 class="menuitem2" id="tituloCadastroUsuario">Cadastro de Usu&aacute;rio</h1>
     </div>
 
     <form name="formularioCadastro" action="Servlet?t=cadastrarUsuario" method="POST">

@@ -6,7 +6,7 @@
 
 <div class="menu2">
     <div class="mainmenu2 clearfix">
-        <h1 class="menuitem2">Cota&ccedil;&atilde;o Hist&oacute;rica de Personagens</h1>
+        <h1 class="menuitem2">Cota&cedil;&atilde;o Hist&oacute;rica de Personagens</h1>
     </div>
 
     <a href="Servlet?t=listarOfertas"><button id="btListarOfertas">Exibir Hist&oacute;rico</button></a>

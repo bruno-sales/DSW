@@ -6,10 +6,10 @@
 
 <div class="menu2">
     <div class="mainmenu2 clearfix">
-        <h1 class="menuitem2">Meu Histórico de Ofertas</h1>
+        <h1 class="menuitem2">Minhas Ofertas</h1>
     </div>
-
-    <a href="Servlet?t=listarOfertas"><button id="btListarOfertas">Exibir Hist&oacute;rico</button></a>
+    
+    <a href="Servlet?t=listarOfertas"><button id="btListarOfertas">Listar Ofertas</button></a>
 
     <div class="form2" id="FormListaOfertas">
         <div class="forceColor2"></div>
@@ -18,10 +18,10 @@
             <%                PersonagemDAO pDao = new PersonagemDAO();
 
             %>
-            <c:forEach var="historico_Ofertas" items ="${requestScope.historicoOfertas}">
+            <c:forEach var="oferta" items ="${requestScope.ofertas}">
                 <label name="nome" type="text" class="input">
                     
-                    <% Oferta test = (Oferta) pageContext.getAttribute("historico_Ofertas");
+                    <% Oferta test = (Oferta) pageContext.getAttribute("oferta");
 
                         String nomePersona = pDao.getPersonagemPorId(test.getIdPersonagem()).getNome();
                         String tipoOferta = test.getTipoOferta().name();
@@ -30,20 +30,22 @@
 
                     <h4 id="tituloTipoOferta"><%=tipoOferta%></h4><br>
                     Personagem: <%=nomePersona%>&nbsp;&nbsp;|&nbsp;
-                    Valor: R$ ${oferta.valor}&nbsp;&nbsp;|&nbsp;Quantidade: ${oferta.quantidade}<br> 
+                    Valor: R$ ${oferta.valor}&nbsp;&nbsp;|&nbsp;&nbsp;Quantidade: ${oferta.quantidade}<br> 
                     Data: ${oferta.data.toString("dd/MM/yyyy HH:mm")}&nbsp;&nbsp;|&nbsp;
                     Status:  <%=statusOferta%>
-                    </label>
-                </c:forEach>                
+                </label>
+            </c:forEach>                
+            </div>
         </div>
-    </div>
 
     <c:if test="${requestScope.hasPriorPageCompra}">
         <a href='Gogo?t=listarOfertas&page=${requestScope.page-1}'>
-            <button id="ant">Anterior</button></a> | 
-        </c:if>
-        <c:if test="${requestScope.hasNextPageCompra}">
+            <button id="ant">Anterior</button></a>
+    </c:if>
+    <c:if test="${requestScope.hasNextPageCompra}">
         <a href='Gogo?t=listarOfertas&page=${requestScope.page+1}'>
-            <button id="prox">Próxima</button></a> |
+            <button id="prox">Próxima</button>
+        </a>
     </c:if> 
-    <%@include file="footer.jsp"%>
+
+<%@include file="footer.jsp"%>

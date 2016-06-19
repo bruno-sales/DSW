@@ -45,6 +45,42 @@ body .itemMenu5 {
   padding: 7px 15px;
 }
 
+body .itemMenu6 {
+  top: 39%;
+  right: 2%;
+  padding: 7px 15px;
+}
+
+body .itemMenu7 {
+  top: 45%;
+  right: 2%;
+  padding: 7px 15px;
+}
+
+body .itemMenu8 {
+  top: 51%;
+  right: 2%;
+  padding: 7px 15px;
+}
+
+body .itemMenu9 {
+  top: 57%;
+  right: 2%;
+  padding: 7px 15px;
+}
+
+body .itemMenu10 {
+  top: 63%;
+  right: 2%;
+  padding: 7px 15px;
+}
+
+body .itemMenu11 {
+  top: 69%;
+  right: 2%;
+  padding: 7px 15px;
+}
+
 body .menu {
   position: absolute;
   width: 100%;
@@ -598,19 +634,21 @@ body .article h1 {
 }
 
 #FormTrocarSenha{
-    top: 160px;
+    top: 170px;
     left: -487px;
     width: 400px;
     height: 300px;
 }
 
 #FormPerfilUsuario{
+    top: 160px;
     width: 700px;
     left: 130px;
     height: 350px;
 }
 
 #FormListaPersonagens{
+    top: 170px;
     left: -511px;
     width: 350px;
     height: 410px;
