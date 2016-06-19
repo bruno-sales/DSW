@@ -10,8 +10,8 @@
         <h1 class="menuitem2">Meu Extrato de Conta Corrente</h1>
     </div>
 
-    <a href="Servlet?t=extratoContaCorrente&tipo=dinheiro"><button id="btListarOfertas">Exibir Extrato Dinheiro</button></a>
-    <a href="Servlet?t=extratoContaCorrente&tipo=personagem"><button id="btListarOfertasa">Exibir Extrato Personagem</button></a>
+    <a href="Servlet?t=extratoContaCorrente&tipo=dinheiro"><button id="btExtratoDinheiro">Exibir Extrato Dinheiro</button></a>
+    <a href="Servlet?t=extratoContaCorrente&tipo=personagem"><button id="btExtratoPersonagem">Exibir Extrato Personagem</button></a>
 
     <div class="form2" id="extratoPersonagem">
         <div class="forceColor2"></div>
