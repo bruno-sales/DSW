@@ -3,7 +3,7 @@ package Model.Enums;
 import lombok.Getter;
 
 public enum ETipoOferta {
-    COMPRA(0), VENDA(1);
+    COMPRA(1), VENDA(0);
     
     private final @Getter int codigo;
     

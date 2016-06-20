@@ -5,6 +5,7 @@ import Model.DAO.Interfaces.IOfertaDAO;
 import Model.Enums.EStatusOferta;
 import Model.Enums.ETipoOferta;
 import Model.Oferta;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -161,5 +162,33 @@ public class OfertaDAO implements IOfertaDAO {
         }
 
         return lista;
+    }
+    
+    @Override
+    public boolean registrarCompra(int idUsuario, int idPersonagem, int quantidade, float valorUnitario) {
+        Connection c = config.getConnection();
+
+        if (c == null) {
+            return false;
+        }
+
+        try {
+            CallableStatement cs = c.prepareCall("{call RegistraOrdemCompra(?, ?, ?, ?, ?)}");
+            cs.setInt(1,idUsuario);
+            cs.setInt(2, idPersonagem);
+            cs.setInt(3, quantidade);
+            cs.setFloat(4, valorUnitario);
+            cs.registerOutParameter(5, java.sql.Types.INTEGER);
+            cs.execute();
+
+            int retorno = cs.getInt(5);
+            
+            c.close();
+            return retorno == 0;
+
+        } catch (SQLException e) {
+            Configurador.log(e.getMessage());
+            return false;
+        }
     }
 }

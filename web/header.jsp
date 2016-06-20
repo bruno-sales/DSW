@@ -66,7 +66,7 @@
             <a href="registrarPersonagem.jsp"><button id="itemMenu" class="itemMenu5">Cadastrar Personagem</button></a>
         </li> 
         <li>
-            <a href="Servlet?t=listarOfertas"><button id="itemMenu" class="itemMenu6">Cadastrar Oferta de Compra</button></a>
+            <a href="registrarCompra.jsp"><button id="itemMenu" class="itemMenu6">Cadastrar Oferta de Compra</button></a>
         </li> 
         <li>
             <a href="Servlet?t=listarOfertas"><button id="itemMenu" class="itemMenu7">Cadastrar Oferta de Venda</button></a>

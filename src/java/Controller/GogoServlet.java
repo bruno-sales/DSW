@@ -55,6 +55,7 @@ public class GogoServlet extends HttpServlet {
     private static final String LISTAROFERTAS = "listarOfertas";
     private static final String REGISTRARTRANSFERENCIA = "registrarTransferencia";
     private static final String REGISTRARPERSONAGEM = "registrarPersonagem";
+    private static final String REGISTRARCOMPRA = "registrarCompra";
     private static final String EXTRATOCONTACORRENTE = "extratoContaCorrente";
 
     /**
@@ -111,6 +112,9 @@ public class GogoServlet extends HttpServlet {
                 break;
             case REGISTRARPERSONAGEM:
                 registrarPersonagem(request, response);
+                break;
+            case REGISTRARCOMPRA:
+                registrarCompra(request, response);
                 break;
             case EXTRATOCONTACORRENTE:
                 extratoContaCorrente(request, response);
@@ -546,7 +550,26 @@ public class GogoServlet extends HttpServlet {
         }
 
     }
+    
+    private void registrarCompra(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        OfertaDAO oDao = new OfertaDAO();
 
+        int usuarioId = recuperaUserIdLogado(request);
+
+        int personagemId = Integer.parseInt(request.getParameter("personagem"));
+        int quantidade = Integer.parseInt(request.getParameter("qtd"));
+        float valorUnitario = Float.parseFloat(request.getParameter("valor"));
+
+        //Caso ocorra erro ao criar a transferencia, o retorno será falso
+        boolean retorno = oDao.registrarCompra(usuarioId, personagemId, quantidade, valorUnitario);
+
+        if (retorno == false) {
+            response.sendRedirect("registrarCompra.jsp?mensagem=Nao foi possivel realizar esta ação, tente novamente");
+        } else {
+            response.sendRedirect("historicoOfertasUsuario.jsp");
+        }
+     }
+    
     private void extratoContaCorrente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         //Paginadores
@@ -653,5 +676,6 @@ public class GogoServlet extends HttpServlet {
         return idUsuario;
 
     }
+
 
 }
