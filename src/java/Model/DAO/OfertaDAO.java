@@ -191,4 +191,32 @@ public class OfertaDAO implements IOfertaDAO {
             return false;
         }
     }
+    
+    @Override
+    public boolean registrarVenda(int idUsuario, int idPersonagem, int quantidade, float valorUnitario) {
+        Connection c = config.getConnection();
+
+        if (c == null) {
+            return false;
+        }
+
+        try {
+            CallableStatement cs = c.prepareCall("{call RegistraOrdemVenda(?, ?, ?, ?, ?)}");
+            cs.setInt(1,idUsuario);
+            cs.setInt(2, idPersonagem);
+            cs.setInt(3, quantidade);
+            cs.setFloat(4, valorUnitario);
+            cs.registerOutParameter(5, java.sql.Types.INTEGER);
+            cs.execute();
+
+            int retorno = cs.getInt(5);
+            
+            c.close();
+            return retorno == 0;
+
+        } catch (SQLException e) {
+            Configurador.log(e.getMessage());
+            return false;
+        }
+    }
 }

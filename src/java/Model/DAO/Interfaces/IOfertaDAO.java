@@ -10,4 +10,5 @@ public interface IOfertaDAO {
     public int CountOfertasUsuario(int userId);
     public List<Oferta> listaOfertasUsuario(int userId,int pagina, int tamanho);
     public boolean registrarCompra(int idUsuario, int idPersonagem, int quantidade, float valorUnitario);
+    public boolean registrarVenda(int idUsuario, int idPersonagem, int quantidade, float valorUnitario);
 }

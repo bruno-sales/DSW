@@ -9,10 +9,10 @@
 
 <div class="menu2">
     <div class="mainmenu2 clearfix">
-        <h1 class="menuitem2">Registrar Interesse de Compra</h1>
+        <h1 class="menuitem2">Registrar Interesse de Venda</h1>
     </div>
 
-    <form name="formularioRegistrarCompra" action="Servlet?t=registrarCompra" method="POST">   
+    <form name="formularioRegistrarCompra" action="Servlet?t=registrarVenda" method="POST">   
         <div class="form2" id="FormListaOfertas">
             <div class="forceColor2"></div>
             <div class="topbar2">

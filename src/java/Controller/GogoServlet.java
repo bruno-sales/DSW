@@ -7,7 +7,6 @@ import Model.DAO.PersonagemDAO;
 import Model.DAO.TokenDAO;
 import Model.DAO.TransferenciaDAO;
 import Model.DAO.UsuarioDAO;
-import Model.Enums.ETipoOferta;
 import Model.LancamentosDinheiros;
 import Model.LancamentosPersonagens;
 import Model.Oferta;
@@ -56,6 +55,7 @@ public class GogoServlet extends HttpServlet {
     private static final String REGISTRARTRANSFERENCIA = "registrarTransferencia";
     private static final String REGISTRARPERSONAGEM = "registrarPersonagem";
     private static final String REGISTRARCOMPRA = "registrarCompra";
+    private static final String REGISTRARVENDA = "registrarVenda";
     private static final String EXTRATOCONTACORRENTE = "extratoContaCorrente";
 
     /**
@@ -115,6 +115,9 @@ public class GogoServlet extends HttpServlet {
                 break;
             case REGISTRARCOMPRA:
                 registrarCompra(request, response);
+                break;
+            case REGISTRARVENDA:
+                registrarVenda(request, response);
                 break;
             case EXTRATOCONTACORRENTE:
                 extratoContaCorrente(request, response);
@@ -560,16 +563,37 @@ public class GogoServlet extends HttpServlet {
         int quantidade = Integer.parseInt(request.getParameter("qtd"));
         float valorUnitario = Float.parseFloat(request.getParameter("valor"));
 
-        //Caso ocorra erro ao criar a transferencia, o retorno será falso
+        //Caso ocorra erro ao criar a ordem, o retorno será falso
         boolean retorno = oDao.registrarCompra(usuarioId, personagemId, quantidade, valorUnitario);
 
         if (retorno == false) {
-            response.sendRedirect("registrarCompra.jsp?mensagem=Nao foi possivel realizar esta ação, tente novamente");
+            response.sendRedirect("registrarCompra.jsp?mensagem=Nao foi possivel realizar esta ação. Favor verifique seu saldo");
         } else {
-            response.sendRedirect("historicoOfertasUsuario.jsp");
+            response.sendRedirect("Servlet?t=listarOfertas");
         }
      }
     
+    
+    private void registrarVenda(HttpServletRequest request, HttpServletResponse response) throws IOException {
+   OfertaDAO oDao = new OfertaDAO();
+
+        int usuarioId = recuperaUserIdLogado(request);
+
+        int personagemId = Integer.parseInt(request.getParameter("personagem"));
+        int quantidade = Integer.parseInt(request.getParameter("qtd"));
+        float valorUnitario = Float.parseFloat(request.getParameter("valor"));
+
+        //Caso ocorra erro ao criar a ordem, o retorno será falso
+        boolean retorno = oDao.registrarVenda(usuarioId, personagemId, quantidade, valorUnitario);
+
+        if (retorno == false) {
+            response.sendRedirect("registrarVenda.jsp?mensagem=Nao foi possivel realizar esta ação. "
+                    + "Favor verifique sua quantidade de personagens");
+        } else {
+            response.sendRedirect("Servlet?t=listarOfertas");
+        }
+    }
+
     private void extratoContaCorrente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         //Paginadores
