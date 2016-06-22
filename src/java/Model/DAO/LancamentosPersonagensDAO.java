@@ -23,7 +23,7 @@ public class LancamentosPersonagensDAO implements ILancamentosPersonagensDAO {
 
     private LancamentosPersonagens carrega(ResultSet rs) throws SQLException {
         LancamentosPersonagens lp = new LancamentosPersonagens();
-        
+
         lp.setHistorico(rs.getString("historico"));
         lp.setQuantidade(rs.getInt("quantidade"));
         lp.setPrecoUnitario(rs.getFloat("precoUnitario"));
@@ -32,7 +32,7 @@ public class LancamentosPersonagensDAO implements ILancamentosPersonagensDAO {
 
         DateTime data = new DateTime(rs.getTimestamp("data"));
         lp.setData(data);
-        
+
         //Recuperando enumerador da operacao
         int codigoOperacao = rs.getInt("operacao");
         EOperacao tipoOperacao = EOperacao.get(codigoOperacao);
@@ -151,9 +151,8 @@ public class LancamentosPersonagensDAO implements ILancamentosPersonagensDAO {
 
     }
 
-    
     @Override
-    public List<LancamentosPersonagens> getLancamentosPersonagensPorIdUsuario(int idUsuario,int pagina, int tamanho) {
+    public List<LancamentosPersonagens> getLancamentosPersonagensPorIdUsuario(int idUsuario, int pagina, int tamanho) {
         Connection c = config.getConnection();
 
         if (c == null) {
@@ -168,7 +167,7 @@ public class LancamentosPersonagensDAO implements ILancamentosPersonagensDAO {
             ps.setInt(1, idUsuario);
             ps.setInt(2, tamanho);
             ps.setInt(3, pagina * tamanho);
-            
+
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -181,9 +180,9 @@ public class LancamentosPersonagensDAO implements ILancamentosPersonagensDAO {
             Configurador.log(e.getMessage());
         }
 
-        return lista;   
+        return lista;
     }
-    
+
     @Override
     public int countLancamentosPersonagens(int userId) {
         Connection c = config.getConnection();
@@ -196,7 +195,7 @@ public class LancamentosPersonagensDAO implements ILancamentosPersonagensDAO {
         try {
             PreparedStatement ps = c.prepareStatement("SELECT count(*) AS qtd FROM LancamentosPersonagem where "
                     + "idUsuario = ?");
-                    
+
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
 
@@ -211,85 +210,30 @@ public class LancamentosPersonagensDAO implements ILancamentosPersonagensDAO {
 
         return qtd;
     }
-    
-    @Override
-    public boolean calculaSaldoDisponivelPersonagem(int IdUsuario, int idPersonagem, /*OUT*/ int saldo) {
-//            Connection c = config.getConnection();
-//		
-//		if (c == null)
-//			return false;
-//         
-//                try
-//		{
-//                        PreparedStatement ps = c.prepareStatement("SELECT SUM");
-//                        ResultSet rs = ps.executeQuery();
-//			
-//                        int opr = operacao.getValor;
-///*SELECT SUM(CASE operacao WHEN 0 THEN quantidade WHEN 1 THEN -quantidade WHEN 2 THEN -quantidade WHEN 3 THEN quantidade END)
-//
-//	INTO vSaldo
-//	FROM lancamentosPersonagem
-//	WHERE idUsuario = vIdUsuario
-//	AND idPersonagem = vIdPersonagem;
-//	
-//	IF vSaldo IS NULL THEN SET vSaldo = 0.0; END IF;*/
-//                        switch(opr.getInt())
-//                        {
-//                            case 0:
-//                                
-//                                break;
-//                            case 1:
-//                                
-//                                break;
-//                            case 2:
-//                                
-//                                break;
-//                            case 3:
-//                                break;
-//                        }
-//                        
-//                        PreparedStatement ps = c.prepareStatement("");
-//                        ResultSet rs = ps.executeQuery();
-//                        
-//                        cs.execute();			
-//			
-//			c.close();
-//			return true;
-//
-//		} catch (SQLException e)
-//		{
-//			Configurador.log(e.getMessage());
-//			return false;
-//		}
-        return false;
-    }
 
     @Override
-    public boolean CancelaOrdemCompra(int idCompra) {
-//            
-//            //DateTime Agora;
-//            int idUsuario;
-//            int quantidade;
-//            float precoUnitario;
-//            float valorTotal;
-//            
-//                PreparedStatement ps = c.prepareStatement
-//("SELECT idUsuario, idPersonagem, quantidade, precoUnitario INTO lIdUsuario, lQuantidade, lPrecoUnitario FROM ofertas WHERE id = idCompra"); //ou vIdCompra?
-//                ps.setInt(3,quantidade);
-//                ps.setInt(4,precoUnitario);
-//        
-//                valorTotal = quantidade * precoUnitario;
-//	
-//                ld.idUsuario = idUsuario;
-//                ld.quantidade = 3;
-//                ld.historico = "Canc Oferta Compra #" + idOfertaCompra;
-//                ld.valor = valorTotal;
-//            
-//                PreparedStatement ps = c.prepareStatement("SELECT status FROM ofertas WHERE id=idCompra"); //ou vIdCompra??
-//                
-//                //status = 2
+    public float obterSaldoPersonagem(int idUsuario, int idPersonagem) {
+        Connection c = config.getConnection();
 
-        return false;
+        if (c == null) {
+            return 0;
+        }
+
+        try {
+            CallableStatement cs = c.prepareCall("{call CalculaSaldoDisponivelPersonagem(?, ?, ?)}");
+            cs.setInt(1, idUsuario);
+            cs.setInt(2, idPersonagem);
+            cs.registerOutParameter(3, java.sql.Types.INTEGER);
+            cs.execute();
+
+            float saldo = cs.getInt(3);
+
+            c.close();
+            return saldo;
+
+        } catch (SQLException e) {
+            Configurador.log(e.getMessage());
+            return 0;
+        }
     }
-
 }

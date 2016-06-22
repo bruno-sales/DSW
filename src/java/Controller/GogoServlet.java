@@ -608,7 +608,7 @@ public class GogoServlet extends HttpServlet {
 
         LancamentosDinheirosDAO ldDao = new LancamentosDinheirosDAO();
         LancamentosPersonagensDAO lpDao = new LancamentosPersonagensDAO();
-        List<LancamentosDinheiros> listaDinheiros = new ArrayList<>();
+        List<LancamentosDinheiros> listaDinheiros = new ArrayList<>();        
         List<LancamentosPersonagens> listaPersonagens = new ArrayList<>();
 
         int count;
@@ -622,7 +622,9 @@ public class GogoServlet extends HttpServlet {
         if (tipo.equals("dinheiro")) {
             listaDinheiros = ldDao.getlancamentosDinheiroPorIdUsuario(idUsuario, page, PAGESIZEOFERTAS);
             count = ldDao.countLancamentoDinheiro(idUsuario);
+            float saldoDisponivel = ldDao.obterSaldoUsuario(idUsuario);
             request.setAttribute("extrato", listaDinheiros);
+            request.setAttribute("saldo", saldoDisponivel);
         } else {
             listaPersonagens = lpDao.getLancamentosPersonagensPorIdUsuario(idUsuario, page, PAGESIZEOFERTAS);
             count = lpDao.countLancamentosPersonagens(idUsuario);

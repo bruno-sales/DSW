@@ -21,12 +21,15 @@
 
             %>
             <c:if test="${requestScope.tipo == 'dinheiro'}">
+                <label name="nome" type="text" class="input">
+                    Saldo Atual: R$ ${requestScope.saldo}
+                </label>
                 <c:forEach var="extrato_Cc" items ="${requestScope.extrato}">
                     <label name="nome" type="text" class="input">
-                        <% LancamentosDinheiros test = (LancamentosDinheiros) pageContext.getAttribute("extrato_Cc");                           
+                        <% LancamentosDinheiros lancamento = (LancamentosDinheiros) pageContext.getAttribute("extrato_Cc");
                         %> 
-                        
-                        <h4 id="tituloTipoOferta"><%= test.getOperacao().name() %></h4><br>                        
+
+                        <h4 id="tituloTipoOferta"><%= lancamento.getOperacao().name()%></h4><br>                        
                         Valor: R$ ${extrato_Cc.valor}&nbsp;&nbsp;|&nbsp;Data: ${extrato_Cc.data.toString("dd/MM/yyyy HH:mm")}<br> 
                         Historico:  ${extrato_Cc.historico}
                     </label>
@@ -37,10 +40,10 @@
                     <label name="nome" type="text" class="input">
                         <% LancamentosPersonagens persona = (LancamentosPersonagens) pageContext.getAttribute("extrato_Cc");
 
-                            String nomePersona = pDao.getPersonagemPorId(persona.getIdPersonagem()).getNome();                            
+                            String nomePersona = pDao.getPersonagemPorId(persona.getIdPersonagem()).getNome();
                         %> 
 
-                        <h4 id="tituloTipoOferta"><%= persona.getOperacao().name() %></h4><br>                        
+                        <h4 id="tituloTipoOferta"><%= persona.getOperacao().name()%></h4><br>                        
                         Data: ${extrato_Cc.data.toString("dd/MM/yyyy HH:mm")}<br> 
                         Personagem: <%=nomePersona%>&nbsp;&nbsp;|&nbsp;Quantidade: ${extrato_Cc.quantidade}
                         &nbsp;&nbsp;|&nbsp;Preço Unitário: ${extrato_Cc.precoUnitario}<br> 

@@ -9,4 +9,5 @@ public interface ILancamentosDinheirosDAO {
         public List<LancamentosDinheiros> getlancamentosDinheiroPorIdUsuario(int idUsuario,int pagina, int tamanho);
         public List<LancamentosDinheiros> lista();
         public int countLancamentoDinheiro(int userId);
+        public float obterSaldoUsuario(int idUsuario);
 }

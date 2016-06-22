@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import Model.DAO.Interfaces.ILancamentosDinheirosDAO;
+import java.sql.CallableStatement;
 import org.joda.time.DateTime;
 
 public class LancamentosDinheirosDAO implements ILancamentosDinheirosDAO {
@@ -152,5 +153,31 @@ public class LancamentosDinheirosDAO implements ILancamentosDinheirosDAO {
         }
 
         return qtd;
+    }
+    
+    @Override
+    public float obterSaldoUsuario(int idUsuario) {
+        Connection c = config.getConnection();
+
+                
+        if (c == null) {
+           return 0;
+        }
+
+        try {
+            CallableStatement cs = c.prepareCall("{call CalculaSaldoDisponivelDinheiro(?, ?)}");
+            cs.setInt(1,idUsuario);
+            cs.registerOutParameter(2, java.sql.Types.FLOAT);
+            cs.execute();
+
+            float saldo = cs.getFloat(2);
+            
+            c.close();
+            return saldo;
+
+        } catch (SQLException e) {
+            Configurador.log(e.getMessage());
+            return 0;
+        }
     }
 }
