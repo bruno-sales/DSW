@@ -27,8 +27,7 @@
 <a href="recuperarSenha.jsp"><button id="findpass">Esqueceu sua senha?</button></a>
 <a href="cadastroUsuario.jsp"><button id="linkCadastro">Cadastrar-se</button></a>
 
-<div class="errorMsg">      
-    <!-- Carregar mensagem de erro, se houver -->
+<div class="errorMsg">
     <c:if test="${not empty param.mensagem}">
         <c:out value="${param.mensagem}"/>
     </c:if> 

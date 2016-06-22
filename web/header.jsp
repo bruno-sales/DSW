@@ -49,38 +49,33 @@
 <h3 class="boasVindas">Bem-vindo, <%= user.getNome()%> <br>
     Ultimo Login: <%= user.getUltimoLogin().toString("dd/MM/yyyy HH:mm") %></h3>
     
-    <ul>
-        <li>
-            <a href="perfilUsuario.jsp"><button id="itemMenu" class="itemMenu1">Meu Perfil</button></a>
-        </li>
-        <li>
-            <a href="editarUsuario.jsp"><button id="itemMenu" class="itemMenu2">Editar Perfil</button></a>
-        </li>
-        <li>
-            <a href="trocarSenha.jsp"><button id="itemMenu" class="itemMenu3">Trocar Senha</button></a>
-        </li>       
-        <li>
-            <a href="transferenciasBancarias.jsp"><button id="itemMenu" class="itemMenu4">Registrar Transferência</button></a>
-        </li>     
-        <li>
-            <a href="registrarPersonagem.jsp"><button id="itemMenu" class="itemMenu5">Cadastrar Personagem</button></a>
-        </li> 
-        <li>
-            <a href="registrarCompra.jsp"><button id="itemMenu" class="itemMenu6">Cadastrar Oferta de Compra</button></a>
-        </li> 
-        <li>
-            <a href="registrarVenda.jsp"><button id="itemMenu" class="itemMenu7">Cadastrar Oferta de Venda</button></a>
-        </li> 
-        <li>
-            <a href="Servlet?t=listarOfertas"><button id="itemMenu" class="itemMenu8">Minhas Ofertas</button></a>
-        </li> 
-        <li>
-            <a href="extratoContaCorrente.jsp"><button id="itemMenu" class="itemMenu9">Meu Extrato</button></a>
-        </li>        
-        <li>
-            <a href="Servlet?t=listarOfertas"><button id="itemMenu" class="itemMenu10">Cotação Histórica</button></a>
-        </li>
-        <li>
-            <a href="Servlet?t=logoff"><button id="itemMenu" class="itemMenu11">Logoff</button></a>
-        </li>
-    </ul>
+<div class="menuDropDown">
+  <button class="btDrop">Minha Conta</button>
+  <div class="dropDownContent"  id="dDContent">
+    <a href="perfilUsuario.jsp">Meu Perfil</a>
+    <a href="editarUsuario.jsp">Editar Perfil</a>
+    <a href="trocarSenha.jsp">Trocar Senha</a>
+  </div>
+</div>
+
+<div class="menuDropDown">
+    <button class="btDrop2">Ofertas</button>
+    <div class="dropdownContent"  id="dDContent2">
+    <a href="Servlet?t=listarOfertas">Minhas Ofertas</a>
+    <a href="registrarCompra.jsp">Cadastrar Oferta de Compra</a>
+    <a href="registrarVenda.jsp">Cadastrar Oferta de Venda</a>
+  </div>
+</div>
+
+<div class="menuDropDown">
+    <button class="btDrop3">Conta Corrente</button>
+    <div class="dropdownContent"  id="dDContent3">
+    <a href="extratoContaCorrente.jsp">Meu Extrato</a>
+    <a href="registrarPersonagem.jsp">Cadastrar Personagem</a>
+    <a href="transferenciasBancarias.jsp">Registrar Transferência</a>
+  </div>
+</div>
+    
+<div class="menuDropDown">
+    <a href="Servlet?t=logoff"><button class="btDrop4">Logoff</button></a>
+</div>

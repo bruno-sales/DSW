@@ -6,23 +6,7 @@
     <div class="mainmenu2 clearfix">
         <h1 class="menuitem2">Personagens</h1>
     </div>
-<!--
-    <nav id="colorNav">
-	<ul>
-		<li class="green">
-			<a href="#" class="icon-home"></a>
-			<ul>
-				<li><a href="#">Dropdown item 1</a></li>
-				<li><a href="#">Dropdown item 2</a></li>
-				<!-- More dropdown options -->
-<!--			</ul>
-		</li>
 
-		<!-- More menu items -->
-<!--
-	</ul>
-</nav>-->
-    
     <a href="Servlet?t=listarPersonagens"><button id="findpass2">Listar Personagens</button></a>
 
     <div class="form2" id="FormListaPersonagens">

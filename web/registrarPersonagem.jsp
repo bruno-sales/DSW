@@ -13,7 +13,7 @@
     </div>
 
     <form name="formularioRegistrarPersonas" action="Servlet?t=registrarPersonagem" method="POST">   
-        <div class="form2" id="FormListaOfertas">
+        <div class="form2" id="FormListaPerson">
             <div class="forceColor2"></div>
             <div class="topbar2">
                 <div class="spanColor2" id=""></div>

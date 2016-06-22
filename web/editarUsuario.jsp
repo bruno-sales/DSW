@@ -21,17 +21,8 @@
                 <input name="cpf" type="text" class="input" id="inputEditarUsuario" required placeholder="CPF XXX.XXX.XXX-XX"
                 <!--input da foto-->
                 <input name="foto" type="file" class="input" id="inputImagem" placeholder="Imagem atual!">
-                
-                <input name="listaOpcoesImgs" type="text" class="input" id="inputOpcoesImgs" placeholder="Op&ccedil;&otilde;es">
-                <datalist id="opcoesImg">
-                    <option value="Foto 1">
-                    <option value="Foto 2">
-                    <option value="Foto 3">
-                    <option value="Foto 4">
-                    <option value="Foto 5">
-                </datalist>
             </div>
-            <button class="submit" id="submitAplicarAlteracoes">Aplicar alterações</button>
+            <button class="submit" id="submitAplicarAlteracoesEdicao">Aplicar alterações</button>
         </div>
     </form>
     
@@ -42,7 +33,7 @@
         </c:if>
     </div>
 
-    <a href="perfilUsuario.jsp"><button id="findpass2">Ir para Perfil</button></a>
+    <a href="perfilUsuario.jsp"><button id="findpass3">Ir para Perfil</button></a>
     
     
 <%@include file="footer.jsp"%>

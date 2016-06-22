@@ -13,15 +13,15 @@ function habilitaPainelEntradaToken() {
     document.getElementsByName("btNovoToken")[0].style.display = "inline";
 }
 function habilitaPainelEnvioToken() {
-     document.getElementsByName("painelEnvioToken")[0].style.display = "inline";
+    document.getElementsByName("painelEnvioToken")[0].style.display = "inline";
     document.getElementsByName("btTemToken")[0].style.display = "inline";
     document.getElementsByName("painelEntradaToken")[0].style.display = "none";
     document.getElementsByName("btNovoToken")[0].style.display = "none";
 }
 function habilitaPainelTrocaSenha() {
-     document.getElementsByName("painelEnvioToken")[0].style.display = "none";
+    document.getElementsByName("painelEnvioToken")[0].style.display = "block";
     document.getElementsByName("btTemToken")[0].style.display = "none";
-    document.getElementsByName("painelEntradaToken")[0].style.display = "none";
+    document.getElementById("painelEntradaToken").style.display = "block";
     document.getElementsByName("btNovoToken")[0].style.display = "none";
     }
 </script>
@@ -38,7 +38,7 @@ function habilitaPainelTrocaSenha() {
         <div class="topbar">
             <div class="spanColor"></div>
             <input name="email" type="text"                
-                   class="input" id="email" placeholder="E-mail"/>    
+                   class="input" id="email" placeholder="E-mail"/>
         </div>
         <button type="submit" class="submit" id="submit">Enviar Token</button>
     </div>
@@ -53,15 +53,14 @@ function habilitaPainelTrocaSenha() {
             <input name="email" type="text"                
                    class="input" id="email" placeholder="E-mail"/>
             <input name="token" type="text"                
-           class="input" id="token" placeholder="token"/>  
+           class="input" id="token" placeholder="Token"/>  
         </div>
-            <button type="submit" class="submit" id="submit" onclick="habilitaPainelTrocaSenha()">Alterar minha senha</button>
+            <button type="submit" class="submit" id="submit" onclick="habilitaPainelTrocaSenha">Verificar Token</button>
     </div>
 </form>
 
 <button name="btNovoToken" type="submit" class="submit" id="btNovoToken" style="display: none" onclick="habilitaPainelEnvioToken()">Obter novo Token</button>
 <button name="btTemToken" type="submit" class="submit" id="btTemToken" onclick="habilitaPainelEntradaToken()">Já possuo um Token</button>
-  
   
 <c:if test="${requestScope.tokenValido}">
     <form action="Gogo?t=recuperarSenha" class="login" method="POST">

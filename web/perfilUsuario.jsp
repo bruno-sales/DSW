@@ -18,7 +18,6 @@
                 <label name="telefone" type="text" class="input" id="inputPerfilUsuario">Telefone: <%= user.getTelefone()%></label>
                 <label name="cpf" type="text" class="input" id="inputPerfilUsuario">CPF: <%= user.getCpf()%></label>
                 <label name="email" type="text" class="input" id="inputPerfilUsuario">Email: <%= user.getEmail()%></label>
-                <label name="senha" type="password" class="input" id="inputPerfilUsuario">Senha: *****</label>
                 <label name="foto" type="file" class="input" id="inputImagem">
                     <img src="Gogo?t=carregarFotoUsuario&userId=<%= user.getIdUsuario()%>" style="width: 210px;height: 255px"/>                    
                 </label>

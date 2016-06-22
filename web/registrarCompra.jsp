@@ -39,4 +39,11 @@
         </div>
     </form>
 
+                  <div class="errorMsgTrocarSenha">
+        <!-- Carregar mensagem de erro, se houver -->
+        <c:if test="${not empty param.mensagem}">
+            <c:out value="${param.mensagem}"/>
+        </c:if>
+    </div>
+                
     <%@include file="footer.jsp"%>

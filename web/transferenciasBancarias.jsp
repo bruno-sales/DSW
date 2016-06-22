@@ -10,7 +10,7 @@
     </div>
     
     <form name="formularioEditarUsuario" action="Servlet?t=registrarTransferencia" method="POST">   
-        <div class="form2" id="FormListaOfertas">
+        <div class="form2" id="FormListaPerson">
             <div class="forceColor2"></div>
             <div class="topbar2">
                 <div class="spanColor2" id=""></div>

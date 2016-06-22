@@ -7,7 +7,7 @@
 
 <div class="menu2">
     <div class="mainmenu2 clearfix">
-        <h1 class="menuitem2">Meu Extrato de Conta Corrente</h1>
+        <h1 class="menuitem2" id="tituloExtrato">Meu Extrato de Conta Corrente</h1>
     </div>
 
     <a href="Servlet?t=extratoContaCorrente&tipo=dinheiro"><button id="btExtratoDinheiro">Exibir Extrato Dinheiro</button></a>
@@ -35,7 +35,7 @@
                     </label>
                 </c:forEach>      
             </c:if> 
-            <c:if test="${requestScope.tipo == 'personagem'}">
+                <c:if test="${requestScope.tipo == 'personagem'}">
                 <c:forEach var="extrato_Cc" items ="${requestScope.extrato}">
                     <label name="nome" type="text" class="input">
                         <% LancamentosPersonagens persona = (LancamentosPersonagens) pageContext.getAttribute("extrato_Cc");
@@ -56,10 +56,10 @@
 
     <c:if test="${requestScope.hasPriorPage}">
         <a href='Gogo?t=extratoContaCorrente&page=${requestScope.page-1}&tipo=${requestScope.tipo}'>
-            <button id="ant2">Anterior</button></a> | 
+            <button id="ant">Anterior</button></a> | 
         </c:if>
         <c:if test="${requestScope.hasNextPage}">
         <a href='Gogo?t=extratoContaCorrente&page=${requestScope.page+1}&tipo=${requestScope.tipo}'>
-            <button id="prox2">Próxima</button></a> |
+            <button id="prox">Próxima</button></a> |
     </c:if> 
     <%@include file="footer.jsp"%>

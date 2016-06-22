@@ -35,7 +35,7 @@
         </c:if>
     </div>
 
-    <a href="perfilUsuario.jsp"><button id="findpass2">Ir para Perfil</button></a>
+    <a href="perfilUsuario.jsp"><button id="findpass3">Ir para Perfil</button></a>
     
     
 <%@include file="footer.jsp"%>
