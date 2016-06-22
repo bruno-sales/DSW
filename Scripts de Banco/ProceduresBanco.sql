@@ -674,7 +674,7 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS CalculaSaldoDisponivelDinheiro;
 DELIMITER //
-CREATE PROCEDURE CalculaSaldoDisponivelDinheiro(vIdUsuario INT, OUT vSaldo INT)
+CREATE PROCEDURE CalculaSaldoDisponivelDinheiro(vIdUsuario INT, OUT vSaldo FLOAT)
 BEGIN
 	SELECT SUM(CASE operacao WHEN 0 THEN valor WHEN 1 THEN -valor WHEN 2 THEN -valor WHEN 3 THEN valor END)
 	INTO vSaldo
